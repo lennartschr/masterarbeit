@@ -1,28 +1,6 @@
-Brotli @ file:///Users/runner/miniforge3/conda-bld/brotli-split_1687884292427/work
-certifi==2023.5.7
-cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1671179893800/work
-charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1678108872112/work
-colorama @ file:///home/conda/feedstock_root/build_artifacts/colorama_1666700638685/work
-conda @ file:///Users/runner/miniforge3/conda-bld/conda_1685035324110/work
-conda-package-handling @ file:///home/conda/feedstock_root/build_artifacts/conda-package-handling_1669907009957/work
-conda_package_streaming @ file:///home/conda/feedstock_root/build_artifacts/conda-package-streaming_1685101166527/work
-cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography-split_1685659597707/work
-idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
-jsonpatch @ file:///home/conda/feedstock_root/build_artifacts/jsonpatch_1632759296524/work
-jsonpointer==2.0
-packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1681337016113/work
-Pillow==10.0.0
-pluggy @ file:///home/conda/feedstock_root/build_artifacts/pluggy_1687776318736/work
-pycosat @ file:///Users/runner/miniforge3/conda-bld/pycosat_1666836623787/work
-pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1636257122734/work
-pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1685514481738/work
-pyperclip==1.8.2
-PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1661604839144/work
-pytesseract==0.3.10
-requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1684774241324/work
-ruamel.yaml @ file:///Users/runner/miniforge3/conda-bld/ruamel.yaml_1686993977949/work
-ruamel.yaml.clib @ file:///Users/runner/miniforge3/conda-bld/ruamel.yaml.clib_1670412881259/work
-toolz @ file:///home/conda/feedstock_root/build_artifacts/toolz_1657485559105/work
-tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1677948868469/work
-urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1688005749963/work
-zstandard==0.19.0
+asgiref==3.4.1
+Django==3.2.6
+gunicorn==20.1.0
+pytz==2021.1
+sqlparse==0.4.1
+whitenoise==5.3.0
