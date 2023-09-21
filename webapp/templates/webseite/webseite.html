@@ -1,0 +1,1098 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+
+<!-- Header: Zusatzinformationen zur Webseite, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+
+<head>
+    <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Titel im Tab -->
+    <title id="changeCompany">Experiment</title>
+
+    <!-- Favicon der Website
+    (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'svg/health-insurance.svg' %}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS mit individueller Anpassung -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/productCards.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/popup.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/newInfo.css' %}">
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/3.7.95/css/materialdesignicons.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- JavaScript Einbindung -->
+    <script src="{% static 'js/scriptData.js' %}"></script>
+    <script src="{% static 'js/function.js' %}"></script>
+
+    <!-- CSS & JavaScript Einbindung Swiper @Vladimir Kharlampidi -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/externalCSS/swiper-bundle.min.css' %}" />
+    <script src="{% static 'js/swiper.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/externalCSS/mailinglist.css' %}" />
+
+    <!-- Standard-Skripte Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</head>
+
+<!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
+<body onload="openPopup()" class="body d-flex flex-column background bg-scrolling-element-when-modal-active">
+    <div id="blur">
+        <div id="SecurityInfos">
+            <nav class="navbar navbar-light navbar-expand fixed-top sticky-top py-0 center">
+                <div class="containernav">
+                    <div class="navbar-brand js-scroll-trigger navsize a" id="changeCompany">Krankenkasse</div>
+                    <div class="healthSymbolPosition">
+                        <!-- Health-Insurance-Logo -->
+                        <!-- (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
+                        <a><img class="health-symbol" src="{% static 'svg/health-insurance.svg' %}"></a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item js-scroll-trigger messageSymbolPosition">
+                                <div id="hide">
+                                    <a
+                                        onclick="switchToSecurityInfo(), blurEffect(), navigateTo('inboxPage'), changeMessageLogo()">
+                                        <!-- User-Message-Logo -->
+                                        <!-- (Quelle) https://www.svgrepo.com/svg/501625/message?edit=true -->
+                                        <img class="messageSymbol" id="messageUnread"
+                                            src="{% static 'svg/messageUnread.svg' %}">
+                                        <img class="messageSymbol" id="messageRead"
+                                            src="{% static 'svg/messageRead.svg' %}">
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item js-scroll-trigger">
+                                <a onclick="openLoginPopup()" id="login">
+                                    <span id="loginText">Login</span>
+                                    <!-- User-Login-Symbol -->
+                                    <!-- (Quelle) https://www.svgrepo.com/svg/511194/user-circle -->
+                                    <img id="loginSymbol" src="{% static 'svg/user.svg' %}">
+                                </a>
+                            </li>
+                            <li class="nav-item js-scroll-trigger">
+                                <a id="loginAfter">
+                                    <span id="loginText">Nachname</span>
+                                    <!-- User-Login-Symbol -->
+                                    <!-- (Quelle) https://www.svgrepo.com/svg/511194/user-circle -->
+                                    <img id="loginSymbol" src="{% static 'svg/userGreen.svg' %}">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Willkommensnachricht -->
+            <div id="welcomeMessage" class="container containerextend" style="display: none">
+                <h2 class="h2 center"> Willkommen zurück bei
+                    Ihrer <span id="changeCompany"> Krankenkasse</span>, <span>AnspracheKurz</span>
+                    <span>Nachname</span>!
+                </h2>
+                <div class="notification-box">
+                    <a onclick="switchToSecurityInfo(), blurEffect(), navigateTo('inboxPage'), changeMessageLogo()">
+                        <div class="row centered-content">
+                            <div class="col-auto centered-content">
+                                <!-- User-Bell-Logo -->
+                                <!-- (Quelle) https://www.svgrepo.com/svg/513429/bell -->
+                                <img class="notificationbell" src="{% static 'svg/bell.svg' %}">
+                            </div>
+                        </div>
+                        <div class="row centered-content">
+                            <div class="col-auto centered-content">
+                                <div class="col centered-content">
+                                    Sie haben wichtige Nachrichten in Ihrem Postfach.
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Container Homepage Infos -->
+            <div id="MainInfo" class="container containerextend" style="margin-top: 25px;">
+                <h2 class="h2 center"> Der beste Schutz für Ihre Gesundheit - Ein Leben lang </h2>
+                <div class="rowextend justify">
+                    Ihre Gesundheit zählt. Bei der <span id="changeCompany"> Krankenkasse</span> begreifen wir
+                    Gesundheitsschutz nicht
+                    nur als unsere
+                    Aufgabe, sondern als unsere Berufung. Wir setzen uns dafür ein, dass jeder Zugang zu qualitativ
+                    hochwertigen Gesundheitsleistungen hat.
+                    <br>
+                    Dabei konzentrieren wir uns auf das, was wirklich zählt: Sie und Ihre
+                    Gesundheit. Unser Leistungsspektrum ist breit gefächert und abgestimmt auf die individuellen
+                    Bedürfnisse
+                    unserer
+                    Mitglieder. Egal ob Sie Vorsorge&shymaßnahmen, spezialisierte Behandlungen oder Unterstützung in der
+                    Rehabilitation benötigen – wir sind an Ihrer Seite.
+                </div>
+
+                <!-- Dienstleistungen -->
+                <div class="rowextend rowProducts" style="position: auto; margin-top: 40px;">
+                    <h2 class="h2 center"> Ihre Krankenkasse für ein gesünderes Leben </h2>
+                    <!-- PROBLEM -->
+                    <div class="slide-container swiper" style="margin-top: -1%;">
+                        <div class="slide-content">
+                            <div class="card-wrapper swiper-wrapper">
+                                <!-- Dienstleistung 1 -->
+                                <div class="swiper-slide">
+                                    <div class="card cardsize">
+                                        <!-- Dienstleistung Mitglied werden -->
+                                        <!-- (Quelle) https://www.pexels.com/de-de/foto/liebe-menschen-freunde-tisch-4262414/ -->
+                                        <img src="{% static 'pictures/service/family.jpg' %}" class="card-img-top">
+                                        <div class="card-content">
+                                            <h2 class="name">Mitglied werden</h2>
+                                            <p class="descriptionOptions">Die besten Leistungen für Ihre Gesundheit</p>
+                                            <button class="button" disabled>Weiter</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dienstleistung 2 -->
+                                <div class="swiper-slide">
+                                    <div class="card cardsize">
+                                        <!-- Dienstleistung Gesundheitstipps -->
+                                        <!-- (Quelle) https://pixabay.com/de/photos/pilze-gem%C3%BCse-kr%C3%A4uter-kochen-8058299/ -->
+                                        <img src="{% static 'pictures/service/gesundheitstipps.jpg' %}"
+                                            class="card-img-top">
+                                        <div class="card-content">
+                                            <h2 class="name">Tipps für Ihre Gesundheit</h2>
+                                            <p class="descriptionOptions">Unterstützen Sie Ihren <br> Körper und Geist</p>
+                                            <button class="button" disabled>Weiter</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dienstleistung 3 -->
+                                <div class="swiper-slide">
+                                    <div class="card cardsize">
+                                        <!-- Dienstleistung Bonusprogramm -->
+                                        <!-- (Quelle) https://pixabay.com/de/photos/menschen-mann-gl%C3%BCcklich-frau-2592296/ -->
+                                        <img src="{% static 'pictures/service/young.jpg' %}" class="card-img-top">
+                                        <div class="card-content">
+                                            <h2 class="name">Bonusprogramm</h2>
+                                            <p class="descriptionOptions">Auf die Gesundheit achten zahlt sich aus</p>
+                                            <button class="button" disabled>Weiter</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dienstleistung 4 -->
+                                <div class="swiper-slide">
+                                    <div class="card cardsize">
+                                        <!-- Dienstleistung Kundensupport -->
+                                        <!-- (Quelle) https://www.pexels.com/de-de/foto/mann-buro-arbeiten-sitzung-8867376/ -->
+                                        <img src="{% static 'pictures/service/customersupport.jpg' %}"
+                                            class="card-img-top">
+                                        <div class="card-content">
+                                            <h2 class="name">Unser Kundenservice</h2>
+                                            <p class="descriptionOptions">Wir beraten Sie gerne persönlich, online oder
+                                                telefonisch
+                                            </p>
+                                            <button class="button" disabled>Weiter</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dienstleistung 5 -->
+                                <div class="swiper-slide">
+                                    <div class="card cardsize">
+                                        <!-- Dienstleistung Medizin & Behandlung -->
+                                        <!-- (Quelle) https://www.pexels.com/de-de/foto/gesund-gelb-notfall-professionell-4386464/ -->
+                                        <img src="{% static 'pictures/service/medicine.jpg' %}" class="card-img-top">
+                                        <div class="card-content">
+                                            <h2 class="name">Medizin & Behandlung</h2>
+                                            <p class="descriptionOptions">Stellen Sie sicher, dass Sie gut informiert zum Arzt
+                                                gehen</p>
+                                            <button class="button" disabled>Weiter</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="swiper-button-next swiper-navBtn"></div>
+                            <div class="swiper-button-prev swiper-navBtn"></div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rowextend justify">
+                    "Der beste Schutz für Ihre Gesundheit. Ein Leben lang." Dies ist nicht nur ein Versprechen, sondern
+                    die
+                    Philosophie, die unsere Arbeit leitet. Wir streben danach, Ihnen die nötige Sicherheit zu geben, um
+                    Ihre
+                    Gesundheit langfristig und nachhaltig zu schützen und zu fördern.
+                    <br>
+                    Dabei setzen wir auf die Kompetenz und das Engagement unseres Teams. Unsere Mitarbeiter sind
+                    geschult
+                    und
+                    erfahren, stets bereit, Ihnen bei Fragen und Anliegen zur Seite zu stehen. Aber eine Krankenkasse
+                    ist
+                    mehr als ein Anbieter von Gesundheitsleistungen. Wir sehen uns als Ihr Partner,
+                    der Sie dabei unterstützt, ein gesundes und erfülltes Leben zu führen. Ihre Gesundheit ist unsere
+                    Priorität, und wir sind stolz darauf, ein zuverlässiger Partner in allen
+                    Lebensphasen zu sein.
+                    <br>
+                    Mit der <span id="changeCompany"> Krankenkasse</span> wählen Sie eine Krankenkasse, die sich
+                    engagiert
+                    für Ihre
+                    Gesundheit einsetzt.
+                    Ein Leben lang.
+                </div>
+            </div>
+
+            <!-- Container Mailverteiler Thema Sicherheitsinformationen nach Login (Handy-View) -->
+            <div id="SecurityInfoMobile" class="container containerextend">
+                <div class="navigation">
+                    <a onclick="navigateBack()">
+                        <!-- Zurück-Symbol -->
+                        <!-- (Quelle) https://www.svgrepo.com/svg/494008/back -->
+                        <img id="backButton" src="{% static 'svg/back-button.svg' %}">
+                    </a>
+                </div>
+
+                <div id="inboxPage" class="page">
+                    <div class="content-wrapper">
+                        <div class="email-wrapper wrapper">
+                            <div class="row align-items-stretch">
+                                <div id="folderPage" class="page active mail-sidebar d-block bg-white">
+                                    <div class="menu-bar">
+                                        <ul class="menu-items">
+                                            <li class="choosed" style="color: rgb(92, 166, 68);"
+                                                onclick="navigateTo('mailPreviews')"><a
+                                                    style="color: rgb(92, 166, 68);"><i
+                                                        class="mdi mdi-email-outline"></i>Inbox</a><span
+                                                    style="color: rgb(92, 166, 68);"
+                                                    class="badge badge-pill badge-success">1</span></li>
+                                            <li><a><i class="mdi mdi-share"></i> Sent</a></li>
+                                            <li><a><i class="mdi mdi-file-outline"></i> Draft</a><span
+                                                    class="badge badge-pill badge-warning">4</span>
+                                            </li>
+                                            <li><a><i class="mdi mdi-upload"></i> Outbox</a><span
+                                                    class="badge badge-pill badge-danger">3</span>
+                                            </li>
+                                            <li><a><i class="mdi mdi-delete"></i> Trash</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="mailPreviews" class="page">
+                    <div class="content-wrapper">
+                        <div class="email-wrapper wrapper">
+                            <div class="row align-items-stretch">
+                                <div class="mail-list mailpreview-container pb-4 border-right bg-white">
+                                    <div class="mail-list mailpreview new_mail" style="cursor: pointer;"
+                                        onclick="navigateTo('mail')">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="green-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name">Informationen zum kürzlichen Sicherheitsvorfall
+                                                </p>
+                                                <p class="message_text"><span>Ansprache</span>
+                                                    <span>Nachname</span>,
+                                                    wir möchten uns zunächst für das in uns gesetzte Vertrauen bedanken,
+                                                    das Sie uns über die Jahre als langjähriger Kunde entgegengebracht
+                                                    haben.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mail-list mailpreview">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="transparent-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name"><span id="changeCompany"> Krankenkasse</span>
+                                                    informiert</p>
+                                                <p class="message_text">
+                                                    Wir freuen uns, Ihnen mitteilen zu dürfen, dass wir unsere digitalen
+                                                    Dienste erweitert haben, um Ihnen ein noch besseres Serviceerlebnis
+                                                    zu
+                                                    bieten!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mail-list mailpreview">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="transparent-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name">Erweiterung unseres Netzwerks</p>
+                                                <p class="message_text">
+                                                    Mehr Ärzte und Spezialisten für Sie! Unser Netzwerk zu erweitern und
+                                                    Ihnen den besten Service zu bieten ist eine ständige Bestrebung.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mail-list mailpreview">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="transparent-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name">Neu! Gesundheits- und Fitnesskurse</p>
+                                                <p class="message_text">
+                                                    Wir wissen, wie wichtig es ist, aktiv und gesund zu bleiben. Daher
+                                                    freuen wir uns, Ihnen unsere neuen exklusiven Gesundheits- und
+                                                    Fitnesskurse vorstellen zu dürfen!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mail-list mailpreview">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="transparent-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name">Jetzt auch mit Telemedizin!</p>
+                                                <p class="message_text">
+                                                    Die Gesundheit unserer Mitglieder hat für uns höchste Priorität.
+                                                    Deshalb
+                                                    haben wir eine neue Funktion eingeführt: die Telemedizin!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mail-list mailpreview">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="transparent-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name">Wichtige Informationen zu Ihrem
+                                                    Gesundheits&shykonto
+                                                </p>
+                                                <p class="message_text">
+                                                    Ihr Gesundheitskonto wurde mit neuen Funktionen ausgestattet. Jetzt
+                                                    können Sie Ihre Gesundheitsdaten besser verfolgen, Rezepte digital
+                                                    speichern und Ihren Impfstatus überprüfen.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mail-list mailpreview">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="transparent-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name">Gesundheitstag mit Ihrer <span
+                                                        id="changeCompany">
+                                                        Krankenkasse</span></p>
+                                                <p class="message_text">Es ist wieder soweit! Wir laden Sie herzlich zu
+                                                    unserem
+                                                    jährlichen Gesundheitstag ein. Nehmen Sie an Workshops teil, hören
+                                                    Sie
+                                                    Vorträge
+                                                    von Gesundheitsexperten und nutzen Sie die Gelegenheit, sich mit
+                                                    anderen
+                                                    Mitgliedern auszutauschen.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mail-list mailpreview">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <div class="transparent-dot"></div>
+                                            </div>
+                                            <div class="col-auto" style="max-width: 80%;">
+                                                <p class="sender-name">Unser Gesundheitsmagazin – Jetzt online!</p>
+                                                <p class="message_text">Wir wissen, wie wichtig es ist, gut informiert
+                                                    zu
+                                                    sein.
+                                                    Deshalb haben wir für Sie unser monatliches Gesundheitsmagazin
+                                                    digitalisiert!
+                                                    Lesen Sie interessante Artikel, informieren Sie sich über aktuelle
+                                                    Gesundheitstrends und erhalten Sie Tipps von Experten.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="mail" class="page">
+                    <div class="content-wrapper">
+                        <div class="email-wrapper wrapper">
+                            <div class="row align-items-stretch">
+                                <div class="mail-view d-block bg-white">
+                                    <div class="message-body">
+                                        <div class="sender-details">
+                                            <div class="details">
+                                                <p class="msg-subject">
+                                                    <br>Wöchentliches Update - Woche 14 (01. Oktober 2023 - 08.
+                                                    September 2023)
+                                                </p>
+                                                <p class="sender-email">
+                                                    <img class="messageSenderSymbol" src="{% static 'svg/user.svg' %}">
+                                                    Brian Walters<br>
+                                                    <a>support@<span id="changeCompany"
+                                                            style="text-transform: lowercase;">krankenkasse</span>.com</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="message-content border-left">
+                                            <span>Ansprache</span>
+                                            <span>Nachname</span>,<br>
+                                            <br>
+                                            <p class="justify"> wir möchten uns zunächst für das in uns gesetzte
+                                                Vertrauen
+                                                bedanken, das
+                                                Sie uns über die Jahre als langjähriger Kunde entgegengebracht haben. Es
+                                                ist
+                                                uns wichtig, Sie transparent und umfassend über eine Angelegenheit zu
+                                                informieren, die sowohl unsere Krankenkasse als auch Ihre
+                                                personen&shybezogenen
+                                                Daten betrifft.
+                                                Kürzlich wurde unsere Krankenkasse das Ziel eines schweren
+                                                Hackerangriffs.
+                                                Dieser Vorfall wurde durch ein fehlerhaftes Sicherheitsupdate
+                                                verursacht,
+                                                das eine Schwachstelle in der Datenbank freigab. In der ersten
+                                                Augustwoche
+                                                gelang es den Angreifern über einen Zeitraum von drei Tagen, Zugang zu
+                                                einigen unserer Systeme zu erlangen. Unsere ersten Analysen deuten
+                                                darauf
+                                                hin, dass personen&shybezogene Daten, einschließlich Namen, Adressen,
+                                                Versicherungs&shynummern, Kranken&shygeschichten und
+                                                Bank&shyinformationen
+                                                von etwa
+                                                15.000 Kunden betroffen sein könnten.
+                                                Wir haben umgehend auf diesen Vorfall reagiert und externe
+                                                Sicherheitsexperten hinzu&shygezogen, um den Angriff zu untersuchen und
+                                                die
+                                                bestehenden Schwachstellen zu adressieren. Es ist uns bewusst, wie
+                                                wichtig
+                                                der Schutz Ihrer Daten ist und wir arbeiten mit Hochdruck daran, das
+                                                volle
+                                                Ausmaß dieses Vorfalls zu verstehen und entsprechende Maßnahmen zu
+                                                ergreifen.
+                                                Bitte seien Sie versichert, dass wir alles in unserer Macht Stehende
+                                                tun, um
+                                                die Angelegenheit gründlich zu klären, um solche Vorfälle in der Zukunft
+                                                zu
+                                                verhindern. Wir werden Sie fortlaufend über weitere Entwicklungen und
+                                                Maßnahmen informieren und bitten um Ihr Verständnis in dieser
+                                                herausfordernden Zeit.
+                                            </p>
+                                            <br>
+                                            <p>Mit freundlichen Grüßen
+                                                <br>
+                                                <!-- Name und Ansprechperson (gemäß Art. 33 DSGVO 3b) -->
+                                                <img class="signature"
+                                                    src="{% static 'pictures/Unterschrift-Datenschutzbeauftragter.jpg' %}">
+                                                <br>
+                                                Brian Walters<br>
+                                                Datenschutzbeauftragter<br>
+                                                <span style="font-weight: bold;" id="changeCompany"> Krankenkasse</span>
+                                                <span style="font-weight: bold;"> Deutschland</span>
+                                            </p>
+                                            <br>
+                                            <hr><br>
+                                            <div class="col center">
+                                                <div class="rowextend center">
+                                                    <div class="formBox">
+                                                        <button class="btn submit rounded-pill btn-primary"
+                                                            type="submit" id="btnSurvey">Weiter zur Umfrage</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Container Mailverteiler Thema Sicherheitsinformationen nach Login (PC-View) -->
+            <div id="SecurityInfoPC" class="container containerextend" style="margin-bottom: 150px;">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-sidebar d-none d-lg-block col-md-3 bg-white">
+                                <div class="menu-bar">
+                                    <ul class="menu-items">
+                                        <li class="active" style="color: rgb(92, 166, 68);"><a
+                                                style="color: rgb(92, 166, 68);"><i class="mdi mdi-email-outline"></i>
+                                                Inbox</a><span class="badge badge-pill badge-success"
+                                                style="color: rgb(92, 166, 68);">1</span></li>
+                                        <li><a><i class="mdi mdi-share"></i> Sent</a></li>
+                                        <li><a><i class="mdi mdi-file-outline"></i> Draft</a><span
+                                                class="badge badge-pill badge-warning">4</span></li>
+                                        <li><a><i class="mdi mdi-upload"></i> Outbox</a><span
+                                                class="badge badge-pill badge-danger">3</span></li>
+                                        <li><a><i class="mdi mdi-delete"></i> Trash</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mail-list-container col-md-3 pb-4 border-right bg-white">
+                                <div class="mail-list new_mail">
+                                    <div class="colDot">
+                                        <label class="notification"></label>
+                                    </div>
+                                    <div class="content">
+                                        <p class="sender-name">Informationen zum kürzlichen Sicherheitsvorfall</p>
+                                        <p class="message_text"><span>Ansprache</span>
+                                            <span>Nachname</span>,
+                                            wir möchten uns zunächst für das in uns gesetzte Vertrauen bedanken,
+                                            das Sie uns über die Jahre als langjähriger Kunde entgegengebracht
+                                            haben.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mail-list">
+                                    <div class="colDot"></div>
+                                    <div class="content">
+                                        <p class="sender-name"><span id="changeCompany"> Krankenkasse</span>
+                                            informiert</p>
+                                        <p class="message_text">
+                                            Wir freuen uns, Ihnen mitteilen zu dürfen, dass wir unsere digitalen
+                                            Dienste erweitert haben, um Ihnen ein noch besseres Serviceerlebnis zu
+                                            bieten!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mail-list">
+                                    <div class="colDot"></div>
+                                    <div class="content">
+                                        <p class="sender-name">Erweiterung unseres Netzwerks</p>
+                                        <p class="message_text">
+                                            Mehr Ärzte und Spezialisten für Sie! Unser Netzwerk zu erweitern und Ihnen
+                                            den
+                                            besten Service zu bieten ist eine ständige Bestrebung.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mail-list">
+                                    <div class="colDot"></div>
+                                    <div class="content">
+                                        <p class="sender-name">Neu! Gesundheits- und Fitnesskurse</p>
+                                        <p class="message_text">
+                                            Wir wissen, wie wichtig es ist, aktiv und gesund zu bleiben. Daher
+                                            freuen wir uns, Ihnen unsere neuen exklusiven Gesundheits- und
+                                            Fitnesskurse vorstellen zu dürfen!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mail-list">
+                                    <div class="colDot"></div>
+                                    <div class="content">
+                                        <p class="sender-name">Jetzt auch mit Telemedizin!</p>
+                                        <p class="message_text">
+                                            Die Gesundheit unserer Mitglieder hat für uns höchste Priorität. Deshalb
+                                            haben wir eine neue Funktion eingeführt: die Telemedizin!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mail-list">
+                                    <div class="colDot"></div>
+                                    <div class="content">
+                                        <p class="sender-name">Wichtige Informationen zu Ihrem Gesundheits&shykonto</p>
+                                        <p class="message_text">
+                                            Ihr Gesundheitskonto wurde mit neuen Funktionen ausgestattet. Sie
+                                            können jetzt Ihre Gesundheitsdaten besser verfolgen, Rezepte digital
+                                            speichern und Ihren Impfstatus überprüfen.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="mail-list">
+                                    <div class="colDot"></div>
+                                    <div class="content">
+                                        <p class="sender-name">Gesundheitstag mit Ihrer <span id="changeCompany">
+                                                Krankenkasse</span></p>
+                                        <p class="message_text">Es ist wieder soweit! Wir laden Sie herzlich zu unserem
+                                            jährlichen Gesundheitstag ein. Nehmen Sie an Workshops teil, hören Sie
+                                            Vorträge
+                                            von Gesundheitsexperten und nutzen Sie die Gelegenheit, sich mit anderen
+                                            Mitgliedern auszutauschen.</p>
+                                    </div>
+                                </div>
+                                <div class="mail-list">
+                                    <div class="colDot"></div>
+                                    <div class="content">
+                                        <p class="sender-name">Unser Gesundheitsmagazin – Jetzt online!</p>
+                                        <p class="message_text">Wir wissen, wie wichtig es ist, gut informiert zu sein.
+                                            Deshalb haben wir für Sie unser monatliches Gesundheitsmagazin
+                                            digitalisiert!
+                                            Lesen Sie interessante Artikel, informieren Sie sich über aktuelle
+                                            Gesundheitstrends und erhalten Sie Tipps von Experten.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mail-view d-none d-md-block col-md-9 col-lg-6 bg-white">
+                                <div class="message-body">
+                                    <div class="sender-details">
+
+                                        <div class="details">
+                                            <p class="msg-subject">
+                                                Wöchentliches Update - Woche 14 (01. Oktober 2023 - 08. September 2023)
+                                            </p>
+                                            <p class="sender-email">
+                                                <img class="messageSenderSymbol" src="{% static 'svg/user.svg' %}">
+                                                Brian Walters<br>
+                                                <a>support@<span id="changeCompany"
+                                                        style="text-transform: lowercase;">krankenkasse</span>.com</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="message-content border-left">
+                                        <span>Ansprache</span>
+                                        <span>Nachname</span>,<br>
+                                        <br>
+                                        <p> wir möchten uns zunächst für das in uns gesetzte Vertrauen
+                                            bedanken, das
+                                            Sie uns über die Jahre als langjähriger Kunde entgegengebracht haben. Es ist
+                                            uns wichtig, Sie transparent und umfassend über eine Angelegenheit zu
+                                            informieren, die sowohl unsere Krankenkasse als auch Ihre
+                                            personen&shybezogenen
+                                            Daten betrifft.
+                                            Kürzlich wurde unsere Krankenkasse das Ziel eines schweren Hackerangriffs.
+                                            Dieser Vorfall wurde durch ein fehlerhaftes Sicherheitsupdate verursacht,
+                                            das eine Schwachstelle in der Datenbank freigab. In der ersten Augustwoche
+                                            gelang es den Angreifern über einen Zeitraum von drei Tagen, Zugang zu
+                                            einigen unserer Systeme zu erlangen. Unsere ersten Analysen deuten darauf
+                                            hin, dass personen&shybezogene Daten, einschließlich Namen, Adressen,
+                                            Versicherungs&shynummern, Kranken&shygeschichten und Bank&shyinformationen
+                                            von etwa 15.000 Kunden betroffen sein könnten.
+                                            Wir haben umgehend auf diesen Vorfall reagiert und externe
+                                            Sicherheitsexperten hinzu&shygezogen, um den Angriff zu untersuchen und die
+                                            bestehenden Schwachstellen zu adressieren. Es ist uns bewusst, wie wichtig
+                                            der Schutz Ihrer Daten ist und wir arbeiten mit Hochdruck daran, das volle
+                                            Ausmaß dieses Vorfalls zu verstehen und entsprechende Maßnahmen zu
+                                            ergreifen. Bitte seien Sie versichert, dass wir alles in unserer Macht
+                                            Stehende
+                                            tun, um
+                                            die Angelegenheit gründlich zu klären, um solche Vorfälle in der Zukunft zu
+                                            verhindern. Wir werden Sie fortlaufend über weitere Entwicklungen und
+                                            Maßnahmen informieren und bitten um Ihr Verständnis in dieser
+                                            herausfordernden Zeit.
+                                        </p>
+                                        <br>
+                                        <p>Mit freundlichen Grüßen
+                                            <br>
+                                            <!-- Name und Ansprechperson (gemäß Art. 33 DSGVO 3b) -->
+                                            <img class="signature"
+                                                src="{% static 'pictures/Unterschrift-Datenschutzbeauftragter.jpg' %}">
+                                            <br>
+                                            Brian Walters<br>
+                                            Datenschutzbeauftragter<br>
+                                            <span style="font-weight: bold;" id="changeCompany"> Krankenkasse</span>
+                                            <span style="font-weight: bold;"> Deutschland</span>
+                                        </p>
+                                        <br>
+                                        <hr><br>
+                                        <div class="col center">
+                                            <div class="rowextend center">
+                                                <div class="formBox">
+                                                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                                                        id="btnSurvey2">Weiter zur Umfrage</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer ist unten fixiert -->
+            <footer>
+                <div class="container jumbotron vertical-center footer">
+                    <section>
+                        <div class="row gridFooter" style="text-align: left; padding-left: 5%;">
+                            <div class="colDot" style="font-size: 18px;">
+                                <section>
+                                    <span class="h3">Über uns</span><br>
+                                    <span class="spanLink">Die <span id="changeCompany">Krankenkasse</span></span><br>
+                                    <span class="spanLink">Partner</span><br>
+                                    <span class="spanLink">Verwaltungsrat</span><br>
+                                    <span class="spanLink">Vorstand</span><br>
+                                </section>
+                            </div>
+
+                            <div class="colDot">
+                                <section>
+                                    <span class="h3">Mitgliedschaft</span><br>
+                                    <span class="spanLink">Meine <span id="changeCompany">Krankenkasse</span></span><br>
+                                    <span class="spanLink">Mitglied werden</span><br>
+                                    <span class="spanLink">Newsletter</span><br>
+                                    <span class="spanLink">Vertriebspartner</span><br>
+                                </section>
+                            </div>
+
+                            <div class="colDot">
+                                <section>
+                                    <span class="h3">Portale</span><br>
+                                    <span class="spanLink">Firmenkunden</span><br>
+                                    <span class="spanLink">Karriere</span><br>
+                                    <span class="spanLink">Politik</span><br>
+                                    <span class="spanLink">Presse</span><br>
+                                </section>
+                            </div>
+
+                            <div class="colDot">
+                                <section>
+                                    <span class="h3">Barrierefreiheit</span><br>
+                                    <span class="spanLink">Barriere melden</span><br>
+                                    <span class="spanLink">Erklärung zur Barrierefreiheit</span><br>
+                                    <span class="spanLink">Gebärdensprache</span><br>
+                                    <span class="spanLink">Leichte Sprache</span><br>
+                                </section>
+                            </div>
+                    </section>
+                    <br>
+                    <section>
+                        <div class="row gridFooter" style="text-align: left; padding-left: 5%;">
+                            <div class="colDot" style="font-size: 18px;">
+                                <section>
+                                    <span class="h3">Social Media der <span id="changeCompany">
+                                            Krankenkasse</span></span><br>
+                                    <!-- Quelle: https://icons8.de/icons/set/facebook2 -->
+                                    <a><img class="socialmedia"
+                                            src="{% static 'svg/SocialMedia/icons8-facebook.svg' %}"></a>
+                                    <!-- Quelle: https://icons8.de/icons/set/twitter -->
+                                    <a><img class="socialmedia"
+                                            src="{% static 'svg/SocialMedia/icons8-twitter.svg' %}"></a>
+                                    <!-- Quelle: https://icons8.de/icons/set/instagram -->
+                                    <a><img class="socialmedia"
+                                            src="{% static 'svg/SocialMedia/icons8-instagram.svg' %}"></a>
+                                    <!-- Quelle: https://icons8.de/icons/set/youtube--static -->
+                                    <a><img class="socialmedia"
+                                            src="{% static 'svg/SocialMedia/icons8-youtube-play.svg' %}"></a>
+                                    <!-- Quelle: https://icons8.de/icons/set/linked-in--static -->
+                                    <a><img class="socialmedia"
+                                            src="{% static 'svg/SocialMedia/icons8-linkedin.svg' %}"></a>
+                                </section>
+                            </div>
+                    </section>
+
+                    <hr>
+
+                    <span>© 2023 </span><span id="changeCompany"> Krankenkasse</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Weitere Informationen -->
+    <div id="informationMessage" style="display: none;">
+        <br>
+        <div class="container">
+            <div class="rowextend center">
+                <div class="formBox">
+                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                        onclick="location.href='https://www.qualtrics.com/de/';">Weiter zur
+                        Umfrage</button>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <!-- Container Zeitungsartikel -->
+        <div class="container containerMoreInfo1 round center expandable">
+            <div class="rowextend">
+                <h1 class="newspaper-name">Daily Economist</h1>
+                <div class="news-banner">
+                    NEWS
+                    <img style="height: 40px;" src="{% static 'svg/trumpet.svg' %}">
+                </div>
+                <h2 class="newspaper-title">Die <span id="changeCompany">Krankenkasse</span> nach schwerem
+                    Hackerangriff unter Druck</h2>
+                <footer>
+                    <p class="description">15. September 2023<br>Von Matthias Schulz</p>
+                </footer><br>
+                <div class="content faded newspaper-text">
+                    Die Krankenkasse <span id="changeCompany">Krankenkasse</span> hat kürzlich einen beunruhigenden
+                    Sicherheitsvorfall aus der ersten Augustwoche bestätigt und ist damit ins Zentrum öffentlicher
+                    Aufmerksamkeit gerückt. Wie das Unternehmen kürzlich in einer Pressemitteilung bekannt gab, war es
+                    Ziel eines erheblichen Cyber-Angriffs. Durch ein fehlerhaftes Sicherheitsupdate wurde eine
+                    Schwachstelle in ihrer Datenbank freigelegt, wodurch Hacker Zugriff auf sensible Kundendaten von
+                    rund 15.000 Versicherten erlangen konnten. Zu den entwendeten Daten gehören nach ersten
+                    Erkenntnissen Namen, Adressen, Versicherungs&shynummern, Kranken&shygeschichten und
+                    Bank&shyinformationen. Der Vorfall wirft ernsthafte Fragen über die Sicherheits&shyprotokolle und
+                    -praktiken der Krankenkasse auf. <article class="news-article"><span class="more"><br>Das
+                            Unternehmen handelte jedoch umgehend und informierte alle betroffenen Kunden per E-Mail über
+                            den Sicherheits&shyvorfall. Darüber hinaus wurden externe Cybersicherheits&shyexperten
+                            engagiert, um den Angriff zu untersuchen und weitere Sicherheits&shymaßnahmen einzuleiten.
+                            Brian Walters, Datenschutzbeauftragter der <span id="changeCompany">Krankenkasse</span>,
+                            betonte in der Presse&shymitteilung des Unternehmens, dass man "alles daran setzen wird, die
+                            Auswirkungen dieses Vorfalls zu minimieren und zukünftige Angriffe zu verhindern."<br><br>
+                            Dieser Vorfall verdeutlicht einmal mehr, wie wichtig es für Unternehmen, insbesondere für
+                            solche, die mit sensiblen Kundendaten arbeiten, ist, in robuste
+                            Cybersicherheits&shymaßnahmen zu investieren. Laut einer Studie von Kaspersky waren im Jahr
+                            2022 allein in Deutschland ein Viertel der kleinen und mittelständischen Unternehmen (KMU)
+                            und weit über die Hälfte der Großunternehmen mit Cyberangriffen konfrontiert (<a
+                                href="https://go.kaspersky.com/supply-chain-report-de.html?utm_medium=PR">Kaspersky
+                                2022</a>). Der Vorfall bei der <span id="changeCompany">Krankenkasse</span> ist nur
+                            einer von vielen in einer wachsenden Liste von Cyberangriffen, die Unternehmen weltweit
+                            betreffen. Es bleibt abzuwarten, wie sich dieser Sicherheitsvorfall auf das Vertrauen der
+                            Kunden und das Geschäft der <span id="changeCompany">Krankenkasse</span> auswirken
+                            wird.<br><br>
+                            <!-- Quelle: https://pixabay.com/de/photos/rechner-sicherheit-vorh%C3%A4ngeschloss-1591018/ -->
+                            <figure> <img src="{% static 'pictures/cybersecurity.jpeg' %}" alt="Beschreibung des Bildes"
+                                    style="max-width: 60%;">
+                            </figure>
+                            <br>
+                    </article>
+                    </span>
+                    <h2>Verwandte Themen</h2>
+                    <div class="topic-container">
+                        <div class="topic">CyberSecurity</div>
+                        <div class="topic">Datenschutzverletzung</div>
+                        <div class="topic">Phishing</div>
+                    </div>
+                    <br>
+                </div>
+                <a href="#" class="toggle">Weiterlesen</a>
+            </div>
+        </div>
+        <!-- Container Pressemitteilung -->
+        <div class="container containerMoreInfo2 round center expandable">
+            <div class="rowextend">
+                <h1 class="paddingInfo" style="text-align: left;"><span id="changeCompany">Krankenkasse</span>
+                    informiert über Cyber-Angriff
+                    auf Datenbank</h1>
+                <div class="content faded">
+                    <div class="flex-container">
+                        <div class="text-section paddingInfo">
+                            <br>Die <span id="changeCompany">Krankenkasse</span> wurde Anfang August Ziel eines
+                            erheblichen
+                            Cyber-Angriffs. Durch ein fehlerhaftes Sicherheitsupdate wurde eine Schwachstelle in der
+                            Datenbank freigelegt. Während des dreitägigen Angriffs in der ersten Augustwoche gelang
+                            es den Hackern, personen&shybezogene Daten wie Namen, Adressen, Versicherungs&shynummern,
+                            Kranken&shygeschichten und Bank&shyinformationen von rund 15.000 Kunden zu
+                            entwenden.<br>
+                            Unmittelbar nachdem die <span id="changeCompany">Krankenkasse</span> von dem Angriff
+                            Kenntnis erlangte, wurden alle betroffenen Kunden per E-Mail über den Vorfall informiert.
+                            Weiterhin wurden umgehend alle notwendigen Abwehrmaßnahmen ergriffen, um die Integrität der
+                            IT-Systeme wiederherzustellen. In Zusammenarbeit mit externen Cybersicherheitsexperten führt
+                            das Unternehmen derzeit eine umfassende Untersuchung des Vorfalls durch. Die Untersuchung
+                            und Analyse des genauen Ausmaßes der Datenverletzung dauert noch an. Die zuständigen
+                            Behörden wurden über den Vorfall informiert. Die <span
+                                id="changeCompany">Krankenkasse</span> steht in engem Kontakt mit den
+                            Sicherheitsbehörden und ist sich ihrer datenschutzrechtlichen Verpflichtungen bewusst.
+                            Gemeinsam mit den Datenschutzbehörden werden die notwendigen Schritte zur vollständigen
+                            Erfüllung dieser Verpflichtungen unternommen.<br><br> Die Sicherheit der Informationen der
+                            Versicherten ist für die <span id="changeCompany">Krankenkasse</span> von höchster
+                            Priorität. Aus diesem Grund hat die Krankenkasse in der Vergangenheit bereits weitreichende
+                            Maßnahmen ergriffen, um ihre Cybersicherheit zu gewährleisten und wird dies auch weiterhin
+                            tun. Brian Walters, Datenschutz&shybeauftragter der <span
+                                id="changeCompany">Krankenkasse</span>, betonte: "Wir setzen alles daran, die
+                            Auswirkungen dieses Vorfalls zu minimieren und zukünftige Angriffe zu verhindern. Wir werden
+                            unsere Kunden fortlaufend über weitere Entwicklungen informieren." <br><br>
+                        </div>
+                        <div class="image-section">
+                            <div class="image-person1">
+                                <!-- Quelle: https://unsplash.com/de/fotos/SJvDxw0azqw -->
+                                <img src="{% static 'pictures/pressesprecherin.jpeg' %}">
+                                <div class="persontext">
+                                    <h4><b>Claudia Krause</b></h4>
+                                    <h5>Pressesprecherin <br> Wirtschaft & Finanzen</h5>
+                                    <h5><a class="mail-link">c.krause@<span id="changeCompany">krankenkasse</span>.com</a></h5>
+                                </div>
+                            </div>
+                            <div class="image-person2">
+                                <!-- Quelle: https://unsplash.com/de/fotos/pAtA8xe_iVM -->
+                                <img src="{% static 'pictures/datenschutzbeauftragter.jpeg' %}"
+                                    alt="Beschreibung des zweiten Bildes">
+                                <div class="persontext">
+                                    <h4><b>Brian Walters</b></h4>
+                                    <h5>Datenschutz&shybeauftragter</h5>
+                                    <h5><a class="mail-link">b.walters@<span id="changeCompany">krankenkasse</span>.com</a></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="more"></span><br>
+                </div>
+                <a href="#" class="toggle paddingInfo">Weiterlesen</a>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="container">
+            <div class="rowextend center">
+                <div class="formBox">
+                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                        onclick="location.href='https://www.qualtrics.com/de/';">Weiter zur
+                        Umfrage</button>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+
+    <!-- HTML für Pop-ups -->
+    <div class="popup" id="popup1">
+        <div class="container round center">
+            <div class="rowextend">
+                <div class="popupcol">
+                    Bevor das Experiment startet, geben Sie bitte folgende Daten ein.
+                </div>
+                <form class="inputform">
+                    <div class="lastname-input-container">
+                        <label for="lastName">Ihren Nachnamen <br> (Einen fikitiven oder Ihren echten Nachnamen)</label>
+                        <input id="lastName" placeholder="Nachname" value="Müller" />
+                    </div>
+                    <div class="formBox input-container">
+                        <select id="title">
+                            <!-- <option value="">Bitte auswählen</option> -->
+                            <option value="Barmer">Barmer</option>
+                            <option value="TK">Techniker Krankenkasse (TK)</option>
+                            <option value="DAK-Gesundheit">DAK-Gesundheit</option>
+                            <option value="AOK">AOK (Allgemeine Ortskrankenkassen)
+                            </option>
+                            <option value="BKK">BKK (Betriebskrankenkassen)</option>
+                            <option value="Continentale">Die Continentale</option>
+                            <option value="IKK">IKK (Innungskrankenkassen)</option>
+                            <option value="LKH">LKH (Landeskrankenhilfe)</option>
+                            <option value="hkk">hkk Krankenkasse</option>
+                            <option value="KKH">KKH Kaufmännische Krankenkasse</option>
+                            <option value="HEK">HEK - Hanseatische Krankenkasse</option>
+                            <option value="Knappschaft">Knappschaft</option>
+                            <option value="Novitas BKK">Novitas BKK</option>
+                            <option value="SECURVITA">SECURVITA Krankenkasse</option>
+                            <option value="Viactiv">Viactiv Krankenkasse</option>
+                            <option value="BIG direkt gesund">BIG direkt gesund</option>
+                            <option value="pronova BKK">pronova BKK</option>
+                            <option value="Työterveyslaitos">
+                                TKK - Työterveyslaitos (Krankenkasse für finnische Arbeitnehmer in Deutschland)</option>
+                            <option value="BARMER GEK">BARMER GEK</option>
+                            <option value="eigeneEingabe">Andere Krankenkasse (Eigene Eingabe)</option>
+                        </select>
+                        <label class="labelsize" for="title">Name der Krankenkasse</label>
+                    </div>
+
+                    <div class="formBox input-container">
+                        <select id="gender">
+                            <!-- <option value="">Bitte auswählen</option> -->
+                            <option value="männlich">Männlich</option>
+                            <option value="weiblich">Weiblich</option>
+                            <option value="divers">Divers</option>
+                        </select>
+                        <label class="labelsize" for="gender">Geschlecht</label>
+                    </div>
+                </form>
+                <div class="popupcol">
+                    Bitte klicken Sie nun auf den unten stehenden Button, um mit dem Experiment zu beginnen.
+                </div>
+                <div class="col center">
+                    <div class="rowextend center">
+                        <div class="formBox">
+                            <button class="btn submit rounded-pill btn-primary" type="submit" id="btn">Experiment
+                                beginnen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup für Hilfe -->
+    <div class="popup" id="popupHelp">
+        <div class="container round center">
+            <div class="rowextend">
+                <div class="popupcol">
+                    <h2>Benötigen Sie Hilfe?</h2>
+                    In der oberen rechten Ecke der Webseite finden Sie eine Anmeldeoption "Login". Bitte melden Sie sich über diesen Button in Ihren
+                    persönlichen Kundenbereich ein. 
+                    <br><br>
+                    Nach erfolgreicher Anmeldung achten Sie insbesondere auf offizielle Nachrichten oder Updates
+                    Ihrer Krankenkasse in Bezug auf den besagten Vorfall.
+                </div>
+                <div class="rowextend center">
+                    <div class="formBox">
+                        <button class="btn submit rounded-pill btn-primary" id="btnCloseHelp"
+                            onclick="closeHelpPopup()">Schließen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup für den Login -->
+    <div class="popup" id="popupLogin">
+        <div class="container round center">
+            <div class="rowextend">
+                <div class="popupcol">
+                    Bitte geben Sie Ihren Nutzernamen und Ihr Passwort ein.
+                </div>
+
+                <form>
+                    <!-- <div class="formBox input-container"> -->
+                    <div class="input-container">
+                        <input type="text" id="username" placeholder=" " readonly />
+                        <label for="username">Nutzername</label>
+                    </div>
+                    <!-- <div class="formBox input-container"> -->
+                    <div class="input-container">
+                        <input type="password" id="password" placeholder=" " readonly />
+                        <label for="password">Passwort</label>
+                    </div>
+                </form>
+
+                <div class="rowextend center">
+                    <div class="formBox">
+                        <button class="btn submit rounded-pill btn-primary" id="btnLogin">Anmelden</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup für die Information -->
+    <div class="popup" id="popupInformation">
+        <div class="container round center">
+            <div class="rowextend">
+                <div class="popupcol">
+                    Nachdem das Unternehmen Sie informiert hat erhalten Sie noch die Möglichkeit sich über die
+                    Datenschutzverletzung zu informieren. Dafür haben Sie die Möglichkeit aus einem Pressemitteilung
+                    oder Zeitungsartikel zu wählen.
+                </div>
+
+                <div class="rowextend center">
+                    <div class="formBox">
+                        <button class="btn submit rounded-pill btn-primary" type="button" id="btnCloseInfo">Weitere
+                            Informationen</button>
+                        <button class="btn submit rounded-pill btn-primary" type="button" id="btnForward">
+                            Umfrage</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="{% static 'js/script.js' %}"></script>
+
+</html>

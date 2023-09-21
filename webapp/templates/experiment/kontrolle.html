@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+
+<!-- Header: Zusatzinformationen zur Webseite, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+
+<head>
+    <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
+    <meta charset="utf-8" name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+
+    <!-- Titel im Tab -->
+    <title>Alles verstanden?</title>
+
+    <!-- Favicon der Website
+    (Quelle) https://icons8.com/icon/41892/mind-map -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicons/Experiment_Favicon.png' %}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS mit individueller Anpassung -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/experiment.css' %}" />
+
+    <!-- JavaScript Einbindung -->
+    <script src="{% static 'js/function.js' %}"></script>
+
+    <!-- Standard-Skripte Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+</head>
+
+<!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
+<body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
+        <div class="container containernav"><a class="navbar-brand js-scroll-trigger" href="/">Experiment</a>
+            <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
+            <div>
+                <a href="https://www.uni-goettingen.de/">
+                    <img class="navlogo" src="{% static 'pictures/Universität-Göttingen-Logo.png' %}">
+                    <!-- (Quelle) Georg-August-Universität Göttingen https://www.uni-goettingen.de/de/589410.html -->
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container: Kontrollfragen & Auswertung der Antworten -->
+    <!-- [Java-Script-Datei: js/function.js/"function redirect2()"]
+        - Alle Fragen korrekt beantwortet: Weiterleitung zur Website. 
+        - Mindestens eine der Antworten nicht korrekt: Pop-up-Fenster und Teilnehmer wird zurück auf Landingpage geleitet -->
+    <div class="container containerextend round center">
+        <div class="rowextend">
+            <h2 class="h2 center">Fragen zum Experiment</h2>
+            <div class="rowextend">
+                <div class="col" style="margin-top:16px">
+                    <p>Bevor das Experiment startet, beantworten Sie bitte noch kurz diese Fragen, um überprüfen zu
+                        können, dass sowohl das Experiment als auch dessen Ablauf korrekt verstanden wurde.
+                    </p>
+                    <!-- Geschütztes Leerzeichen: "&nbsp;" -->
+                    <p class="questions">
+                        <b>1. Welche Dienstleistung bietet das Unternehmen an?</b></br>
+                        <label class="option" for="check1a">
+                            <input type="radio" name="1" id="check1a">&nbsp; Unternehmensberatung
+                        </label>
+                        <br>
+
+                        <label class="option" for="check1b">
+                            <input type="radio" name="1" id="check1b">&nbsp; Lebensmittel-Lieferdienst
+                        </label>
+                        <br>
+
+                        <label class="option" for="check1c">
+                            <input type="radio" name="1" id="check1c">&nbsp; Leistungen als Krankenkasse
+                        </label>
+                        <br>
+                    </p>
+
+                    <p class="questions">
+                        <b>2. Worüber sollen Sie sich auf der nachfolgenden Webseite informieren? </b></br>
+                        <label class="option" for="check2a" style="margin-bottom: 6px;">
+                            <input type="radio" name="2" id="check2a">&nbsp; Informationen hinsichtlich einer Datenschutzverletzung
+                        </label>
+                        <br>
+
+                        <label class="option" for="check2b" style="margin-bottom: 6px;">
+                            <input type="radio" name="2" id="check2b">&nbsp; Angebotene Produkte und Dienstleistungen
+                        </label>
+                        <br>
+
+                        <label class="option" for="check2c">
+                            <input type="radio" name="2" id="check2c">&nbsp; Maßnahmen zur Verbesserung des operativen Cashflows
+                        </label>
+                        <br>
+                    </p>
+
+                    <p class="questions">
+                        <b>3. In welche Perspektive sollen Sie sich während des Experiments versetzen?</b></br>
+                        <label class="option" for="check3a">
+                            <input type="radio" name="3" id="check3a">&nbsp; Ein Manager eines Konkurrenzunternehmens
+                        </label>
+                        <br>
+
+                        <label class="option" for="check3b">
+                            <input type="radio" name="3" id="check3b">&nbsp; Ein Kunde einer Krankenkassenversicherung
+                        </label>
+                        <br>
+
+                        <label class="option" for="check3c">
+                            <input type="radio" name="3" id="check3c">&nbsp; Ein Mitarbeiter eines Lieferdienstes
+                        </label>
+                        <br>
+                    </p>
+                </div>
+            </div>
+
+            <div class="rowextend">
+                <div class="col" style="font-size: 19px;">
+                    <p>Bitte klicken Sie nun auf den unten stehenden Button, um Ihre Antworten
+                        auszuwerten und anschließend mit dem Experiment zu beginnen.</p>
+                </div>
+                <div class="col center">
+                    <div class="rowextend center">
+                        <button class="btn submit rounded-pill btn-primary" type="submit"
+                            onclick="redirect2()"><b>Experiment beginnen</b></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer ist unten fixiert -->
+    <footer class="mt-auto">
+        <div class="container jumbotron vertical-center footer">
+            <span>© 2023 Georg-August-Universität Göttingen</span>
+        </div>
+    </footer>
+</body>
+
+</html>

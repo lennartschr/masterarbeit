@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+
+<!-- Header: Zusatzinformationen zur Website, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+
+<head>
+  <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
+  <meta charset="utf-8" name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+
+  <!-- Titel im Tab -->
+  <title>Experiment</title>
+
+  <!-- Favicon der Website
+    (Quelle) https://icons8.com/icon/41892/mind-map -->
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicons/Experiment_Favicon.png' %}">
+
+  <!-- NavBar Design -->
+  <link rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- CSS mit individueller Anpassung -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/experiment.css' %}" />
+
+  <!-- JavaScript Einbindung -->
+  <script src="{% static 'js/function.js' %}"></script>
+
+  <!-- Standard-Skripte Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+</head>
+
+<!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
+<body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
+  <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
+    <div class="container containernav"><a class="navbar-brand js-scroll-trigger" href="/B">Experiment</a>
+      <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
+      <div>
+        <a href="https://www.uni-goettingen.de/">
+          <img class="navlogo" src="{% static 'pictures/Universität-Göttingen-Logo.png' %}">
+          <!-- (Quelle) Georg-August-Universität Göttingen https://www.uni-goettingen.de/de/589410.html -->
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Container 1: Einleitung, Experiment-Ablauf -->
+  <div class="container containerextend round center">
+    <div class="rowextend">
+      <!-- <h2 class="h2 center">Das Experiment ist nun beendet - Vielen Dank für Ihre Teilnahme</h2> -->
+      <h2 class="h2 center">Vielen Dank für die Teilnahme am Experiment</h2>
+      <br>
+      <h2> Das Experiment</h2>
+      <p>
+        Bitte nehmen Sie im folgenden Szenario die Rolle eines Kunden einer Krankenkasse ein, bei
+        der sowohl Sie als auch Ihre Familie Mitglieder sind. Sie nutzen regelmäßig die vielfältigen
+        Dienstleistungen im Bereich der Gesundheitsversorgung. Darunter fallen
+        unter anderem Leistungen wie der monatliche
+        Gesundheits-Check, die Koordination und Abwicklung von Arztbesuchen, die Rückerstattung medizinischer
+        Auslagen sowie generelle Beratungen zu gesundheitsrelevanten Themen.
+
+        In dem folgenden Szenario bitten wir Sie, die Rolle eines Kunden einer Krankenkasse zu übernehmen, bei
+        der sowohl Sie als auch Ihre Familie Mitglieder sind. Sie nutzen regelmäßig ihre breit gefächerten
+        Dienstleistungen im Bereich der Gesundheitsversorgung. Dazu zählen Leistungen wie der monatliche
+        Gesundheits-Check, die Koordination und Abwicklung von Arztbesuchen, die Rückerstattung medizinischer
+        Auslagen sowie generelle Beratungen zu gesundheitsrelevanten Themen.
+        <br><br>
+
+        <b>Gesetzliche Vorschriften</b><br>
+        Krankenkassen sind gesetzlich verpflichtet, eine Kundendatenakte für jeden Kunden zu führen. Diese
+        Akte muss sämtlichen Kontakt und die Kommunikation zwischen der Krankenkasse und ihren Kunden
+        dokumentieren. Gemäß den Datenschutzbestimmungen beinhaltet diese persönliche
+        Daten, medizinische Informationen und die Kommunikation bezüglich der Gesundheitsversorgung.
+        <br><br>
+        
+        <b>Was ist eine Datenschutzverletzung?</b><br>
+        Eine Datenschutzverletzung tritt auf, wenn personenbezogene Daten in einer Weise gehandhabt werden, die
+        geltende Datenschutzbestimmungen missachtet und potenziellen Schaden für Individuen, Unternehmen oder
+        Regierungen verursacht. Solche Verletzungen können in diversen Formen auftreten, von
+        Datenverlust oder -diebstahl über Hackerangriffe und unautorisierten Zugriff auf Systeme bis hin zur
+        unbeabsichtigten Offenlegung von Daten. Auch mangelnde Sicherheitsmaßnahmen, wie unzureichende
+        Verschlüsselung oder Passwortsicherheit, oder der missbräuchliche Gebrauch von Daten durch Personen oder
+        Organisationen stellen Datenschutzverletzungen dar.
+        <br><br>
+        <i>Die Gesamtdauer des Experiments umfasst etwa 10 Minuten.</i>
+        <br>
+      </p>
+      <hr>
+      <br>
+
+      <h2>Ablauf des Experiments</h2>
+      <br>
+
+      <h3>Schritt 1</h3>
+      <p>Zunächst bitten wir Sie, einige Kontrollfragen zu beantworten. Dies stellt sicher, dass das
+        Experiment und dessen Ablauf korrekt verstanden haben.</p>
+
+      <h3>Schritt 2</h3>
+      <p>Nach Beginn des Experiments wird Ihnen eine Nachricht von Ihrer Krankenkasse dargestellt, die Sie als Kunden über die
+        Datenschutzverletzung informiert. Bitte lesen Sie alle bereitgestellten Informationen aufmerksam durch, da diese
+        für die folgende Umfrage von Bedeutung sind.</p>
+
+      <h3>Schritt 3</h3>
+      <p>Nachdem Sie über die Datenschutzverletzung informiert wurden, gelangen Sie zu einem
+        Button mit der
+        Aufschrift
+        <b>"Weiter zur Umfrage"</b>, der Sie anschließend zu einem
+        kurzen Fragebogen führt. Ziel
+        dieses Fragebogens ist es, Ihre Einschätzungen und Meinungen zum Vorfall zu erhalten und um zu
+        verstehen, wie
+        Sie den Vorfall und die darauffolgenden Maßnahmen des Unternehmens wahrnehmen. Bitte nehmen Sie sich
+        einen Moment Zeit, um die Fragen zu beantworten. Ihre Meinung ist wertvoll und trägt dazu bei, dass
+        Unternehmen in Zukunft besser auf solche Vorfälle vorbereitet sind und ihren Umgang mit
+        Datenschutzverletzungen
+        kontinuierlich verbessern.
+      </p>
+    </div>
+  </div>
+
+  <!-- Container 2: Akzeptierung der Nutzungsbedingungen & Datenschutzerklärung [Java-Script-Datei: js/function.js/"function redirect()" & "function showAdvice()"]
+    (Checkboxen werden überprüft und Abschnitte visuell angepasst, falls nicht alle Checkboxen ausgefüllt wurden (blau + Hinweis) oder (grün)) -->
+  <div class="container containerextend round center">
+    <div class="rowextend center">
+      <form>
+        <div class="form-group">
+          <div class="form-check checkit">
+            <input class="form-check-input" type="checkbox" id="check1">
+            <label for="check1" id="CC1">
+              Ich habe die <a href="/datenschutzB">Datenschutzerklärung</a> gelesen und verstanden.
+            </label>
+            <div class="required" id="required1">
+              <p>Bitte akzeptieren Sie die Datenschutzerklärung</p>
+            </div>
+          </div>
+          <div class="form-check checkit">
+            <input class="form-check-input" type="checkbox" id="check2">
+            <label for="check2" id="CC2">
+              Ich bin einverstanden, dass der Dienst <i>Qualtrics</i> für die Durchführung der Umfrage
+              genutzt wird.
+            </label>
+            <div class="required" id="required2">
+              <p>Bitte akzeptieren Sie die Verwendung von <i>Qualtrics</i></p>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="rowextend center">
+        <button class="btn submit rounded-pill btn-primary" type="submit" onclick="redirectB()"><b>Experiment
+            beginnen</b></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer ist unten fixiert -->
+  <footer class="mt-auto">
+    <div class="container jumbotron vertical-center footer">
+      <span>© 2023 Georg-August-Universität Göttingen</span>
+    </div>
+  </footer>
+</body>
+
+</html>
