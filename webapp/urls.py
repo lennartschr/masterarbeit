@@ -6,9 +6,9 @@ from . import views
 app_name = "webapp"
 urlpatterns = [
 
-    path("", views.start, name="start"),
+    path("start", views.start, name="start"),
     # Startview
-    path("experiment", views.experiment, name="experiment"),
+    path("", views.experiment, name="experiment"),
     # Informationen zum Datenschutz
     path("datenschutz", views.datenschutz, name="datenschutz"),
     # Kontrollfragen
