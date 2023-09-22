@@ -128,8 +128,8 @@ function closePopup() {
 let timer;
 
 function initiateTimer() {
-    // Setzt einen Timer, der 'openHelpPopup' nach 4 Minuten auslöst
-    timer = setTimeout(openHelpPopup, 40000);
+    // Setzt einen Timer, der 'openHelpPopup' nach 2 Minuten auslöst
+    timer = setTimeout(openHelpPopup, 120000);
 }
 
 // Funktion zum Wechseln zur Sicherheitsinformation
