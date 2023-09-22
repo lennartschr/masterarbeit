@@ -154,6 +154,9 @@ function switchToSecurityInfo() {
         // SecurityInfo anzeigen
         securityInfo.style.display = "block";
     }
+
+    // Auf Seitenanfang scrollen
+    window.scrollTo(0, 0);
 }
 
 function changeMessageLogo() {
@@ -323,12 +326,12 @@ function closeHelpPopup() {
 
 // Weiterleitung zur Umfrage mit Prototyp
 function forwardToSurvey() {
-    window.location.href = 'https://google.com';
+    window.location.href = 'https://www.qualtrics.com/de/';
 }
 
 // Weiterleitung zur Umfrage ohne Prototyp
 function forwardToSurveyOP() {
-    window.location.href = 'https://google.com';
+    window.location.href = 'https://www.qualtrics.com/de/';
 }
 
 
