@@ -129,7 +129,7 @@ let timer;
 
 function initiateTimer() {
     // Setzt einen Timer, der 'openHelpPopup' nach 1 Minute auslöst
-    timer = setTimeout(openHelpPopup, 600000);
+    timer = setTimeout(openHelpPopup, 40000);
 }
 
 // Funktion zum Wechseln zur Sicherheitsinformation
