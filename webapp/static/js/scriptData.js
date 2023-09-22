@@ -99,6 +99,14 @@ function closePopup() {
         return;
     }
 
+    // Überprüfung des Wertes 'eigeneEingabe' im Dropdown-Menü
+    const titleValue = document.getElementById('title').value;
+    if (titleValue === 'eigeneEingabe') {
+        alert('Bitte wählen Sie eine andere Option als "Andere Krankenkasse (Eigene Eingabe)".');
+        document.getElementById('title').parentNode.classList.add('error');
+        return;
+    }
+
     // Ändern des Textes in der Navbar
     const companyName = document.getElementById('title').value;
     const navbarBrand = document.querySelector('.navbar-brand.js-scroll-trigger.navsize.a');
@@ -337,12 +345,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedOption = document.getElementById('title').value;
         if (selectedOption === 'eigeneEingabe') {
             const userInput = prompt('Bitte geben Sie den Namen der Krankenkasse ein:');
-            if (userInput) {
+            if (userInput && userInput.length <= 20) { // Hier überprüfen wir die Länge der Eingabe
                 document.getElementById('title').innerHTML += `<option value="${userInput}">${userInput}</option>`;
                 document.getElementById('title').value = userInput;
+            } else if (userInput && userInput.length > 20) { // Optionaler Abschnitt, um den Benutzer zu informieren
+                alert('Bitte geben Sie nicht mehr als 20 Zeichen ein.');
             }
         }
     });
+
     // "Anmelden"
     document.getElementById('btnLogin').addEventListener('click', closeLoginPopup);
     // "Weiter zur Umfrage"
