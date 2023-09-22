@@ -142,6 +142,16 @@ body {
     text-align: left !important;
 }
 
+.picture-description {
+    font-size: calc(0.1rem + 1vw);
+    text-align: justify;
+    max-width: 60%;
+}
+
+.security-picture {
+    max-width: 60%;
+}
+
 .topic-container {
     display: flex;
     flex-wrap: wrap;
@@ -242,5 +252,15 @@ body {
 
     .rowextend {
         padding: 0%;
+    }
+
+    .picture-description {
+        font-size: calc(0.5rem + 1.2vw);
+        text-align: justify;
+        max-width: 100%;
+    }
+
+    .security-picture {
+        max-width: 100%;
     }
 }

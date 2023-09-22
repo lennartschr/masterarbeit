@@ -189,9 +189,9 @@ function closeChooseExperimentPopup() {
     popupLogin.classList.remove("open-popup");
 
     if (Math.random() < 0.5) {
-        window.location.href = 'http://127.0.0.1:8000/B';
+        window.location.href = '/B';
     } else {
-        window.location.href = 'http://127.0.0.1:8000/A';
+        window.location.href = '/A';
     }
 }
 
