@@ -220,9 +220,13 @@ body {
     }
 
     .newspaper-text {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
+    .paddingInfo {
+        font-size: 1.1rem;
+    }
+    
     .newspaper-title {
         font-size: 1.8rem;
     }
@@ -262,9 +266,5 @@ body {
 
     .security-picture {
         max-width: 100%;
-    }
-
-    .paddingInfo {
-        font-size: 16px;
     }
 }
