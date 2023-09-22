@@ -128,7 +128,10 @@ function closePopup() {
     // Aktualisierte Texte einfügen
     replaceAnsprache();
     replaceNachname();
-    // Startet den Timer, sobald das Skript geladen wird
+
+    // Inhalt anzeigen lassen
+    document.getElementById('mainContent').style.display = 'block';
+    // Startet den Timer für Hilfe, sobald das Skript geladen wird
     initiateTimer();
 }
 

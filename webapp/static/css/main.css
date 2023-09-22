@@ -39,6 +39,10 @@ body:before {
     }
 }
 
+.mainContent {
+    display: none;
+}
+
 /* Navbar & Logo */
 .containernav {
     align-items: center;
