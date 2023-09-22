@@ -171,6 +171,12 @@ body {
     cursor: pointer;
 }
 
+.paddingInfoTitle {
+    padding-left: 6%;
+    padding-right: 6%;
+    text-align: left;
+}
+
 .paddingInfo {
     padding-left: 6%;
     padding-right: 6%;
@@ -224,7 +230,7 @@ body {
     }
 
     .paddingInfo {
-        font-size: 0.9rem;
+        font-size: 1rem;
     }
 
     .newspaper-title {
