@@ -244,6 +244,9 @@ function closeLoginPopup() {
         var loginAfter = document.getElementById("loginAfter");
         loginAfter.style.display = "flex";
 
+        // Auf Seitenanfang scrollen
+        window.scrollTo(0, 0);
+
         // Willkommensnachricht anzeigen
         var welcomeMessage = document.getElementById("welcomeMessage");
         welcomeMessage.style.display = "block";
