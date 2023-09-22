@@ -308,20 +308,12 @@ function closeInformationPopup() {
 function openHelpPopup() {
     let popupHelp = document.getElementById("popupHelp");
     popupHelp.classList.add("open-popup");
-
-    let blur = document.getElementById("blur");
-    blur.classList.remove("deactive");
-    blur.classList.toggle("active");
 }
 
 // Pop-up zum InformationPopup schließen
 function closeHelpPopup() {
     let popupHelp = document.getElementById("popupHelp");
     popupHelp.classList.remove("open-popup");
-
-    let blur = document.getElementById("blur");
-    blur.classList.toggle("deactive");
-    blur.classList.remove("active");
 }
 
 // Weiterleitung zur Umfrage mit Prototyp
