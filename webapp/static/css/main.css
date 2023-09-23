@@ -214,7 +214,7 @@ a {
         font-size: 18px !important;
         padding-left: 2%;
         padding-right: 2%;
-        text-align: left !important;
+        /* text-align: left !important; */
     }
 
     .navbar-nav {
