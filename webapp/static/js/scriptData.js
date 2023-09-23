@@ -1,5 +1,10 @@
 // Array für Krankenkassen-Daten
 let krankenkassen = [];
+// Hilfe Timer
+let timer;
+// Funktionalitäten für Mailverteiler in der Handyversion
+let navigationHistory = ["folderPage"];
+
 
 // Funktionen für das Pop-up, um Nachname, Krankenkasse und Geschlecht einzugeben/auszuwählen
 const addKrankenkasse = (ev) => {
@@ -134,9 +139,6 @@ function closePopup() {
     // Startet den Timer für Hilfe, sobald das Skript geladen wird
     initiateTimer();
 }
-
-// Hilfe Timer
-let timer;
 
 function initiateTimer() {
     // Setzt einen Timer, der 'openHelpPopup' nach 2 Minuten auslöst
@@ -384,10 +386,6 @@ function blurEffect() {
         blur.classList.add("deactive");
     }, 200);
 }
-
-// Funktionalitäten für Mailverteiler in der Handyversion
-
-let navigationHistory = ["folderPage"];
 
 function navigateTo(pageId) {
     document.getElementById(navigationHistory[navigationHistory.length - 1]).classList.remove('active');
