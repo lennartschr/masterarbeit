@@ -39,7 +39,7 @@ body:before {
     }
 }
 
-.mainContent {
+#mainContent {
     display: none;
 }
 
