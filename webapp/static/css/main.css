@@ -10,7 +10,6 @@ body {
 
 /* Background Image */
 body:before {
-    /* background: url(../health_pictures/health.jpeg) no-repeat center center; */
     background-color: #fff;
     background-size: cover;
     content: "";
@@ -26,7 +25,6 @@ body:before {
 /* Responsive Background Image */
 @media screen and (max-width: 800px) {
     body:before {
-        /* background: url(../health_pictures/health-MB.jpeg) no-repeat center center; */
         background-color: #fff;
         background-size: cover;
         content: "";
