@@ -48,7 +48,7 @@ function replaceAnsprache() {
             }
         } else if (gender === 'weiblich') {
             if (span.textContent === 'Ansprache') {
-                span.textContent = "Sehr geehrter Frau";
+                span.textContent = "Sehr geehrte Frau";
             }
             if (span.textContent === 'AnspracheKurz') {
                 span.textContent = "Frau";
