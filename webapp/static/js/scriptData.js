@@ -53,12 +53,18 @@ function replaceAnsprache() {
             if (span.textContent === 'AnspracheKurz') {
                 span.textContent = "Frau";
             }
+            if (span.textContent === 'langjähriger Kunde') {
+                span.textContent = "langjährige Kundin";
+            }
         } else if (gender === 'divers') {
             if (span.textContent === 'Ansprache') {
                 span.textContent = "Sehr geehrte*r Herr/Frau";
             }
             if (span.textContent === 'AnspracheKurz') {
                 span.textContent = "Herr/Frau";
+            }
+            if (span.textContent === 'langjähriger Kunde') {
+                span.textContent = "langjährige/r Kunde/Kundin";
             }
         }
     });
