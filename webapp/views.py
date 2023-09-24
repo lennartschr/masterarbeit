@@ -38,6 +38,3 @@ def webseiteB(request):
 
 def ZTest(request):
     return render(request, "webseite/ZTest.html")
-    
-def ZTest2(request):
-    return render(request, "webseite/ZTest2.html")

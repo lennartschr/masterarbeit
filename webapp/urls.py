@@ -31,8 +31,6 @@ urlpatterns = [
 
     # Webseite zum Testen von diversen Inhalten
     path("ZTest", views.ZTest, name="ZTest"),
-    # Webseite zum Testen von diversen Inhalten
-    path("ZTest2", views.ZTest2, name="ZTest2"),
 ]
 
 # path('website' -> Aufruf im Browser,
