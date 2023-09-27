@@ -208,7 +208,7 @@ function closeChooseExperimentPopup() {
     popupLogin.classList.remove("open-popup");
 
     if (Math.random() < 0.5) {
-        window.location.href = '/B';
+        window.location.href = '/A';
     } else {
         window.location.href = '/A';
     }

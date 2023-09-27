@@ -50,11 +50,6 @@ h3 {
         width: 94% !important;
     }
 
-    p {
-        font-size: 17px;
-        text-align: left !important;
-    }
-
     h3 {
         font-size: 19px !important;
     }
@@ -91,7 +86,6 @@ h3 {
 
     .rowextend {
         font-size: 18px !important;
-        text-align: left !important;
         padding-left: 2.5%;
         padding-right: 2.5%;
     }
