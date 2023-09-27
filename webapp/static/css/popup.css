@@ -1,5 +1,5 @@
 .popup {
-    min-width: 300px;
+    min-width: 800px;
     align-content: center;
     background-color: rgba(255, 255, 255);
     border-radius: 10px;
@@ -18,11 +18,13 @@
     visibility: hidden;
 }
 
+/* Wenn der Bildschirm schmaler als 768px ist (Mobile) */
 @media screen and (max-width: 768px) {
     .popup {
         padding-bottom: 7.5%;
         padding-top: 7.5%;
         width: 85%;
+        min-width: 300px;
     }
 }
 
