@@ -95,8 +95,16 @@ function openPopup() {
 // Pop-up schließen
 function closePopup() {
     // Überprüfen, ob alle Felder ausgefüllt wurden
-    const inputFields = document.querySelectorAll('.formBox.input-container input, .formBox.input-container select');
+    const inputFields = document.querySelectorAll('.formBox.input-container select');
     let allFieldsFilled = true;
+    // Überprüfen, ob das Nachnamen-Feld ausgefüllt wurde
+    const nachnameField = document.getElementById('lastName');
+
+    if (!nachnameField.value) {
+        alert('Bitte geben Sie einen Nachnamen ein.');
+        nachnameField.parentNode.classList.add('error');
+        return;
+    }
 
     inputFields.forEach((input) => {
         if (!input.value) {
@@ -136,14 +144,14 @@ function closePopup() {
     blur.classList.toggle("deactive");
     blur.classList.remove("active");
 
-    // Aktualisierte Texte einfügen
-    replaceAnsprache();
-    replaceNachname();
 
     // Inhalt anzeigen lassen
     document.getElementById('mainContent').style.display = 'block';
     // Startet den Timer für Hilfe, sobald das Skript geladen wird
     initiateTimer();
+    // Aktualisierte Texte einfügen
+    replaceAnsprache();
+    replaceNachname();
 }
 
 function initiateTimer() {
@@ -349,7 +357,6 @@ function forwardToSurveyOP() {
 // Event Listener hinzufügen
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn').addEventListener('click', addKrankenkasse);
-    document.getElementById('btn').addEventListener('click', replaceNachname);
     document.getElementById('btn').addEventListener('click', closePopup);
 
     document.getElementById('title').addEventListener('change', function () {
