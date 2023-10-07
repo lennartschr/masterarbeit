@@ -1,3 +1,11 @@
+::selection {
+    background: #B4D7FF;
+}
+
+::-moz-selection {
+    background: #B4D7FF;
+}
+
 /* Abstand Überschrift zur Navbar + Hintergrund weiß/grün iPad*/
 body {
     font-family: SF Pro Display, SF Pro Icons, AOS Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -50,11 +58,6 @@ h3 {
         width: 94% !important;
     }
 
-    p {
-        font-size: 17px;
-        text-align: left !important;
-    }
-
     h3 {
         font-size: 19px !important;
     }
@@ -91,7 +94,6 @@ h3 {
 
     .rowextend {
         font-size: 18px !important;
-        text-align: left !important;
         padding-left: 2.5%;
         padding-right: 2.5%;
     }

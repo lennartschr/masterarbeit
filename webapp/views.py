@@ -4,9 +4,11 @@ from django.http import HttpResponse
 # Create your views here.
 # Wiedergabe der Views und deren Code/Inhalt unter dem Reiter "templates"
 
+#  Choose Experiment
 def start(request):
     return render(request, "experiment/start.html")
 
+# Experiment A
 def experiment(request):
     return render(request, "experiment/experiment.html")
 
@@ -36,6 +38,3 @@ def webseiteB(request):
 
 def ZTest(request):
     return render(request, "webseite/ZTest.html")
-    
-def ZTest2(request):
-    return render(request, "webseite/ZTest2.html")
