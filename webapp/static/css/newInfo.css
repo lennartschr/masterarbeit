@@ -142,16 +142,6 @@ body {
     text-align: left !important;
 }
 
-.picture-description {
-    font-size: calc(0.1rem + 1vw);
-    text-align: justify;
-    max-width: 60%;
-}
-
-.security-picture {
-    max-width: 60%;
-}
-
 .topic-container {
     display: flex;
     flex-wrap: wrap;
@@ -169,12 +159,6 @@ body {
 .topic:hover {
     background-color: #d5d5d5;
     cursor: pointer;
-}
-
-.paddingInfoTitle {
-    padding-left: 6%;
-    padding-right: 6%;
-    text-align: left;
 }
 
 .paddingInfo {
@@ -221,27 +205,12 @@ body {
         padding-left: 5px;
     }
 
-    .image-person1,
-    .image-person2 {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
     .newspaper-name {
         font-size: 2.2rem;
     }
 
     .newspaper-text {
-        font-size: 1.1rem;
-    }
-
-    .paddingInfoTitle {
-        font-size: 1.6rem;
-    }
-
-    .paddingInfo {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 
     .newspaper-title {
@@ -252,7 +221,6 @@ body {
         padding: 20px 0px;
         padding-left: 10px;
         font-size: 1rem;
-        width: 100%;
     }
 
     .mail-link {
@@ -274,15 +242,5 @@ body {
 
     .rowextend {
         padding: 0%;
-    }
-
-    .picture-description {
-        font-size: calc(0.5rem + 1.2vw);
-        text-align: justify;
-        max-width: 100%;
-    }
-
-    .security-picture {
-        max-width: 100%;
     }
 }

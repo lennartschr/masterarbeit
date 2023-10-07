@@ -10,6 +10,7 @@ body {
 
 /* Background Image */
 body:before {
+    /* background: url(../health_pictures/health.jpeg) no-repeat center center; */
     background-color: #fff;
     background-size: cover;
     content: "";
@@ -25,6 +26,7 @@ body:before {
 /* Responsive Background Image */
 @media screen and (max-width: 800px) {
     body:before {
+        /* background: url(../health_pictures/health-MB.jpeg) no-repeat center center; */
         background-color: #fff;
         background-size: cover;
         content: "";
@@ -35,10 +37,6 @@ body:before {
         position: fixed;
         width: 100%;
     }
-}
-
-#mainContent {
-    display: none;
 }
 
 /* Navbar & Logo */
@@ -89,11 +87,6 @@ a {
 #loginSymbol {
     height: 40px;
     margin-top: -5%;
-}
-
-#messageLoginSymbol {
-    height: 36px;
-    margin-top: -1%;
 }
 
 #loginText {
@@ -219,7 +212,7 @@ a {
         font-size: 18px !important;
         padding-left: 2%;
         padding-right: 2%;
-        /* text-align: left !important; */
+        text-align: left !important;
     }
 
     .navbar-nav {
@@ -267,11 +260,6 @@ a {
     padding-bottom: 8px;
     padding-top: 8px;
     width: 100%;
-}
-
-p {
-    font-size: 19px;
-    text-align: justify;
 }
 
 .center {
@@ -335,7 +323,7 @@ p {
 
 .h2 {
     font-family: 'Raleway', sans-serif;
-    font-size: calc(1.2rem + 2vw);
+    font-size: calc(1.425rem + 2vw);
     font-weight: 500;
     line-height: 1.2;
     padding-bottom: 10px;
@@ -352,12 +340,24 @@ p {
     padding-top: 8px;
 }
 
-
-/* Automatische Größenanpassung */
-
 @media (min-width: 1200px) {
     .h2 {
         font-size: 2.6rem;
+    }
+}
+
+/* Automatische Größenanpassung */
+p {
+    font-size: 19px;
+    text-align: justify;
+}
+
+@media screen and (max-width: 450px) {
+
+    body,
+    p {
+        font-size: 17px;
+        text-align: left !important;
     }
 }
 
@@ -375,15 +375,6 @@ p {
     }
 }
 
-@media screen and (max-width: 450px) {
-
-    body,
-    p {
-        font-size: 17px;
-        text-align: left !important;
-    }
-}
-
 @media screen and (max-width: 780px) {
     .containerextend {
         padding: 6% 4% 6% 4%;
@@ -394,16 +385,16 @@ p {
         padding-top: 18px;
     }
 
-    .h3 {
-        font-size: calc(1rem + 1.2vw) !important;
-    }
-
     .navsize {
         font-size: 20px !important;
     }
 
     .footer {
         padding-top: 40px;
+    }
+
+    .h3 {
+        font-size: calc(1rem + 1.2vw) !important;
     }
 }
 

@@ -84,7 +84,7 @@ function redirect2() {
 
     // Pop-up-Fenster die den Hinweis ausgibt
     else {
-        window.location.href = '/A';
+        window.location.href = '/';
         window.alert('Leider waren Ihre Angaben nicht korrekt.\nBitte lesen Sie die einzelnen Schritte des Experiments erneut.');
     }
 }

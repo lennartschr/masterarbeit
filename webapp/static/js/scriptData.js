@@ -1,10 +1,5 @@
 // Array für Krankenkassen-Daten
 let krankenkassen = [];
-// Hilfe Timer
-let timer;
-// Funktionalitäten für Mailverteiler in der Handyversion
-let navigationHistory = ["folderPage"];
-
 
 // Funktionen für das Pop-up, um Nachname, Krankenkasse und Geschlecht einzugeben/auszuwählen
 const addKrankenkasse = (ev) => {
@@ -48,13 +43,10 @@ function replaceAnsprache() {
             }
         } else if (gender === 'weiblich') {
             if (span.textContent === 'Ansprache') {
-                span.textContent = "Sehr geehrte Frau";
+                span.textContent = "Sehr geehrter Frau";
             }
             if (span.textContent === 'AnspracheKurz') {
                 span.textContent = "Frau";
-            }
-            if (span.textContent === 'langjähriger Kunde') {
-                span.textContent = "langjährige Kundin";
             }
         } else if (gender === 'divers') {
             if (span.textContent === 'Ansprache') {
@@ -62,9 +54,6 @@ function replaceAnsprache() {
             }
             if (span.textContent === 'AnspracheKurz') {
                 span.textContent = "Herr/Frau";
-            }
-            if (span.textContent === 'langjähriger Kunde') {
-                span.textContent = "langjährige/r Kunde/Kundin";
             }
         }
     });
@@ -95,16 +84,8 @@ function openPopup() {
 // Pop-up schließen
 function closePopup() {
     // Überprüfen, ob alle Felder ausgefüllt wurden
-    const inputFields = document.querySelectorAll('.formBox.input-container select');
+    const inputFields = document.querySelectorAll('.formBox.input-container input, .formBox.input-container select');
     let allFieldsFilled = true;
-    // Überprüfen, ob das Nachnamen-Feld ausgefüllt wurde
-    const nachnameField = document.getElementById('lastName');
-
-    if (!nachnameField.value) {
-        alert('Bitte geben Sie einen Nachnamen ein.');
-        nachnameField.parentNode.classList.add('error');
-        return;
-    }
 
     inputFields.forEach((input) => {
         if (!input.value) {
@@ -115,14 +96,6 @@ function closePopup() {
 
     if (!allFieldsFilled) {
         alert('Bitte füllen Sie alle Felder aus.');
-        return;
-    }
-
-    // Überprüfung des Wertes 'eigeneEingabe' im Dropdown-Menü
-    const titleValue = document.getElementById('title').value;
-    if (titleValue === 'eigeneEingabe') {
-        alert('Bitte wählen Sie eine andere Option als "Andere Krankenkasse (Eigene Eingabe)".');
-        document.getElementById('title').parentNode.classList.add('error');
         return;
     }
 
@@ -144,20 +117,19 @@ function closePopup() {
     blur.classList.toggle("deactive");
     blur.classList.remove("active");
 
-
-    // Inhalt anzeigen lassen
-    document.getElementById('mainContent').style.display = 'block';
-    // Startet den Timer für Hilfe, sobald das Skript geladen wird
-    initiateTimer();
     // Aktualisierte Texte einfügen
     replaceAnsprache();
     replaceNachname();
+    // Startet den Timer, sobald das Skript geladen wird
+    initiateTimer();
 }
 
+// Hilfe Timer
+let timer;
+
 function initiateTimer() {
-    // Setzt einen Timer, der 'openHelpPopup' nach 45 Sekunden auslöst
-    // timer = setTimeout(openHelpPopup, 45000);
-    timer = setTimeout(openHelpPopup, 8000);
+    // Setzt einen Timer, der 'openHelpPopup' nach 1 Minute auslöst
+    timer = setTimeout(openHelpPopup, 600000);
 }
 
 // Funktion zum Wechseln zur Sicherheitsinformation
@@ -182,9 +154,6 @@ function switchToSecurityInfo() {
         // SecurityInfo anzeigen
         securityInfo.style.display = "block";
     }
-
-    // Auf Seitenanfang scrollen
-    window.scrollTo(0, 0);
 }
 
 function changeMessageLogo() {
@@ -217,9 +186,9 @@ function closeChooseExperimentPopup() {
     popupLogin.classList.remove("open-popup");
 
     if (Math.random() < 0.5) {
-        window.location.href = '/A';
+        window.location.href = 'http://127.0.0.1:8000/';
     } else {
-        window.location.href = '/A';
+        window.location.href = 'http://127.0.0.1:8000/B';
     }
 }
 
@@ -274,9 +243,6 @@ function closeLoginPopup() {
         document.getElementById("login").style.display = "none";
         var loginAfter = document.getElementById("loginAfter");
         loginAfter.style.display = "flex";
-
-        // Auf Seitenanfang scrollen
-        window.scrollTo(0, 0);
 
         // Willkommensnachricht anzeigen
         var welcomeMessage = document.getElementById("welcomeMessage");
@@ -336,43 +302,49 @@ function closeInformationPopup() {
 function openHelpPopup() {
     let popupHelp = document.getElementById("popupHelp");
     popupHelp.classList.add("open-popup");
+
+    let blur = document.getElementById("blur");
+    blur.classList.remove("deactive");
+    blur.classList.toggle("active");
 }
 
 // Pop-up zum InformationPopup schließen
 function closeHelpPopup() {
     let popupHelp = document.getElementById("popupHelp");
     popupHelp.classList.remove("open-popup");
+
+    let blur = document.getElementById("blur");
+    blur.classList.toggle("deactive");
+    blur.classList.remove("active");
 }
 
 // Weiterleitung zur Umfrage mit Prototyp
 function forwardToSurvey() {
-    window.location.href = 'https://www.qualtrics.com/de/';
+    window.location.href = 'https://google.com';
 }
 
 // Weiterleitung zur Umfrage ohne Prototyp
 function forwardToSurveyOP() {
-    window.location.href = 'https://www.qualtrics.com/de/';
+    window.location.href = 'https://google.com';
 }
 
 
 // Event Listener hinzufügen
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn').addEventListener('click', addKrankenkasse);
+    document.getElementById('btn').addEventListener('click', replaceNachname);
     document.getElementById('btn').addEventListener('click', closePopup);
 
     document.getElementById('title').addEventListener('change', function () {
         const selectedOption = document.getElementById('title').value;
         if (selectedOption === 'eigeneEingabe') {
             const userInput = prompt('Bitte geben Sie den Namen der Krankenkasse ein:');
-            if (userInput && userInput.length <= 20) { // Hier überprüfen wir die Länge der Eingabe
+            if (userInput) {
                 document.getElementById('title').innerHTML += `<option value="${userInput}">${userInput}</option>`;
                 document.getElementById('title').value = userInput;
-            } else if (userInput && userInput.length > 20) { // Optionaler Abschnitt, um den Benutzer zu informieren
-                alert('Bitte geben Sie nicht mehr als 20 Zeichen ein.');
             }
         }
     });
-
     // "Anmelden"
     document.getElementById('btnLogin').addEventListener('click', closeLoginPopup);
     // "Weiter zur Umfrage"
@@ -400,6 +372,10 @@ function blurEffect() {
         blur.classList.add("deactive");
     }, 200);
 }
+
+// Funktionalitäten für Mailverteiler in der Handyversion
+
+let navigationHistory = ["folderPage"];
 
 function navigateTo(pageId) {
     document.getElementById(navigationHistory[navigationHistory.length - 1]).classList.remove('active');

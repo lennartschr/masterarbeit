@@ -89,16 +89,12 @@
   min-width: 60%;
 }
 
-.button:hover {
-  background-color: rgb(70, 133, 46) !important;
+#btnLogin:hover {
+  background: rgb(70, 133, 46) !important;
 }
 
 #btnLogin {
   background-color: rgb(92, 166, 68) !important;
-}
-
-#btnLogin:hover {
-  background: rgb(70, 133, 46) !important;
 }
 
 /* Button Einstellungen */
