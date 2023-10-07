@@ -18,16 +18,6 @@
     visibility: hidden;
 }
 
-/* Wenn der Bildschirm schmaler als 768px ist (Mobile) */
-@media screen and (max-width: 768px) {
-    .popup {
-        padding-bottom: 7.5%;
-        padding-top: 7.5%;
-        width: 85%;
-        min-width: 300px;
-    }
-}
-
 .popup-text {
     padding: 6%;
 }
@@ -124,4 +114,23 @@
 #btnLogin:hover,
 #btnCloseHelp:hover {
     background: rgb(70, 133, 46) !important;
+}
+
+#birthdate {
+    color: rgb(121, 121, 121);
+    padding-left: 2.5%;
+}
+
+/* Wenn der Bildschirm schmaler als 768px ist (Mobile) */
+@media screen and (max-width: 768px) {
+    .popup {
+        padding-bottom: 7.5%;
+        padding-top: 7.5%;
+        width: 85%;
+        min-width: 300px;
+    }
+
+    #birthdate {
+        padding-left: 4%;
+    }
 }
