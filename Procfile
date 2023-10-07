@@ -1,0 +1,1 @@
+web gunicorn prototyp.wsgi:application --log-file -
