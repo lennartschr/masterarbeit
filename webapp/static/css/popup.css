@@ -1,0 +1,127 @@
+.popup {
+    min-width: 50%;
+    align-content: center;
+    background-color: rgba(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    justify-content: center;
+    left: 50%;
+    padding: 2.5%;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transform: translate(-50%, -50%) scale(0.1);
+    transition: transform 0.4s, top 0.6s;
+    visibility: hidden;
+}
+
+/* Wenn der Bildschirm schmaler als 768px ist (Mobile) */
+@media screen and (max-width: 768px) {
+    .popup {
+        padding-bottom: 7.5%;
+        padding-top: 7.5%;
+        width: 85%;
+        min-width: 300px;
+    }
+}
+
+.popup-text {
+    padding: 6%;
+}
+
+.popupcol {
+    margin-bottom: 5%;
+    text-align: center;
+}
+
+.open-popup {
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    visibility: visible;
+}
+
+#blur.active,
+#blurHelp.active {
+    filter: blur(40px) brightness(80%);
+    pointer-events: none;
+    user-select: none;
+}
+
+#blur.deactive,
+#blurHelp.deactive {
+    filter: blur(0px);
+    pointer-events: all;
+    transition: filter 0.6s;
+}
+
+.inputform {
+    padding-bottom: 2.5%;
+}
+
+.input-container {
+    margin-bottom: 20px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.input-container input,
+.input-container select {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    height: 30px;
+    padding: 5px;
+    width: 100%;
+}
+
+.input-container label {
+    color: #777;
+    left: 0;
+    padding-left: 10px;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transition: 0.2s ease all;
+}
+
+.input-container input:focus+label,
+.input-container input:not(:placeholder-shown)+label,
+.input-container select:focus+label,
+.input-container select:not(:placeholder-shown)+label {
+    color: #000;
+    font-size: 12px;
+    padding-left: 0px;
+    top: -20px;
+}
+
+.input-container.error input,
+.input-container.error select {
+    border-color: red;
+}
+
+.lastname-input-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 70%;
+}
+
+.lastname-input-container input {
+    border: 1.5px solid rgb(64, 131, 190);
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 5px 5px 5px 12px;
+}
+
+#btnLogin,
+#btnCloseHelp {
+    background-color: rgb(92, 166, 68) !important;
+}
+
+#btnLogin:hover,
+#btnCloseHelp:hover {
+    background: rgb(70, 133, 46) !important;
+}

@@ -1,0 +1,376 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+
+<!-- Header: Zusatzinformationen zur Webseite, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+
+<head>
+    <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
+    <meta charset="utf-8" name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+
+    <!-- Titel im Tab -->
+    <title>Datenschutzerklärung</title>
+
+    <!-- Favicon der Website
+    (Quelle) https://icons8.com/icon/EML3C-WjW8gX/security-guard -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicons/Datenschutz_Favicon.png' %}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS mit individueller Anpassung -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/experiment.css' %}" />
+
+    <!-- Standard-Skripte Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+</head>
+
+<!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
+<body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
+        <div class="container containernav"><a class="navbar-brand js-scroll-trigger" href="/A">Experiment</a>
+            <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
+            <div>
+                <a href="https://www.uni-goettingen.de/">
+                    <img class="navlogo" src="{% static 'pictures/Universität-Göttingen-Logo.png' %}">
+                    <!-- (Quelle) Georg-August-Universität Göttingen https://www.uni-goettingen.de/de/589410.html -->
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Container: Datenschutzerklärung -->
+    <div class="container containerextend round center">
+        <div class="rowextend">
+            <h2 class="h2 center" style="margin-bottom: -6px;">Datenschutzerklärung</h2>
+            <p class="center">
+                <a href="/A">
+                    Zurück zur Startseite
+                </a>
+            </p>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Für welche Zwecke sollen personenbezogene Daten verarbeitet werden?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Ziel dieses Forschungsprojektes ist es die Reaktionen von Kunden bezüglich der Transparenz
+                        von Datenschutzverletzungen innerhalb von Unternehmen zu ergründen.
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Wer ist für die Datenverarbeitung verantwortlich und an wen können sich
+                    Betroffene wenden?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Georg-August-Universität Göttingen </br>
+                        Datenschutzbeauftragter: </br>
+                        Herr Prof. Andreas Wiebe, LL.M. (Virginia) </br>
+                        Platz der Göttinger Sieben 6 </br>
+                        37073 Göttingen </br>
+                        E-Mail: datenschutz@uni-goettingen.de
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Auf welcher Rechtsgrundlage erfolgt die Verarbeitung personenbezogener
+                    Daten?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Die Rechtsgrundlage für die Datenverarbeitung zu den oben genannten Zwecken ist Art. 6 Abs. 1
+                        UAbs. 1 lit. a DSGVO (Einwilligung).
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Welche personenbezogenen Daten werden verarbeitet?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Im Rahmen des Experiments werden keine personenbezogenen Daten
+                        erfasst. Ihre IP-Adresse wird übermittelt, jedoch nicht gespeichert.</br>
+                        Sollten Sie sich zur Teilnahme am Gewinnspiel entscheiden, müssen Sie
+                        dafür Ihre E-Mail-Adresse angeben. Jedoch wird diese gesondert von
+                        Experiment und Umfrage erfasst und erlaubt so keine Rückschlüsse auf
+                        Ihre Angaben.
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Wie lange werden personenbezogene Daten verarbeitet/gespeichert?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Auf Grund der möglichen Erhebung von Daten (E-Mail-Adresse, Alter & Geschlecht) können
+                        Rückschlüsse auf konkrete Personen gezogen werden. Die personenbezogenen Daten werden
+                        gelöscht, sobald die Verlosung und Übermittlung der Gutscheine
+                        erfolgt ist (spätestens mit Abschluss der Studie).
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Werden personenbezogene Daten an Dritte übermittelt?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        <b>Hosting</b><br>
+                        Diese Seite wird über den Service „Heroku“ des Hostinganbieters
+                        Salesforce.com Inc. ("Salesforce"), The Landmark @ One Market,
+                        Suite 300, San Francisco, California 94105, USA betrieben. Heroku
+                        erhält Zugriff auf Ihre IP-Adresse, Browser- sowie Geräte- und
+                        Betriebssysteminformationen. Heroku kann in Ihrem Browser sogenannte
+                        Cookies (kleine Textdateien) setzen. Die Datenschutzbestimmungen von Salesforce finden Sie hier:
+                        <a href="https://www.salesforce.com/de/company/privacy/" target="_blank">
+                            Datenschutzerklärung Salesforce
+                        </a>
+                    </p>
+                    <p class="pDatenschutz">
+                        <b>Umfrage</b><br>
+                        Die Daten der Umfrage werden im Rahmen einer Auftragsverarbeitung von
+                        Qualtrics.com verarbeitet. Qualtrics ist eine amerikanische Tochtergesellschaft
+                        des deutschen Softwareunternehmens SAP und erhält Zugriff auf Ihre IP-Adresse, Browser- sowie
+                        Geräte- und Betriebssysteminformationen. Qualtrics kann in Ihrem Browser sogenannte Cookies (kleine Textdateien) setzen. Die Datenschutzbestimmungen
+                        von Qualtrics finden Sie hier:
+                        <a href="https://www.qualtrics.com/privacy-statement/" target="_blank">
+                            Datenschutzerklärung Qualtrics
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Erfolgt eine Veröffentlichung personenbezogener Daten?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Die Forschungsergebnisse werden in wissenschaftlich üblicher Form
+                        veröffentlicht. Wir sichern zu, dass aus den Veröffentlichungen
+                        keinerlei Rückschlüsse auf konkrete natürliche Personen möglich sind.
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Welche Rechte haben Betroffene grundsätzlich?
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        <b> 1) Freiwilligkeit und Widerruf (Art. 7 Abs. 3 DSGVO)</b></br>
+                        Die Einwilligung erfolgt freiwillig. Durch eine Nichtteilnahme oder
+                        einen Abbruch entstehen Ihnen keine Nachteile. Die Einwilligung kann
+                        jederzeit nach Art. 7 Abs. 3 DSGVO widerrufen werden,
+                        sodass die personenbezogenen Daten der betreffenden Person nicht
+                        weiterverarbeitet werden. Die Rechtmäßigkeit der aufgrund der
+                        Einwilligung bis zum Widerruf erfolgten Verarbeitung bleibt hiervon
+                        unberührt. Bei einem Widerruf wird die E-Mail-Adresse gelöscht. </br>
+                    </p>
+                    <p class="pDatenschutz">
+                        <b> 2) Auskunftsrecht (Art. 15 DSGVO) </b> </br>
+                        Die Betroffenen haben das Recht, jederzeit Auskunft über die zu ihrer
+                        Person verarbeiteten Daten, sowie die möglichen Empfänger dieser Daten
+                        verlangen zu können. Ihnen steht eine Antwort innerhalb einer Frist
+                        von einem Monat nach Eingang des Auskunftsersuchens zu. </br>
+                    </p>
+                    <p class="pDatenschutz">
+                        <b>3) Recht auf Berichtigung, Löschung und Einschränkung (Art. 16 –
+                            18 DSGVO)</b> </br>
+                        Die Betroffenen können jederzeit gegenüber der Georg-August-Universität die
+                        Berichtigung oder Löschung ihrer personenbezogenen Daten oder die
+                        Einschränkung der Verarbeitung verlangen.</br>
+                    </p>
+                    <p class="pDatenschutz">
+                        <b>4) Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</b></br>
+                        Die Betroffenen können verlangen, dass der Verantwortliche Ihnen
+                        personenbezogenen Daten in einem maschinenlesbaren Format übermittelt.
+                        Alternativ können Sie die direkte Übermittlung der von Ihnen
+                        bereitgestellten personenbezogenen Daten an einen anderen
+                        Verantwortlichen verlangen, soweit dies möglich ist.</br>
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Hinweise zu Artikel 13 der EU-Datenschutzgrundverordnung
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Folgende Informationen sind Ihnen gemäß Art. 13 der Datenschutz-Grundverordnung
+                        (DSGVO, Verordnung (EU) 2016/679) bei Erhebung der personenbezogenen Daten mitzuteilen:
+                    </p>
+                    <ul>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 1 a) und b)</b></br>
+                                Verantwortlicher für die Erhebung und Verarbeitung der personenbezogenen Daten gem. Art.
+                                4 Nr. 7 DSGVO ist die <br>
+                                <p style="margin-bottom:0px; font-weight: bold;">
+                                    Georg- August-Universität Göttingen <br>
+                                    Stiftung öffentlichen Rechts (ohne Universitätsmedizin) <br>
+                                    Wilhelmsplatz 1 <br>
+                                    37073 Göttingen <br>
+                                </p>
+                                vertreten durch den Präsidenten der Universität Göttingen,
+                                konkrete Daten verarbeitende Stelle ist der Lehrstuhl für Informationsmanagement im
+                                Rahmen der Forschung.</br>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 1 c)</b></br>
+                                Die Erhebung der personenbezogenen Daten ist notwendig, um den Einsatz von digitalen
+                                Assistenzsystemen zu erforschen
+                                und beruht auf Ihrer Einwilligung gem. Art. 6 Abs. 1 Buchst. a) DSGVO.</br>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 1 e)</b></br>
+                                Die personenbezogenen Daten werden folgendermaßen weiterverarbeitet und an weitere
+                                zuständige Stellen übermittelt:</br>
+                                Forschung: Die im Rahmen von Studien angegebenen Daten werden von den Ihnen angegebenen
+                                Forschenden verarbeitet.
+                                Wenn weitere Datenempfänger existieren, werden Sie gesondert darauf hingewiesen.</br>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 2 a)</b></br>
+                                Die Speicherdauer der Daten variiert und wird Ihnen im Einzelfall mitgeteilt. Auf jeden
+                                Fall werden die
+                                personenbezogenen Daten gelöscht, sobald sie nicht mehr benötigt werden. Wo und wann
+                                immer möglich, werden
+                                die Daten anonymisiert.</br>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 2 b)</b></br>
+                                Die betroffene Person hat gegenüber der Organisationseinheit ein Recht auf Auskunft über
+                                die sie betreffenden personenbezogenen
+                                Daten sowie gegebenenfalls auf Berichtigung, Löschung oder auf Einschränkung der
+                                Verarbeitung dieser Daten und ein Widerspruchsrecht
+                                gegen die Verarbeitung sowie ein etwaiges Recht auf Datenübertragbarkeit.</br>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 2 c)</b></br>
+                                Soweit die Datenverarbeitung auf Ihrer Einwilligung beruht, haben Sie jederzeit das
+                                Recht, die Einwilligung zu widerrufen. Die bis
+                                dahin erfolgte Datenverarbeitung bleibt rechtmäßig, der Widerruf gilt nur für die
+                                Zukunft. Ihre Daten werden in diesem Fall unverzüglich
+                                gelöscht.</br>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 2 d) Beschwerderecht (Art. 77 DSGVO)</b></br>
+                                Betroffene Personen können sich jederzeit an den
+                                Datenschutzbeauftragten der Georg-August-Universität (s.o.) sowie bei einer
+                                Beschwerde nach Art. 77 DSGVO an die zuständige Aufsichtsbehörde zum
+                                Datenschutz wenden.<br>
+                                Die zuständige Aufsichtsbehörde ist:</br>
+                                <p style="margin-left:40px; font-weight: bold;">
+                                    Landesbeauftragte für den Datenschutz Niedersachsen </br>
+                                    Prinzenstraße 5 </br>
+                                    30159 Hannover </br>
+                                    <span style="word-break: break-all;">
+                                        E-Mail: poststelle@lfd.niedersachsen.de </br>
+                                    </span>
+                                </p>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 2 e)</b></br>
+                                Die Bereitstellung Ihrer Daten kann verpflichtend sein. Darüber werden Sie im
+                                Einzelfall informiert.</br>
+                            </li>
+                        </p>
+                        <p class="pDatenschutz">
+                            <li>
+                                <b> Zu Art. 13 Abs. 3)</b></br>
+                                Ist beabsichtigt, die personenbezogenen Daten für einen anderen Zweck
+                                weiterzuverarbeiten als den, für den sie ursprünglich erhoben wurden, so stellt die
+                                Universität Göttingen oder die Organisationseinheit der betroffenen Person vor dieser
+                                Weiterverarbeitung Informationen über diesen anderen Zweck und alle anderen maßgeblichen
+                                Informationen zur Verfügung.</br>
+                            </li>
+                        </p>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col datah1 rounded">
+                    Hinweis zur Inanspruchnahme der Rechte
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="pDatenschutz">
+                        Zur Inanspruchnahme der Rechte genügt eine Mitteilung
+                        in Textform (Brief oder E-Mail) an den Verantwortlichen.
+                        Die Inanspruchnahme der Rechte entfaltet jedoch nur Wirkung,
+                        wenn die verarbeiteten Daten eine Identifizierung einer natürlichen
+                        Person zulassen.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col center">
+                    <a href="/A">
+                        Zurück zur Startseite
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer ist unten fixiert -->
+    <footer class="mt-auto">
+        <div class="container jumbotron vertical-center footer">
+            <span>© 2023 Georg-August-Universität Göttingen</span>
+        </div>
+    </footer>
+</body>
+
+</html>

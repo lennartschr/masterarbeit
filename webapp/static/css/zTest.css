@@ -1,0 +1,228 @@
+/* Ihre bisherige CSS */
+.expandable .more {
+    display: none;
+}
+
+.toggle {
+    color: rgb(20, 100, 170);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.toggle:hover {
+    color: rgb(8, 72, 128);
+}
+
+/* Neuer CSS-Code für den Fade-Effekt */
+.content {
+    position: relative;
+    overflow: hidden;
+    max-height: 350px;
+}
+
+/* Fade-Effekt für das ausklappbare Div */
+.faded::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Überblendeffekts Höhe */
+    background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+    display: block;
+}
+
+.news-banner {
+    background-color: rgb(188, 0, 0);
+    color: white;
+    padding: 10px 30px 10px 30px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 30px;
+    text-align: left;
+    letter-spacing: 2px;
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.containerMoreInfo {
+    max-width: 1200px;
+    min-width: 300px;
+    width: 90%;
+    min-height: 8%;
+    height: auto;
+    padding: 5%;
+    padding-top: 48px;
+    padding-bottom: 40px;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255);
+    box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.2);
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    position: relative;
+}
+
+body {
+    background-color: rgb(186, 186, 186);
+}
+
+/* Flex-Container-Anpassungen */
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.text-section {
+    flex: 2;
+    min-width: calc(700px - 50%);
+    margin-right: 20px;
+}
+
+.image-section {
+    flex: 1;
+    max-width: 340px;
+    background-color: #f0f0f0;
+    /* padding: 20px; */
+}
+
+.image-section img {
+    width: 100%;
+    height: auto;
+}
+
+.flex-container>.image-section {
+    margin-top: 3.5%;
+    margin-left: 2.5%;
+}
+
+.persontext {
+    padding: 20px;
+    text-align: left;
+}
+
+.mail-link {
+    text-transform: lowercase;
+    text-decoration: underline;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.newspaper-name {
+    font-size: 4rem;
+    font-family: Georgia, serif;
+}
+
+.newspaper-title {
+    font-size: 2.2rem;
+    padding-top: 100px;
+    font-family: Optima, sans-serif;
+}
+
+.newspaper-text {
+    font-size: 1.6rem;
+    font-family: Optima, sans-serif;
+}
+
+.description {
+    padding-top: 5px;
+    font-size: 1.3rem;
+    font-family: Optima, sans-serif;
+}
+
+.topic-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.topic {
+    flex: 1 0 calc(25% - 20px);
+    background-color: #ededed;
+    padding: 10px;
+    text-align: center;
+}
+
+.topic:hover {
+    background-color: #d5d5d5;
+    cursor: pointer;
+}
+
+/* Medienabfrage für Bildschirmbreiten unter 700px */
+@media (max-width: 850px) {
+
+    .text-section,
+    .image-section {
+        flex-basis: 100%;
+        margin-right: 0;
+    }
+
+    .text-section {
+        min-width: 0;
+    }
+
+    .image-section {
+        max-width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        width: 220% !important;
+        justify-content: space-between;
+        padding-left: 0%;
+        padding-right: 0%;
+    }
+
+    .image-section img {
+        display: block;
+        margin-top: 10px;
+        width: 100%;
+        height: auto;
+    }
+
+    .image-person1 {
+        width: 50%;
+        padding-right: 5px;
+    }
+
+    .image-person2 {
+        width: 50%;
+        padding-left: 5px;
+    }
+
+    .newspaper-name {
+        font-size: 2.2rem;
+    }
+
+    .newspaper-text {
+        font-size: 1.2rem;
+    }
+
+    .newspaper-title {
+        font-size: 1.8rem;
+    }
+
+    .persontext {
+        padding: 20px 0px;
+        font-size: 1rem;
+    }
+
+    .mail-link {
+        font-size: 0.9rem;
+    }
+
+    .toggle {
+        margin-top: 10px;
+    }
+
+    .flex-container>.image-section {
+        margin-top: 4%;
+        margin-left: 0%;
+    }
+
+    .topic {
+        flex: 1 0 calc(50% - 20px);
+    }
+}
