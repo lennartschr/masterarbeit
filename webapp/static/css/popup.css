@@ -124,7 +124,7 @@
 
 #birthdate {
     color: rgb(121, 121, 121);
-    padding-left: 2.5%;
+    padding-left: 15px;
 }
 
 /* Wenn der Bildschirm schmaler als 768px ist (Mobile) */
@@ -134,9 +134,5 @@
         padding-top: 7.5%;
         width: 85%;
         min-width: 300px;
-    }
-
-    #birthdate {
-        padding-left: 4%;
     }
 }
