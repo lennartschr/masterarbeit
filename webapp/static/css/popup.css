@@ -107,12 +107,18 @@
 }
 
 #btnLogin,
-#btnCloseHelp {
+#btnCloseHelp, 
+#btnSurvey,
+#btnSurvey2,
+#btnCloseInfo {
     background-color: rgb(92, 166, 68) !important;
 }
 
 #btnLogin:hover,
-#btnCloseHelp:hover {
+#btnCloseHelp:hover,
+#btnSurvey:hover,
+#btnSurvey2:hover,
+#btnCloseInfo:hover {
     background: rgb(70, 133, 46) !important;
 }
 
