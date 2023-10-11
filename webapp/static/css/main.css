@@ -453,3 +453,7 @@ svg+svg {
     border: 0px;
     box-shadow: rgba(0, 0, 0, 0.20) 0px 6px 12px, rgba(0, 0, 0, 0.24) 0px 8px 8px;
 }
+
+.extraBold {
+    font-weight: 700;
+}

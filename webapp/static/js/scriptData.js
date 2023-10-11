@@ -2,6 +2,7 @@
 let krankenkassen = [];
 // Hilfe Timer
 let timer;
+let timer2;
 // Funktionalitäten für Mailverteiler in der Handyversion
 let navigationHistory = ["folderPage"];
 
@@ -160,7 +161,6 @@ function closePopup() {
     blur.classList.toggle("deactive");
     blur.classList.remove("active");
 
-
     // Inhalt anzeigen lassen
     document.getElementById('mainContent').style.display = 'block';
     // Startet den Timer für Hilfe, sobald das Skript geladen wird
@@ -174,6 +174,12 @@ function initiateTimer() {
     // Setzt einen Timer, der 'openHelpPopup' nach 45 Sekunden auslöst
     // timer = setTimeout(openHelpPopup, 45000);
     timer = setTimeout(openHelpPopup, 8000);
+}
+
+function initiateTimer2() {
+    // Setzt einen Timer, der 'openHelpPopup' nach 45 Sekunden auslöst
+    // timer = setTimeout(openHelpPopup, 45000);
+    timer2 = setTimeout(openHelpPopup2, 8000);
 }
 
 // Funktion zum Wechseln zur Sicherheitsinformation
@@ -214,6 +220,9 @@ function changeMessageLogo() {
         messageUnreadSymbol.style.display = 'block';
         messageReadSymbol.style.display = 'none';
     }
+
+    // Startet den Timer für Hilfe, sobald das Skript geladen wird
+    initiateTimer2();
 }
 
 // Pop-up ChooseExperiment
@@ -237,7 +246,6 @@ function closeChooseExperimentPopup() {
         window.location.href = '/A';
     }
 }
-
 
 // Pop-up zum Login öffnen
 function openLoginPopup() {
@@ -307,25 +315,8 @@ function closeLoginPopup() {
     }
 }
 
-// Pop-up zum InformationPopup öffnen
-function openInformationPopup() {
-    let popupLogin = document.getElementById("popupInformation");
-    popupLogin.classList.add("open-popup");
-
-    let blur = document.getElementById("blur");
-    blur.classList.remove("deactive");
-    blur.classList.toggle("active");
-}
-
-// Pop-up zum InformationPopup schließen
-function closeInformationPopup() {
-    let popupLogin = document.getElementById("popupInformation");
-    popupLogin.classList.remove("open-popup");
-
-    let blur = document.getElementById("blur");
-    blur.classList.toggle("deactive");
-    blur.classList.remove("active");
-
+function changeToInformation() {
+    clearTimeout(timer2);
     let mailSecurityInfos = document.getElementById("SecurityInfos");
     mailSecurityInfos.style.display = "none";
 
@@ -337,6 +328,29 @@ function closeInformationPopup() {
         top: 0,
         behavior: 'smooth'
     });
+
+    openInformationPopup();
+}
+
+
+// Pop-up zum InformationPopup öffnen
+function openInformationPopup() {
+    let popupLogin = document.getElementById("popupInformation");
+    popupLogin.classList.add("open-popup");
+
+    let blur = document.getElementById("blurInformation");
+    blur.classList.remove("deactive");
+    blur.classList.toggle("active");
+}
+
+// Pop-up zum InformationPopup schließen
+function closeInformationPopup() {
+    let popupLogin = document.getElementById("popupInformation");
+    popupLogin.classList.remove("open-popup");
+
+    let blur = document.getElementById("blurInformation");
+    blur.classList.toggle("deactive");
+    blur.classList.remove("active");
 }
 
 // Pop-up für Hilfe
@@ -352,6 +366,26 @@ function openHelpPopup() {
 // Pop-up zum HilfePopup schließen
 function closeHelpPopup() {
     let popupHelp = document.getElementById("popupHelp");
+    popupHelp.classList.remove("open-popup");
+
+    let blur = document.getElementById("blurHelp");
+    blur.classList.toggle("deactive");
+    blur.classList.remove("active");
+}
+
+// Pop-up für Hilfe
+function openHelpPopup2() {
+    let popupHelp = document.getElementById("popupHelp2");
+    popupHelp.classList.add("open-popup");
+
+    let blur = document.getElementById("blurHelp");
+    blur.classList.remove("deactive");
+    blur.classList.toggle("active");
+}
+
+// Pop-up zum HilfePopup schließen
+function closeHelpPopup2() {
+    let popupHelp = document.getElementById("popupHelp2");
     popupHelp.classList.remove("open-popup");
 
     let blur = document.getElementById("blurHelp");
@@ -391,8 +425,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // "Anmelden"
     document.getElementById('btnLogin').addEventListener('click', closeLoginPopup);
     // "Weiter zur Umfrage"
-    document.getElementById("btnSurvey").addEventListener('click', openInformationPopup);
-    document.getElementById("btnSurvey2").addEventListener('click', openInformationPopup);
+    document.getElementById("btnSurvey").addEventListener('click', changeToInformation);
+    document.getElementById("btnSurvey2").addEventListener('click', changeToInformation);
     document.getElementById("btnCloseInfo").addEventListener('click', closeInformationPopup);
     document.getElementById("btnForward").addEventListener('click', forwardToSurvey);
 });
