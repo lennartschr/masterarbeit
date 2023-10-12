@@ -395,12 +395,12 @@ function closeHelpPopup2() {
 
 // Weiterleitung zur Umfrage mit Prototyp
 function forwardToSurvey() {
-    window.location.href = 'https://www.qualtrics.com/de/';
+    window.location.href = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6g3geTJqqsbLKGG';
 }
 
 // Weiterleitung zur Umfrage ohne Prototyp
 function forwardToSurveyOP() {
-    window.location.href = 'https://www.qualtrics.com/de/';
+    window.location.href = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_0vL5fUw7R70B52e';
 }
 
 
