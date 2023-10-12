@@ -172,7 +172,7 @@ function closePopup() {
 
 function initiateTimer() {
     // Setzt einen Timer, der 'openHelpPopup' auslöst
-    timer = setTimeout(openHelpPopup, 10000);
+    timer = setTimeout(openHelpPopup, 15000);
 }
 
 function initiateTimer2() {
