@@ -177,7 +177,7 @@ function initiateTimer() {
 
 function initiateTimer2() {
     // Setzt einen Timer, der 'openHelpPopup2' auslöst
-    timer2 = setTimeout(openHelpPopup2, 180000);
+    timer2 = setTimeout(openHelpPopup2, 150000);
 }
 
 // Funktion zum Wechseln zur Sicherheitsinformation
