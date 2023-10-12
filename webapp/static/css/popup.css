@@ -127,6 +127,10 @@
     padding-left: 15px;
 }
 
+.extraBold {
+    font-weight: 650;
+}
+
 /* Wenn der Bildschirm schmaler als 768px ist (Mobile) */
 @media screen and (max-width: 768px) {
     .popup {
