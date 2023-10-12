@@ -35,14 +35,16 @@
 }
 
 #blur.active,
-#blurHelp.active {
+#blurHelp.active,
+#blurInformation.active {
     filter: blur(40px) brightness(80%);
     pointer-events: none;
     user-select: none;
 }
 
 #blur.deactive,
-#blurHelp.deactive {
+#blurHelp.deactive,
+#blurInformation.deactive {
     filter: blur(0px);
     pointer-events: all;
     transition: filter 0.6s;

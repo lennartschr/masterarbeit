@@ -363,7 +363,7 @@ function openHelpPopup() {
     blur.classList.toggle("active");
 }
 
-// Pop-up zum HilfePopup schließen
+// Pop-up für Hilfe schließen
 function closeHelpPopup() {
     let popupHelp = document.getElementById("popupHelp");
     popupHelp.classList.remove("open-popup");
@@ -373,7 +373,7 @@ function closeHelpPopup() {
     blur.classList.remove("active");
 }
 
-// Pop-up für Hilfe
+// Pop-up für Hilfe2
 function openHelpPopup2() {
     let popupHelp = document.getElementById("popupHelp2");
     popupHelp.classList.add("open-popup");
@@ -383,7 +383,7 @@ function openHelpPopup2() {
     blur.classList.toggle("active");
 }
 
-// Pop-up zum HilfePopup schließen
+// Pop-up für Hilfe2 schließen
 function closeHelpPopup2() {
     let popupHelp = document.getElementById("popupHelp2");
     popupHelp.classList.remove("open-popup");
