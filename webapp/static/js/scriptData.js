@@ -241,7 +241,7 @@ function closeChooseExperimentPopup() {
     if (Math.random() < 0.5) {
         window.location.href = '/A';
     } else {
-        window.location.href = '/A';
+        window.location.href = '/B';
     }
 }
 
