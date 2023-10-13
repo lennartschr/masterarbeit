@@ -19,7 +19,7 @@ function redirect() {
     }
     // Überprüfen ob alle Checkboxen ausgefüllt wurden
     if ((a == 1) && (b == 1))
-        window.location.href = '/website';
+        window.location.href = '/webseite';
     else // Falls nicht alle Checkboxen ausgefüllt wurden wird die Funktion durchlaufen, die die Hinweise ausgibt
         showAdvice();
 }
