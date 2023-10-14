@@ -336,9 +336,9 @@ function openInformationPopup() {
     let popupLogin = document.getElementById("popupInformation");
     popupLogin.classList.add("open-popup");
 
-    let blur = document.getElementById("blurInformation");
-    blur.classList.remove("deactive");
-    blur.classList.toggle("active");
+    // let blur = document.getElementById("blurInformation");
+    // blur.classList.remove("deactive");
+    // blur.classList.toggle("active");
 }
 
 // Pop-up zum InformationPopup schließen
@@ -346,9 +346,9 @@ function closeInformationPopup() {
     let popupLogin = document.getElementById("popupInformation");
     popupLogin.classList.remove("open-popup");
 
-    let blur = document.getElementById("blurInformation");
-    blur.classList.toggle("deactive");
-    blur.classList.remove("active");
+    // let blur = document.getElementById("blurInformation");
+    // blur.classList.toggle("deactive");
+    // blur.classList.remove("active");
 }
 
 // Pop-up für Hilfe
