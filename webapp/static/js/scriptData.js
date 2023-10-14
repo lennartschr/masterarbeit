@@ -168,6 +168,11 @@ function closePopup() {
     // Aktualisierte Texte einfügen
     replaceAnsprache();
     replaceNachname();
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function initiateTimer() {
