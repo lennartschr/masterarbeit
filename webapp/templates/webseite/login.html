@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+
+<!-- Header: Zusatzinformationen zur Website, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+
+<head>
+    <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
+    <meta charset="utf-8">
+    <!-- Token für Datenbankanbindung -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Titel im Tab -->
+    <title>VitaNova Intranet</title>
+
+    <!-- Favicon der Website
+    (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'svg/health-insurance.svg' %}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS mit individueller Anpassung -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/externalCSS/mailinglist.css' %}" />
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/3.7.95/css/materialdesignicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- JavaScript Einbindung -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/function.js' %}"></script>
+    <script src="{% static 'js/databaseConnection.js' %}"></script> <!-- Datenbankanbindung einbinden POST/GET -->
+
+    <!-- Standard-Skripte Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</head>
+
+<!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
+<body onload="openDataPopup()" class="no-background">
+    <div id="mainElement" class="mainBlur">
+        <!-- Navigationsbar-->
+        <nav class="navbar navbar-light navbar-expand fixed-top sticky-top py-0 center">
+            <div id="containernav" class="d-flex flex-column align-items-start w-100">
+                <!-- Oberer Teil der Navbar -->
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div class="navbar-brand js-scroll-trigger navsize a">VitaNova</div>
+                    <div class="healthSymbolPosition">
+                        <!-- Health-Insurance-Logo -->
+                        <!-- (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
+                        <a><img class="health-symbol" src="{% static 'svg/health-insurance.svg' %}"></a>
+                    </div>
+                    <!-- Navbar Bereich Rechts -->
+                    <div class="hideLoginArea align-items-center" id="LoginArea">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Footer ist unten fixiert -->
+        <footer class="fixed-bottom footer" id="footerSettings">
+            <span>© 2024 VitaNova</span>
+        </footer>
+    </div>
+
+    <!-- Dateneingabe Popups -->
+    <div class="popup" id="enterDataPopup">
+        <div class="container round center">
+            <div class="rowextend">
+                <div class="popupcol">
+                    Bevor Sie zum Login des internen Netzwerkes gelangen, geben Sie bitte die nachfolgenden Daten ein.
+                </div>
+                <form class="inputform">
+                    <div class="lastname-input-container">
+                        <label class="inputLabel" for="lastname">Ihren Nachname</label>
+                        <!-- <input id="lastName" placeholder="Nachname" /> -->
+                        <input id="lastName" placeholder="Nachname" value="Müller" />
+                    </div>
+
+                    <div class="formBox input-container">
+                        <select id="gender">
+                            <option value="">Bitte auswählen</option>
+                            <option value="männlich">Männlich</option>
+                            <option value="weiblich">Weiblich</option>
+                            <option value="divers">Divers</option>
+                            <option value="andere">Andere</option>
+                        </select>
+                        <label class="inputLabel" for="gender">Ihr Geschlecht</label>
+                    </div>
+                </form>
+                <div class="col center">
+                    <div class="rowextend center">
+                        <div class="formBox">
+                            <button class="btn submit rounded-pill btn-primary" type="submit" id="btnDataPopUp">
+                                Weiter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ladespinner -->
+    <div class="loader-overlay" id="loaderOverlay1">Benutzerkonto wird erstellt<div class="loader" id="spinner1"></div>
+    </div>
+</body>
+
+</html>

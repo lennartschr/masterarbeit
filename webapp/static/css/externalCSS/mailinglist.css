@@ -22,8 +22,8 @@
     display: flex;
     -webkit-align-items: center;
     align-items: center;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
+    /* -webkit-justify-content: space-between;
+    justify-content: space-between; */
 }
 
 .email-wrapper .mail-sidebar .menu-bar .menu-items li:hover {
@@ -32,12 +32,12 @@
 
 .email-wrapper .mail-sidebar .menu-bar .menu-items li a {
     color: #303a40;
-    font-size: 1.2rem;
+    font-size: calc(16px + 0.390625vw);
     text-decoration: none;
 }
 
 .email-wrapper .mail-sidebar .menu-bar .menu-items li a i {
-    margin-right: 8px;
+    margin-right: 12px;
     font-size: 0.75rem;
     line-height: 1.5;
 }
@@ -230,6 +230,7 @@
 /* Nachrichteninhalt */
 .email-wrapper .message-body .sender-details {
     padding: 0px 15px 0;
+    padding-top: 2%;
     border-bottom: 1px solid #e9e9e9;
     display: -webkit-flex;
     display: flex;
@@ -240,8 +241,7 @@
 }
 
 .email-wrapper .message-body .sender-details .details .msg-subject {
-    font-weight: 600;
-    font-size: 14px;
+    font-size: calc(14px + 0.390625vw);
 }
 
 .email-wrapper .message-body .sender-details .details .sender-email {
@@ -256,7 +256,7 @@
 }
 
 .email-wrapper .message-body .message-content {
-    padding: 50px 15px;
+    padding: 25px 15px 50px 15px;
     text-align: justify;
 }
 
@@ -321,13 +321,19 @@
     font-size: 18px;
 }
 
-.green-dot {
+.blue-dot {
     width: 10px;
     height: 10px;
-    background-color: rgb(92, 166, 68);
+    background-color: rgb(64, 131, 190);
     border-radius: 50%;
     order: -1 !important;
     /* Reihenfolge ändern, um den Punkt vor dem Text anzuzeigen */
+}
+
+/* Abstand */
+.row>* {
+    padding-right: calc(var(--bs-gutter-x) * 0.4);
+    padding-left: calc(var(--bs-gutter-x) * 0.3);
 }
 
 .transparent-dot {
@@ -341,11 +347,13 @@
 
 .badge {
     color: black;
+    font-size: calc(14px + 0.390625vw);
+    margin-top: 2px;
 }
 
 .mdi:before,
 .mdi-set {
-    font-size: large;
+    font-size: calc(22px + 0.390625vw) !important;
 }
 
 /* CSS für Mail */
@@ -355,11 +363,6 @@
 
 .page.active {
     display: block;
-}
-
-.navigation {
-    top: 0;
-    left: 0;
 }
 
 .email-preview {
@@ -376,7 +379,7 @@
 
 .sender-name {
     font-weight: 600 !important;
-    font-size: smaller;
+    font-size: calc(12px + 0.390625vw);
     max-width: 95%;
     padding-top: 2%;
     margin: 0%;
@@ -386,7 +389,7 @@
     margin: 0;
     height: 50px;
     max-width: 93%;
-    font-size: 0.9rem;
+    font-size: calc(12px + 0.390625vw);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

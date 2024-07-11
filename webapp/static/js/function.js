@@ -19,7 +19,7 @@ function redirect() {
     }
     // Überprüfen ob alle Checkboxen ausgefüllt wurden
     if ((a == 1) && (b == 1))
-        window.location.href = '/webseite';
+        window.location.href = '/kontrolle';
     else // Falls nicht alle Checkboxen ausgefüllt wurden wird die Funktion durchlaufen, die die Hinweise ausgibt
         showAdvice();
 }
@@ -79,13 +79,13 @@ function redirect2() {
     }
 
     if ((a == 1) && (b == 1) && (c == 1)) {
-        window.location.href = '/webseite';
+        window.location.href = '/login';
     }
 
     // Pop-up-Fenster die den Hinweis ausgibt
     else {
         window.location.href = '/A';
-        window.alert('Leider waren Ihre Angaben nicht korrekt.\nBitte lesen Sie die einzelnen Schritte des Experiments erneut.');
+        window.alert('Leider waren Ihre Angaben nicht korrekt.\nBitte lesen Sie die einzelnen Schritte der Studie erneut.');
     }
 }
 

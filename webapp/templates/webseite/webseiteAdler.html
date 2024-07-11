@@ -1,0 +1,582 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+
+<!-- Header: Zusatzinformationen zur Website, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+
+<head>
+    <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
+    <meta charset="utf-8">
+    <!-- Token für Datenbankanbindung -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Titel im Tab -->
+    <title>VitaNova Intranet</title>
+
+    <!-- Favicon der Website
+    (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'svg/health-insurance.svg' %}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS mit individueller Anpassung -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/externalCSS/mailinglist.css' %}" />
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/3.7.95/css/materialdesignicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- JavaScript Einbindung -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/function.js' %}"></script>
+    <script src="{% static 'js/databaseConnection.js' %}"></script> <!-- Datenbankanbindung einbinden POST/GET -->
+
+    <!-- Standard-Skripte Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</head>
+
+<!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
+<body onload="openLoginPopup()" id="background" class="no-background">
+    <div id="mainElement" class="mainBlur">
+        <!-- Navigationsbar-->
+        <nav class="navbar navbar-light navbar-expand fixed-top sticky-top py-0 center">
+            <div id="containernav" class="d-flex flex-column align-items-start w-100">
+                <!-- Oberer Teil der Navbar -->
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div class="navbar-brand js-scroll-trigger navsize a">VitaNova</div>
+                    <div class="healthSymbolPosition">
+                        <!-- Health-Insurance-Logo -->
+                        <!-- (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
+                        <a><img class="health-symbol" src="{% static 'svg/health-insurance.svg' %}"></a>
+                    </div>
+                    <!-- Timer -->
+                    <div class="ml-auto" id="timerContainer">
+                        <span id="timer">01:30</span>
+                    </div>
+                    <!-- Navbar Bereich Rechts -->
+                    <div class="hideLoginArea align-items-center" id="LoginArea">
+                        <!-- Message-Logo -->
+                        <!-- (Quelle) https://www.svgrepo.com/svg/501625/message?edit=true -->
+                        <a onclick="navigateTo('inboxPage'), showMailbox(), closeWelcomeMessage()">
+                            <img class="messageUnread-logo" src="{% static 'svg/messageUnread.svg' %}"
+                                id="messageUnread" alt="Nachrichten">
+                        </a>
+                        <div class="navbar-brand js-scroll-trigger navsize a"><span id="participantNameSpan">{{ participantName }}</span></div>
+                    </div>
+                </div>
+                <!-- Unterer Teil der Navbar mit Zurück-Button -->
+                <div class="justify-content-start w-100 mt-2" id="navigationSymbol">
+                    <a onclick="navigateBack()">
+                        <!-- Zurück-Symbol -->
+                        <!-- (Quelle) https://www.svgrepo.com/svg/494008/back -->
+                        <img id="backButton" src="{% static 'svg/arrow-back.svg' %}" alt="Zurück">
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- LoginBereich VitaNova -->
+        <div class="container containerWelcome round center hide" id="welcomePage">
+            <div class="loginfield">
+                <div class="rowextend">
+                    <span class="spanWelcome">Willkommen</span>
+                    <form>
+                        <div class="formBox input-container">
+                            <div class="input-container">
+                                <input type="text" id="username" placeholder=" " value="{{ participantNameWithSuffix }}"
+                                    readonly />
+                                <label for="username">Nutzername</label>
+                            </div>
+                        </div>
+                        <div class="formBox input-container">
+                            <div class="input-container">
+                                <input type="password" id="password" placeholder=" " readonly />
+                                <label for="password">Passwort</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="rowextend center">
+                        <div class="formBox">
+                            <button class="btn submit rounded-pill btn-primary" type="submit"
+                                id="btnWelcome">Anmelden</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Willkommensnachricht -->
+        <div id="welcomeMessage" class="container containerextend" style="display: none">
+            <h2 class="h2 center"> Willkommen <wbr><span>{{ participantGender_speech }}</span> <span>{{ participantName }}</span>!</h2>
+            <div class="notification-box">
+                <a onclick="navigateTo('inboxPage'), showMailbox(), closeWelcomeMessage()" style="cursor: pointer;">
+                    <div class="row centered-content">
+                        <div class="col-auto centered-content">
+                            <!-- User-Bell-Logo -->
+                            <!-- (Quelle) https://www.svgrepo.com/svg/513429/bell -->
+                            <img class="notificationbell" src="{% static 'svg/bell.svg' %}">
+                        </div>
+                    </div>
+                    <div class="row centered-content">
+                        <div class="col-auto centered-content">
+                            <div class="col centered-content">
+                                In Ihrem Postfach befinden sich neue Nachrichten.
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Container Mailverteiler Thema Sicherheitsinformationen nach Login (Handy-View) -->
+        <div id="MailContainerMobile" class="container containerextend">
+            <div id="inboxPage" class="page" style="margin-top: 5%;">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div id="folderPage" class="page active mail-sidebar d-block bg-white">
+                                <div class="menu-bar">
+                                    <ul class="menu-items">
+                                        <li style="color: rgb(64, 131, 190); cursor: pointer;"
+                                            onclick="navigateTo('mailPreviews'), showNavigation()"><a
+                                                style="color: rgb(64, 131, 190);"><i
+                                                    class="mdi mdi-email-outline"></i></a><span
+                                                class="mailbox-text">Nachrichten-Eingang<span
+                                                    style="color: rgb(64, 131, 190);"
+                                                    class="badge badge-pill badge-success"><span
+                                                        id="inboxNumber">4</span></span></li>
+                                        <li><a><i class="mdi mdi-share"></i></a><span
+                                                class="mailbox-text">Entwürfe</span></li>
+                                        <li><a><i class="mdi mdi-file-outline"></i></a><span
+                                                class="mailbox-text">Entwürfe<span
+                                                    class="badge badge-pill badge-warning">4</span></span>
+                                        </li>
+                                        <li><a><i class="mdi mdi-upload"></i></a><span class="mailbox-text">Ausgang<span
+                                                    class="badge badge-pill badge-danger">1</span></span>
+                                        </li>
+                                        <li><a><i class="mdi mdi-delete"></i></a><span
+                                                class="mailbox-text">Papierkorb</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mailPreviews" class="page">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-list mailpreview-container pb-4 border-right bg-white">
+                                <!-- Mailvorschau 1 -->
+                                <div class="mail-list mailpreview" style="cursor: pointer;"
+                                    onclick="navigateTo('mail1'), removeDot(1)">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="blue-dot" id="blueDot1"></div>
+                                        </div>
+                                        <div class="col-auto" style="max-width: 80%;">
+                                            <p class="sender-name">Projekt D213
+                                            </p>
+                                            <p class="message_text"><span>{{ participantGender_speech }}</span>
+                                                <span>{{ participantName }}</span>,
+                                                wie geht es Ihnen?
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Mailvorschau 2 -->
+                                <div class="mail-list mailpreview" style="cursor: pointer;"
+                                    onclick="navigateTo('mail2'), removeDot(2)">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="blue-dot" id="blueDot2"></div>
+                                        </div>
+                                        <div class="col-auto" style="max-width: 80%;">
+                                            <p class="sender-name">Dringendes Sicherheitsupdate erforderlich!</p>
+                                            <p class="message_text">
+                                                Liebe Mitarbeiter,
+                                                um die Sicherheit unseres Netzwerks zu gewährleisten, führen wir heute
+                                                ein dringendes
+                                                Sicherheitsupdate durch.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Mailvorschau 3 -->
+                                <div class="mail-list mailpreview" style="cursor: pointer;"
+                                    onclick="navigateTo('mail3'), removeDot(3)">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="blue-dot" id="blueDot3"></div>
+                                        </div>
+                                        <div class="col-auto" style="max-width: 80%;">
+                                            <p class="sender-name">Erweiterung unseres Netzwerks</p>
+                                            <p class="message_text">
+                                                Mehr Ärzte und Spezialisten für Sie! Unser Netzwerk zu
+                                                erweitern
+                                                und Ihnen den besten Service zu bieten ist eine ständige
+                                                Bestrebung.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Mailvorschau 4 -->
+                                <div class="mail-list mailpreview" id="mailvorschau4" style="cursor: pointer;"
+                                    onclick="navigateTo('mail4'), removeDot(4)">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="blue-dot" id="blueDot4"></div>
+                                        </div>
+                                        <div class="col-auto" style="max-width: 80%;">
+                                            <p class="sender-name">Zugang zum Teamsordner
+                                            </p>
+                                            <p class="message_text">Hallo <span>{{ participantGender_speech }}</span>
+                                                <span>{{ participantName }}</span>,
+                                                ich bin gerade auf dem Weg zu einem wichtigen Treffen mit einem unserer
+                                                Kunden, um unser neues
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Button zur Umfrage -->
+                                <div class="rowextend center">
+                                    <div class="formBox">
+                                        <button class="btn submit rounded-pill btn-primary" type="button"
+                                            id="openSurvey">Arbeit
+                                            abschließen</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mailinhalt 1 -->
+            <div id="mail1" class="page">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-view d-block bg-white">
+                                <div class="message-body">
+                                    <div class="sender-details">
+                                        <div class="details">
+                                            <p class="msg-subject">
+                                                <b>Betreff:</b> Projekt D213
+                                                <br>
+                                                <b>Von:</b>
+                                                <span class="sender-email-container" onclick="toggleTooltip()">
+                                                    zhiror@ikrani.dicuridae.eu.com
+                                                    <img src="{% static 'svg/attention-icon.svg' %}" alt="Error Icon"
+                                                        class="error-icon-2">
+                                                </span><br>
+                                                <b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                            </p>
+                                            <div class="tooltip" id="tooltip">
+                                                Dieser Absender ist extern. Bitte prüfen Sie den Inhalt sorgfältig.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="message-content border-left">
+                                        <p>Hallo <span>{{ participantGender_speech }}</span> <span>{{ participantName }}</span>,
+                                            <br><br>
+                                            ich bin gerade auf dem Weg zu einem wichtigen Treffen mit einem unserer
+                                            Kunden, um unser neues
+                                            Produkt vorzustellen. Leider musste ich feststellen, dass nach einem
+                                            Browser-Update meine
+                                            gespeicherten Benutzernamen und Passwörter verloren gegangen sind. Um die
+                                            neueste Version der
+                                            Präsentation aus unserem Teamsordner herunterzuladen, muss mich in das
+                                            Dateifreigabesystem der
+                                            Firma einloggen. Ich habe diese Problematik gerade mit unserem Vorgesetzen
+                                            besprochen, der mir
+                                            empfohlen hat, mich direkt an Sie zu wenden, da Sie mir am schnellsten
+                                            weiterhelfen können.
+                                            Könnten Sie mir bitte kurzfristig Ihre Anmeldedaten für das
+                                            Dateifreigabesystem zukommen lassen,
+                                            damit ich die Präsentation herunterladen und pünktlich zum Meeting
+                                            erscheinen kann? Ich danke
+                                            Ihnen vielmals!
+                                            <br><br>
+                                            Mit besten Grüßen<br>
+                                            Johannes Bergmann<br>
+                                        </p>
+                                        <div class="col center">
+                                            <div class="rowextend center">
+                                                <div class="formBox">
+                                                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                                                        id="openAnswerPopUp1">Antworten</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mailinhalt 2 -->
+            <div id="mail2" class="page">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-view d-block bg-white">
+                                <div class="message-body">
+                                    <div class="sender-details">
+                                        <div class="details">
+                                            <p class="msg-subject">
+                                                <!-- <img class="messageSenderSymbol" src="{% static 'svg/user.svg' %}"> -->
+                                                <b>Betreff:</b> Dringendes Sicherheitsupdate erforderlich!
+                                                <br><br><b>Von:</b> re-rpcesl-vsey9o@news-mail.de
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="message-content border-left">
+
+                                        <p> Liebe Mitarbeiter,
+                                            <br><br>
+                                            um die Sicherheit unseres Netzwerks zu gewährleisten, führen wir heute ein
+                                            dringendes
+                                            Sicherheits&shyupdate durch. Alle Nutzer sind aufgefordert, ihre Systeme bis
+                                            zum Ende des Tages zu
+                                            aktualisieren, um Kompatibilitäts&shyprobleme zu vermeiden.
+                                            <br>
+                                            Bitte klicken Sie auf den folgenden Link, um das Update zu starten:
+                                            <br><br>[<span id="download_Hyperlink">Link</span>]<br><br>
+
+                                            Sollten Sie das Update nicht durchführen, kann dies zu einem temporären
+                                            Ausschluss vom Netzwerk
+                                            führen.
+                                            <br>Vielen Dank für Ihre sofortige Aufmerksamkeit zu dieser Angelegenheit.
+                                            <br><br>
+                                            Mit freundlichen Grüßen<br>
+                                            Ihre IT-Abteilung
+                                        </p>
+                                        <br>
+                                        <div class="col center">
+                                            <div class="rowextend center">
+                                                <div class="formBox">
+                                                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                                                        id="btnSurvey">Antworten</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mailinhalt 3 -->
+            <div id="mail3" class="page">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-view d-block bg-white">
+                                <div class="message-body">
+                                    <div class="sender-details">
+                                        <div class="details">
+                                            <p class="msg-subject">
+                                                <!-- <img class="messageSenderSymbol" src="{% static 'svg/user.svg' %}"> -->
+                                                <b>Betreff:</b> Mitarbeiterzufriedenheitsumfrage - Ihre Meinung ist
+                                                gefragt!
+                                                <br><br><b>Von:</b> miror@ikrani.dicuridae.eu.com
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="message-content border-left">
+                                        <p> Liebe Kolleginnen und Kollegen,
+                                            <br><br>
+                                            als Teil unserer ständigen Bemühungen, die Arbeitsumgebung zu verbessern,
+                                            bitten wir Sie, an
+                                            unserer kurzen Mitarbeiter&shyzufriedenheits&shyumfrage teilzunehmen. Ihr
+                                            Feedback ist uns sehr
+                                            wichtig
+                                            und die Umfrage dauert nur wenige Minuten.
+                                            <br>
+                                            Bitte klicken Sie auf den Link, um zur Umfrage zu gelangen:
+                                            <br><br>[<span id="download_Hyperlink">Link</span>]<br><br>
+
+                                            <br>Wir danken Ihnen im Voraus für Ihre Teilnahme und Ihr ehrliches
+                                            Feedback.
+                                            <br><br>
+                                            Mit freundlichen Grüßen<br>
+                                            Ihre IT-Abteilung
+                                        </p>
+                                        <br>
+                                        <div class="col center">
+                                            <div class="rowextend center">
+                                                <div class="formBox">
+                                                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                                                        id="btnSurvey">Antworten</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mailinhalt 4 -->
+            <div id="mail4" class="page">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-view d-block bg-white">
+                                <div class="message-body">
+                                    <div class="sender-details">
+                                        <div class="details">
+                                            <p class="msg-subject">
+                                                <!-- <img class="messageSenderSymbol" src="{% static 'svg/user.svg' %}"> -->
+                                                <b>Betreff:</b> Zugang zum Teamsordner
+                                                <br><b>Von:</b> zhiror@ikrani.dicuridae.eu.com
+                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="message-content border-left">
+                                        <!-- Notification Error -->
+                                        <div class="notification-error">
+                                            <img src="{% static 'svg/attention-icon.svg' %}" alt="Error Icon"
+                                                class="error-icon">
+                                            <span>Achtung Externe Mail!</span>
+                                        </div>
+                                        <p>
+                                            Hallo <span>{{ participantGender_speech }}</span> <span>{{ participantName }}</span>,
+                                            <br><br>
+                                            ich bin gerade auf dem Weg zu einem wichtigen Treffen mit einem unserer
+                                            Kunden, um unser neues
+                                            Produkt vorzustellen. Leider musste ich feststellen, dass nach einem
+                                            Browser-Update meine
+                                            gespeicherten Benutzernamen und Passwörter verloren gegangen sind. Um die
+                                            neueste Version der
+                                            Präsentation aus unserem Teamsordner herunterzuladen, muss mich in das
+                                            Dateifreigabesystem der
+                                            Firma einloggen. Ich habe diese Problematik gerade mit unserem Vorgesetzen
+                                            besprochen, der mir
+                                            empfohlen hat, mich direkt an Sie zu wenden, da Sie mir am schnellsten
+                                            weiterhelfen können.
+                                            Könnten Sie mir bitte kurzfristig Ihre Anmeldedaten für das
+                                            Dateifreigabesystem zukommen lassen,
+                                            damit ich die Präsentation herunterladen und pünktlich zum Meeting
+                                            erscheinen kann? Ich danke
+                                            Ihnen vielmals!
+                                            <br><br>
+                                            Mit besten Grüßen<br>
+                                            Johannes Bergmann<br>
+                                        </p>
+                                        <div class="col center">
+                                            <div class="rowextend center">
+                                                <div class="formBox">
+                                                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                                                        id="openAnswerPopUp4">Antworten</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer ist unten fixiert -->
+        <footer class="fixed-bottom footer" id="footerSettings">
+            <span>© 2024 VitaNova</span>
+        </footer>
+    </div>
+
+    <!-- Pop-Up -->
+    <!-- Antwort E-Mail 1 -->
+    <div class="popup" id="Antwort_Email_1">
+        <div class="container round center popup-content">
+            <div class="rowextend">
+                <!-- Close button "X" -->
+                <div class="popupcol close-btn" onclick="closeAnswerPopUp(1)">
+                    <span>&times;</span>
+                </div>
+                <br>
+            </div>
+            <div class="rowextend center">
+                Antwort an Johannes Bergmann: <br><br>
+            </div>
+
+            <!-- Input field for the response -->
+            <div class="rowextend center mt-3">
+                <textarea class="form-control" id="responseText1" rows="4" maxlength="250"
+                    placeholder="Schreiben Sie Ihre Antwort hier..."></textarea>
+                <div class="text-right">
+                    <span id="charCount1">250</span> Zeichen verbleibend
+                </div>
+            </div>
+            
+            <span style="text-align: left !important;"><b>Ihre Anmeldedaten:</b><br>
+                <span><i>Username:</i></span> <span>{{ participantNameWithSuffix }}</span><br>
+                <span><i>Passwort:</i></span> V!taHe@lth_24
+            </span>
+
+            <div class="rowextend center mt-3">
+                <div class="formBox">
+                    <button class="btn rounded-pill btn-success" type="submit" id="sendAnswer1" disabled>
+                        Senden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Antwort E-Mail 4 -->
+    <div class="popup" id="Antwort_Email_4">
+        <div class="container round center popup-content">
+            <div class="rowextend">
+                <!-- Close button "X" -->
+                <div class="popupcol close-btn" onclick="closeAnswerPopUp(4)">
+                    <span>&times;</span>
+                </div>
+                <br>
+            </div>
+            <div class="rowextend center">
+                Antwort an Johannes Bergmann: <br><br>
+            </div>
+
+            <!-- Input field for the response -->
+            <div class="rowextend center mt-3">
+                <textarea class="form-control" id="responseText4" rows="4" maxlength="250"
+                    placeholder="Schreiben Sie Ihre Antwort hier..."></textarea>
+                <div class="text-right">
+                    <span id="charCount4">250</span> Zeichen verbleibend
+                </div>
+            </div>
+
+            <div class="rowextend center mt-3">
+                <div class="formBox">
+                    <button class="btn rounded-pill btn-success" type="submit" id="sendAnswer4" disabled>
+                        Senden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ladespinner -->
+    <div class="loader-overlay" id="loaderOverlay2">Kontodetails werden abgerufen<div class="loader" id="spinner2">
+        </div>
+    </div>
+
+</body>
+
+</html>

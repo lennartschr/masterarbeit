@@ -14,7 +14,9 @@ urlpatterns = [
     path("datenschutz", views.datenschutz, name="datenschutz"),
     # Kontrollfragen
     path("kontrolle", views.kontrolle, name="kontrolle"),
-    # Webseite
+    # Login
+    path("login", views.login, name="login"),
+    # Website
     path("webseite", views.webseite, name="webseite"),
 
 
@@ -24,12 +26,11 @@ urlpatterns = [
     path("datenschutzB", views.datenschutzB, name="datenschutzB"),
     # Kontrollfragen
     path("kontrolleB", views.kontrolleB, name="kontrolleB"),
-    # Webseite
-    path("webseiteB", views.webseiteB, name="webseiteB"),
+    # Website
+    path("webseiteAdler", views.webseiteAdler, name="webseiteAdler"),
 
 
-
-    # Webseite zum Testen von diversen Inhalten
+    # Website zum Testen von diversen Inhalten
     path("ZTest", views.ZTest, name="ZTest"),
 ]
 

@@ -9,15 +9,18 @@
 /* Abstand Überschrift zur Navbar + Hintergrund weiß/grün iPad*/
 body {
     font-family: SF Pro Display, SF Pro Icons, AOS Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 19px;
+    font-size: 4vw;
     margin: 0px;
     min-height: 800px;
     display: block;
 }
 
+.wallpaper {
+    background-image: url("{% static 'svg/backgroundHealth.webp' %}");
+}
+
 p {
     text-align: justify;
-    font-size: 19px;
 }
 
 .pDatenschutz {
@@ -27,7 +30,6 @@ p {
 h3 {
     font-size: 22px;
 }
-
 
 /* Button Einstellungen */
 .submit {
@@ -53,8 +55,6 @@ h3 {
     }
 
     .containerextend {
-        padding-left: 3.5% !important;
-        padding-right: 3.5% !important;
         width: 94% !important;
     }
 
@@ -93,9 +93,8 @@ h3 {
     }
 
     .rowextend {
-        font-size: 18px !important;
-        padding-left: 2.5%;
-        padding-right: 2.5%;
+        padding-left: 3%;
+        padding-right: 3%;
     }
 }
 
@@ -118,6 +117,7 @@ h3 {
     height: auto;
     min-height: 60px;
     background-color: rgb(23, 55, 118);
+    margin-bottom: 5%;
 }
 
 .navbar {
@@ -158,9 +158,9 @@ h3 {
 /* Allgemeine Standardwerte */
 /* Containererweiterung */
 .containerextend {
-    max-width: 1200px;
+    /* max-width: 1200px;
     min-width: 300px;
-    width: 90%;
+    width: 90% !important; */
     min-height: 8%;
     height: auto;
     padding: 6%;
@@ -169,7 +169,7 @@ h3 {
     margin-top: 10px;
     /*Abstand zum oberen Container*/
     background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 4px 4px 4px 2px rgba(0, 0, 0, 0.2); */
 }
 
 .containerFooter {
@@ -256,7 +256,8 @@ h3 {
 }
 
 .option {
-    padding-top: 3px;
+    padding-top: 2%;
+    padding-left: 2.5%;
     text-align: left;
 }
 

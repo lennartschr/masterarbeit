@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="de">
 
-<!-- Header: Zusatzinformationen zur Webseite, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+<!-- Header: Zusatzinformationen zur Website, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
 
 <head>
     <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
@@ -13,8 +13,8 @@
     <title>Alles verstanden?</title>
 
     <!-- Favicon der Website
-    (Quelle) https://icons8.com/icon/41892/mind-map -->
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicons/Experiment_Favicon.png' %}">
+    (Quelle) https://www.svgrepo.com/svg/500449/university -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicons/Graduate_Cap.svg' %}">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -29,14 +29,14 @@
     <!-- Standard-Skripte Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+        </script>
 </head>
 
 <!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
 
 <body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
     <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
-        <div class="container containernav"><a class="navbar-brand js-scroll-trigger" href="/B">Experiment</a>
+        <div class="container containernav"><a class="navbar-brand js-scroll-trigger" href="/B">Studie</a>
             <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
             <div>
                 <a href="https://www.uni-goettingen.de/">
@@ -53,11 +53,11 @@
         - Mindestens eine der Antworten nicht korrekt: Pop-up-Fenster und Teilnehmer wird zurück auf Landingpage geleitet -->
     <div class="container containerextend round center">
         <div class="rowextend">
-            <h2 class="h2 center">Fragen zum Experiment</h2>
+            <h2 class="h2 center">Fragen zur Studie</h2>
             <div class="rowextend">
                 <div class="col" style="margin-top:16px">
-                    <p>Bevor das Experiment startet, beantworten Sie bitte noch die folgenden Fragen, um überprüfen zu
-                        können, dass sowohl das Experiment als auch dessen Ablauf korrekt verstanden wurde.
+                    <p>Bevor die Studie startet, beantworten Sie bitte noch die folgenden Fragen, um überprüfen zu
+                        können, dass sowohl die Studie als auch dessen Ablauf korrekt verstanden wurde.
                     </p>
                     <!-- Geschütztes Leerzeichen: "&nbsp;" -->
                     <p class="questions">
@@ -79,9 +79,10 @@
                     </p>
 
                     <p class="questions">
-                        <b>2. Worüber werden Sie nachfolgend informiert? </b></br>
+                        <b>2. Worüber sollen Sie sich auf der nachfolgenden Website informieren? </b></br>
                         <label class="option" for="check2a" style="margin-bottom: 6px;">
-                            <input type="radio" name="2" id="check2a">&nbsp; Informationen hinsichtlich einer Datenschutzverletzung
+                            <input type="radio" name="2" id="check2a">&nbsp; Informationen hinsichtlich einer
+                            Datenschutzverletzung
                         </label>
                         <br>
 
@@ -91,13 +92,14 @@
                         <br>
 
                         <label class="option" for="check2c">
-                            <input type="radio" name="2" id="check2c">&nbsp; Maßnahmen zur Verbesserung des operativen Cashflows
+                            <input type="radio" name="2" id="check2c">&nbsp; Maßnahmen zur Verbesserung des operativen
+                            Cashflows
                         </label>
                         <br>
                     </p>
 
                     <p class="questions">
-                        <b>3. In welche Perspektive sollen Sie sich während des Experiments versetzen?</b></br>
+                        <b>3. In welche Perspektive sollen Sie sich während der Studie versetzen?</b></br>
                         <label class="option" for="check3a">
                             <input type="radio" name="3" id="check3a">&nbsp; Ein Manager eines Konkurrenzunternehmens
                         </label>
@@ -119,12 +121,12 @@
             <div class="rowextend">
                 <div class="col" style="font-size: 19px;">
                     <p>Bitte klicken Sie nun auf den unten stehenden Button, um Ihre Antworten
-                        auszuwerten und anschließend mit dem Experiment zu beginnen.</p>
+                        auszuwerten und anschließend mit der Studie zu beginnen.</p>
                 </div>
                 <div class="col center">
                     <div class="rowextend center">
                         <button class="btn submit rounded-pill btn-primary" type="submit"
-                            onclick="redirect2B()"><b>Experiment beginnen</b></button>
+                            onclick="redirect2B()"><b>Studie beginnen</b></button>
                     </div>
                 </div>
             </div>
@@ -134,7 +136,7 @@
     <!-- Footer ist unten fixiert -->
     <footer class="mt-auto">
         <div class="container jumbotron vertical-center footer">
-            <span>© 2023 Georg-August-Universität Göttingen</span>
+            <span>© 2024 Georg-August-Universität Göttingen</span>
         </div>
     </footer>
 </body>

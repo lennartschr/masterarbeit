@@ -66,16 +66,16 @@ function redirect2() {
     }
 }
 
-// randomisierte Weiterleitung zu den unterschiedlichen Webseiten
+// randomisierte Weiterleitung zu den unterschiedlichen Websiten
 function redirectWebsite() {
     var a = Math.floor(Math.random() * 2 + 1);
 
-    // Webseite mit hoher Transparenz
+    // Website mit hoher Transparenz
     if (a == 1) {
         window.location.href = '/eingabedaten';
     }
 
-    // Webseite mit geringer Transparenz
+    // Website mit geringer Transparenz
     if (a == 2) {
         window.location.href = '/eingabedaten';
     }
@@ -148,7 +148,7 @@ function update() {
         }, 1400);
 
         // Text Pop-Up ändern
-        var date = document.getElementById("popup-text-change").textContent = "Eine Woche nach Bekanntgabe der Datenschutzverletzung ist vergangen. Sie besuchen die Webseite erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
+        var date = document.getElementById("popup-text-change").textContent = "Eine Woche nach Bekanntgabe der Datenschutzverletzung ist vergangen. Sie besuchen die Website erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
 
         // Button text change
         var buttonforward = document.getElementById("buttonmessage").textContent = "Nächster Schritt";
@@ -179,7 +179,7 @@ function update() {
         }, 1400);
 
         // Text Pop-Up ändern
-        var date = document.getElementById("popup-text-change").textContent = "Inzwischen ist ein Monat nach Bekanntgabe der Datenschutzverletzung vergangen. Sie besuchen die Webseite erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
+        var date = document.getElementById("popup-text-change").textContent = "Inzwischen ist ein Monat nach Bekanntgabe der Datenschutzverletzung vergangen. Sie besuchen die Website erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
     }
 
     if (value == "18. November 2022") {
@@ -307,7 +307,7 @@ function updateNT() {
         }, 1400);
 
         // Text Pop-Up ändern
-        var date = document.getElementById("popup-text-change").textContent = "Eine weitere Woche nach Bekanntgabe der Datenschutzverletzung ist vergangen. Sie besuchen die Webseite erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
+        var date = document.getElementById("popup-text-change").textContent = "Eine weitere Woche nach Bekanntgabe der Datenschutzverletzung ist vergangen. Sie besuchen die Website erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
 
         // Button text change
         var buttonforward = document.getElementById("buttonmessage").textContent = "Nächster Schritt";
@@ -326,7 +326,7 @@ function updateNT() {
         }, 1400);
 
         // Text Pop-Up ändern
-        var date = document.getElementById("popup-text-change").textContent = "Inzwischen ist ein Monat nach Bekanntgabe der Datenschutzverletzung vergangen. Sie besuchen die Webseite erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
+        var date = document.getElementById("popup-text-change").textContent = "Inzwischen ist ein Monat nach Bekanntgabe der Datenschutzverletzung vergangen. Sie besuchen die Website erneut, um sich über neue Sicherheits-Updates im Hinblick auf die Datenschutzverletzung zu informieren.";
     }
 
     if (value == "20. November 2022") {
