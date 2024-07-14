@@ -21,7 +21,7 @@ class Answers(models.Model):
     answer3 = models.CharField(max_length=250, default="No Answer")
     answer4 = models.CharField(max_length=250, default="No Answer")
 
-    answer2_pdf = models.IntegerField(default=0) # Ob die PDF mitgesendet wurde oder nicht
+    pdf_clicked = models.IntegerField(default=0) # Ob die PDF mitgesendet wurde oder nicht
 
 # Experiment Nummern
 #         0 = Default Webseite

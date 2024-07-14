@@ -1,5 +1,8 @@
 /////////// Datenbankanbindung ///////////
 
+const totalMailNumbers = 4; // Anzahl der zu beantwortenden Mails
+let answeredCount = 0;
+
 // Funktion zum Abrufen des CSRF-Tokens
 function getCsrfToken() {
     const tokenElement = document.querySelector('meta[name="csrf-token"]');
@@ -66,7 +69,7 @@ function sendAnswer(mailNumber) {
     formData.append(`answer${mailNumber}`, responseText);
     formData.append('participantName', participantName);
     formData.append('csrfmiddlewaretoken', token);
-    formData.append('answer2_pdf', documentSelected);
+    formData.append('pdf_clicked', documentSelected);
 
     fetch('/webseite', {
         method: 'POST',
@@ -75,6 +78,11 @@ function sendAnswer(mailNumber) {
         return response.json().then(data => {
             if (response.ok) {
                 console.log('Antwort erfolgreich gesendet:', data.message);
+                answeredCount++; // Zählen der gesendeten Antworten
+                if (answeredCount === totalMailNumbers) {
+                    // Alle Antworten wurden gesendet
+                    document.getElementById('completionSection').style.display = 'block';
+                }
             } else {
                 console.error('Fehler beim Senden der Antwort:', data.message);
             }

@@ -3,6 +3,7 @@ let navigationHistory = ["folderPage"]; // Funktionalitäten für Mailverteiler 
 
 /*//////////////// Event-Listener ////////////////*/
 document.addEventListener('DOMContentLoaded', () => {
+
     // "?" relevant, um zu prüfen ob Element existiert
     document.getElementById('btnDataPopUp')?.addEventListener('click', closeDataPopup);
     document.getElementById('btnWelcome')?.addEventListener('click', closeWelcome);
@@ -283,6 +284,7 @@ function showMailbox() {
 
     // Ausblenden Footer
     document.getElementById('footerLinks').style.display = 'none';
+    document.getElementById('footerLine').style.display = 'none';
     document.getElementById('footerSettings').style.backgroundColor = 'white';
 }
 

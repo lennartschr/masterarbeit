@@ -503,7 +503,7 @@ body {
     display: none;
     min-height: 500px;
     height: 100%;
-    padding-bottom: 5%;
+    /* padding-bottom: 5%; */
 }
 
 #inboxPage {
@@ -633,6 +633,10 @@ body {
     text-decoration: underline;
 }
 
+.note {
+    font-size: calc(10px + 0.590625vw);
+}
+
 /* Mailantwort schließen - "X-Button" */
 .close-btn {
     position: absolute !important;
@@ -663,9 +667,14 @@ body {
 
 .document-container {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
     margin-top: 10px;
+}
+
+.note {
+    font-style: italic;
+    font-size: calc(8px + 0.490625vw)
 }
 
 .document-tile {

@@ -52,7 +52,7 @@ def webseite(request):
                 ip_address=ip_address,
                 participantName=participantName,
                 participantGender=participantGender,
-                created_at__gte=lifetime_participant_dataset
+                created_at__gte=lifetime_participant_dataset,
             ).first()
 
             if recent_entry:
@@ -61,7 +61,9 @@ def webseite(request):
                 recent_entry.participantGender = participantGender
                 recent_entry.experimentNumber = experimentNumber
                 recent_entry.save()
-                return JsonResponse({"message": "Teilnehmerdaten erfolgreich aktualisiert."})
+                return JsonResponse(
+                    {"message": "Teilnehmerdaten erfolgreich aktualisiert."}
+                )
             else:
                 # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minute ist
                 Answers.objects.create(
@@ -70,22 +72,27 @@ def webseite(request):
                     participantGender=participantGender,
                     experimentNumber=experimentNumber,
                 )
-                return JsonResponse({"message": "Neuer Teilnehmerdatensatz erfolgreich gespeichert."})
+                return JsonResponse(
+                    {"message": "Neuer Teilnehmerdatensatz erfolgreich gespeichert."}
+                )
 
-        elif "answer1" in request.POST or "answer2" in request.POST or "answer3" in request.POST or "answer4" in request.POST:
+        elif (
+            "answer1" in request.POST
+            or "answer2" in request.POST
+            or "answer3" in request.POST
+            or "answer4" in request.POST
+        ):
             answer1 = request.POST.get("answer1")
             answer2 = request.POST.get("answer2")
             answer3 = request.POST.get("answer3")
             answer4 = request.POST.get("answer4")
+            pdf_clicked = int(request.POST.get("pdf_clicked", 0))
             participantName = request.POST.get("participantName")
-            answer2_pdf = int(request.POST.get("answer2_pdf", 0))
-
-
+            
             try:
                 # Eintrag für den Teilnehmer aktualisieren basierend auf Name und IP-Adresse
                 latest_answer = Answers.objects.filter(
-                    participantName=participantName,
-                    ip_address=ip_address
+                    participantName=participantName, ip_address=ip_address
                 ).latest("created_at")
 
                 if timezone.now() - latest_answer.created_at < timedelta(minutes=30):
@@ -97,12 +104,16 @@ def webseite(request):
                         latest_answer.answer3 = answer3
                     if answer4:
                         latest_answer.answer4 = answer4
-                    latest_answer.answer2_pdf = answer2_pdf
+                    latest_answer.pdf_clicked = pdf_clicked
                     latest_answer.save()
                     return JsonResponse({"message": "Antwort erfolgreich gespeichert."})
                 else:
-                    return JsonResponse({"message": "Eintrag ist älter als 30 Minuten, keine Aktualisierung erfolgt."})
-                
+                    return JsonResponse(
+                        {
+                            "message": "Eintrag ist älter als 30 Minuten, keine Aktualisierung erfolgt."
+                        }
+                    )
+
             except Answers.DoesNotExist:
                 return JsonResponse({"message": "Teilnehmer nicht gefunden."})
 
@@ -134,9 +145,20 @@ def webseite(request):
         "andere": "Herr/Frau",
     }
 
-    # Standardanrede, falls das Geschlecht nicht im Dictionary enthalten ist
+    # Dictionary zur Zuordnung des Titels basierend auf dem Geschlecht
+    gender_titel_map = {
+        "männlich": "Sehr geehrter",
+        "weiblich": "Sehr geehrte",
+        "divers": "Sehr geehrter/Sehr geehrte",
+        "andere": "Sehr geehrter/Sehr geehrte",
+    }
+
+    # Standardanreden, falls das Geschlecht nicht im Dictionary enthalten ist
     participantGender_speech = gender_speech_map.get(
         latest_answer.participantGender, "Herr/Frau"
+    )
+    participantGender_titel = gender_titel_map.get(
+        latest_answer.participantGender, "Sehr geehrter/Sehr geehrte"
     )
 
     context = {
@@ -144,8 +166,9 @@ def webseite(request):
         "participantNameWithSuffix": participant_name_with_suffix,
         "participantGender": latest_answer.participantGender,
         "participantGender_speech": participantGender_speech,
+        "participantGender_titel": participantGender_titel,
     }
-    
+
     return render(request, "webseite/webseite.html", context)
 
     # Daten an Frontend zurück übergeben
