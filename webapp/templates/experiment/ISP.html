@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+
+<!-- Header: Zusatzinformationen zur Website, wie Titel, Links zu CSS/JavaScript-Dateien, Favicons, andere Metadaten -->
+
+<head>
+    <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
+    <meta charset="utf-8" name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+
+    <!-- Titel im Tab -->
+    <title>Alles verstanden?</title>
+
+    <!-- Favicon der Website
+    (Quelle) https://www.svgrepo.com/svg/500449/university -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicons/Graduate_Cap.svg' %}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- CSS mit individueller Anpassung -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/experiment.css' %}" />
+
+    <!-- JavaScript Einbindung -->
+    <script src="{% static 'js/function.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- Standard-Skripte Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+        </script>
+</head>
+
+<!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
+<body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
+        <div class="container containernav">
+            <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
+            <div>
+                <a href="https://www.uni-goettingen.de/">
+                    <img class="navlogo" src="{% static 'pictures/Universität-Göttingen-Logo.png' %}">
+                    <!-- (Quelle) Georg-August-Universität Göttingen https://www.uni-goettingen.de/de/589410.html -->
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Verstecktes Feld zur Speicherung der experimentNumber -->
+    <input type="hidden" id="experimentNumber" value="{{ experimentNumber }}">
+
+    <!-- Container: Kontrollfragen & Auswertung der Antworten -->
+    <!-- [Java-Script-Datei: js/function.js/"function redirect2()"]
+        - Alle Fragen korrekt beantwortet: Weiterleitung zur Website. 
+        - Mindestens eine der Antworten nicht korrekt: Pop-up-Fenster und Teilnehmer wird zurück auf Landingpage geleitet -->
+    <div class="container containerextend round center">
+        <div class="rowextend">
+            <div class="rowextend">
+                <h2 class="h2 center">Interne Richtlinien</h2>
+                <br>
+                <!-- Nudges -->
+                <div class="rowextend" id="nudge1a" style="display: none;"> Ich bin Nudge 1a - Verlustaversion</div>
+                <div class="rowextend" id="nudge2a" style="display: none;"> Ich bin Nudge 2a - Social Proof</div>
+                <br>
+                VitaNova verpflichtet seine Mitarbeiter, alle internen Systeme und Ressourcen verantwortungsbewusst zu
+                nutzen, um die Sicherheit und Effizienz im Krankenhausbetrieb zu gewährleisten. Die Nutzung der Systeme
+                soll den Informationsaustausch sowie die Kommunikation und Zusammenarbeit fördern. Mitarbeiter sind
+                angehalten, ihre Computer und vertraulichen Daten stets mit einem sicheren Passwort zu schützen. Sichere
+                Passwörter müssen aus mindestens acht Zeichen bestehen, darunter ein Großbuchstabe, ein Kleinbuchstabe,
+                ein Symbol und eine Zahl. Passwörter sind jederzeit vertraulich zu behandeln und dürfen nicht an andere
+                Personen weitergegeben oder aufgezeichnet werden. Wenn Mitarbeiter ihre Geräte oder Computer
+                unbeaufsichtigt lassen, müssen sie sich entweder abmelden oder ihre Bildschirme sperren, um unbefugten
+                Zugriff zu verhindern. Vertrauliche Daten, einschließlich persönlicher Informationen und
+                krankenhausinterner Daten, sind mit höchster Sorgfalt zu behandeln. Es ist untersagt, vertrauliche Daten
+                an private E-Mail-Konten zu versenden oder an unbefugte Dritte weiterzugeben.
+                <br><br>
+                <!-- Nudges -->
+                <div class="rowextend" id="nudge1b" style="display: none;"> Ich bin Nudge 1b - Verlustaversion</div>
+                <div class="rowextend" id="nudge2b" style="display: none;"> Ich bin Nudge 2b - Social Proof</div>
+            </div>
+            <br><br>
+
+            <div class="rowextend">
+                <div class="col center">
+                    <div class="rowextend center">
+                        <button class="btn submit rounded-pill btn-primary" type="submit"
+                            onclick="window.location.href='/ISPkontrolle'"><b>Weiter</b></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer ist unten fixiert -->
+    <footer class="mt-auto">
+        <div class="container jumbotron vertical-center footer">
+            <span>© 2024 Georg-August-Universität Göttingen</span>
+        </div>
+    </footer>
+</body>
+
+</html>

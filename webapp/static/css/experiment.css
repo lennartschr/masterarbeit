@@ -9,7 +9,7 @@
 /* Abstand Überschrift zur Navbar + Hintergrund weiß/grün iPad*/
 body {
     font-family: SF Pro Display, SF Pro Icons, AOS Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 4vw;
+    font-size: 1rem;
     margin: 0px;
     min-height: 800px;
     display: block;
@@ -35,16 +35,36 @@ h3 {
 .submit {
     height: 50px;
     max-width: 400px;
-    width: 100%;
+    width: 80%;
     margin-top: 20px;
     font-weight: bold;
-    background-color: rgb(23, 55, 118) !important;
-    border: none;
+    background-color: rgb(255, 255, 255) !important;
+    border: 1.5px solid rgb(50, 80, 156) !important;
+    color: rgb(0, 0, 0) !important;
+    /* transition: background-color 0.3s, color 0.3s; */
 }
 
-.submit:hover {
-    background-color: rgb(40, 80, 156) !important;
+.submit:hover,
+.submit:focus {
+    background-color: rgb(50, 80, 156) !important;
+    border: 1.5px solid rgb(50, 80, 156) !important;
+    color: rgb(255, 255, 255) !important;
 }
+
+.btn {
+    height: 50px;
+    max-width: 400px;
+    width: 80%;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: rgb(50, 80, 156);
+    color: rgb(255, 255, 255);
+}
+
+
 
 /* Größe der Schrift, wenn das Fenster <= 450px groß ist iPhone*/
 @media screen and (max-width: 450px) {
@@ -306,4 +326,9 @@ h3 {
 .input-container.error input,
 .input-container.error select {
     border-color: red;
+}
+
+#nudge1a, #nudge1b, #nudge2a, #nudge2b {
+    display: none;
+    color: red;
 }

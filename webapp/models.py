@@ -13,8 +13,8 @@ class Answers(models.Model):
     
     experimentNumber = models.PositiveIntegerField(default=0)
     
-    participantName = models.CharField(max_length=20) 
-    participantGender = models.CharField(max_length=20, default="Unknown")
+    participantName = models.CharField(max_length=20, default="UnknownName") 
+    participantGender = models.CharField(max_length=20, default="UnknownGender")
 
     answer1 = models.CharField(max_length=250, default="No Answer")
     answer2 = models.CharField(max_length=250, default="No Answer")

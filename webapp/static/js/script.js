@@ -1,12 +1,18 @@
 /*//////////////// Fixe Variablen ////////////////*/
 let navigationHistory = ["folderPage"]; // Funktionalitäten für Mailverteiler in der Handyversion
+let experimentNumber; // Experimentnummer im globalen Scope definieren
 
 /*//////////////// Event-Listener ////////////////*/
 document.addEventListener('DOMContentLoaded', () => {
-
     // "?" relevant, um zu prüfen ob Element existiert
-    document.getElementById('btnDataPopUp')?.addEventListener('click', closeDataPopup);
-    document.getElementById('btnWelcome')?.addEventListener('click', closeWelcome);
+    const btnDataPopUp = document.getElementById('btnDataPopUp');
+    if (btnDataPopUp) {
+        btnDataPopUp.addEventListener('click', closeDataPopup);
+    }
+    const btnWelcome = document.getElementById('btnWelcome');
+    if (btnWelcome) {
+        btnWelcome.addEventListener('click', closeWelcome);
+    }
 
     // Mail Buttons:
     const mailNumbers = [1, 2, 3, 4, 5];
@@ -22,41 +28,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('openSurvey')?.addEventListener('click', function () {
-        window.open('https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o', '_blank');
+    // Nudges anzeigen
+    fetchExperimentNumber((expNumber) => {
+        experimentNumber = expNumber; // Experimentnummer im globalen Scope setzen
+        // Wenn die experimentNumber gleich 3 oder 4 ist, zeige die spezifischen Elemente an
+        if (experimentNumber === 3 || experimentNumber === 4) {
+            const nudge1a = document.getElementById('nudge1a');
+            if (nudge1a) nudge1a.style.display = 'block';
+            const nudge1b = document.getElementById('nudge1b');
+            if (nudge1b) nudge1b.style.display = 'block';
+        }
+        // Wenn die experimentNumber gleich 5 oder 6 ist, zeige andere spezifische Elemente an
+        else if (experimentNumber === 5 || experimentNumber === 6) {
+            const nudge2a = document.getElementById('nudge2a');
+            if (nudge2a) nudge2a.style.display = 'block';
+            const nudge2b = document.getElementById('nudge2b');
+            if (nudge2b) nudge2b.style.display = 'block';
+        }
     });
 
+    // PDF-Einstellungen
     const documentTile = document.getElementById('documentTile');
-
     if (documentTile) {
         documentTile.addEventListener('click', function () {
             this.classList.toggle('selected');
         });
     }
+
+    // Hinzufügen der Event-Listener für openSurvey-Button
+    const openSurvey = document.getElementById('openSurvey');
+    if (openSurvey) {
+        openSurvey.addEventListener('click', function () {
+            let url;
+            if (experimentNumber === 1 || experimentNumber === 2 || experimentNumber === 3) {
+                url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o';
+            } else {
+                url = 'https://www.google.com';
+            }
+            window.open(url, '_blank');
+        });
+    }
 });
 
-//////////////// Start der Studie ////////////////
-// Pop-up ChooseExperiment
-function chooseExperimentPopup() {
-    let popupLogin = document.getElementById("ChooseExperiment");
-    popupLogin.classList.add("open-popup");
-
-    let blur = document.getElementById("blur");
-    blur.classList.remove("deactive");
-    blur.classList.toggle("active");
+function fetchExperimentNumber(callback) {
+    fetch('/get_experiment_number')
+        .then(response => response.json())
+        .then(data => {
+            if (data.experimentNumber !== null) {
+                callback(data.experimentNumber);
+            } else {
+                console.error("Experiment number not found.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching experiment number:", error);
+        });
 }
 
-// Pop-up ChooseExperiment schließen
-function closeChooseExperimentPopup() {
-    let popupLogin = document.getElementById("ChooseExperiment");
-    popupLogin.classList.remove("open-popup");
 
-    if (Math.random() < 0.5) {
-        window.location.href = '/A';
-    } else {
-        window.location.href = '/A';
-    }
-}
 
 //////////////// Webseite ////////////////
 
@@ -98,16 +127,13 @@ function closeDataPopup() {
         alert('Bitte wählen Sie Ihr Geschlecht.');
         genderField.parentNode.classList.add('error');
         return;
-    }
-
-    else {
+    } else {
         // Username und Passworteingabe
         let lastNameInput = nachnameField.value;
         let genderInput = genderField.value;
 
         // Sicherstellen, dass der erste Buchstabe groß geschrieben ist
         lastNameInput = lastNameInput.charAt(0).toUpperCase() + lastNameInput.slice(1).toLowerCase();
-        // console.log("Teilnehmer: " + lastNameInput);
 
         // Close Popup
         let pop = document.getElementById("enterDataPopup");
@@ -117,37 +143,16 @@ function closeDataPopup() {
         document.getElementById('loaderOverlay1').style.display = 'flex';
         document.getElementById('spinner1').style.display = 'block';
 
-        // Generiere eine Zufallszahl für das Experiment (1 bis 6)
-        let experimentNumber = Math.floor(Math.random() * 6) + 1;
-        // console.log("Experiment Number: " + experimentNumber);
-
         // Item erzeugen und Datenbank füllen
-        addParticipantData(lastNameInput, genderInput, experimentNumber);
+        updateParticipantData(lastNameInput, genderInput);
 
         // Homepage-Elemente anzeigen - Blur entfernen
         setTimeout(function () {
             // Spinner stoppen
             document.getElementById('loaderOverlay1').style.display = 'none';
 
-            // Zur Homepage wechseln basierend auf der experimentNumber
-            let experimentUrlMap = {
-                1: '/webseite',
-                2: '/webseite',
-                3: '/webseite',
-                4: '/webseite',
-                5: '/webseite',
-                6: '/webseite'
-
-                // 1: '/webseiteAdler',
-                // 2: '/webseiteIgel',
-                // 3: '/webseiteHase',
-                // 4: '/webseitePanda',
-                // 5: '/webseiteFuchs',
-                // 6: '/webseiteKoala'
-            };
-            window.location.href = experimentUrlMap[experimentNumber];
-
-            // Timerlänge für "Konto erstellen"
+            // Zur Homepage wechseln
+            window.location.href = '/webseite';
         }, 200);
     }
 
@@ -214,13 +219,12 @@ function closeWelcome() {
         // Auf Seitenanfang scrollen
         window.scrollTo(0, 0);
 
-        // Usereingaben an Webseite anpassen
-        // Funktion zum Aktualisieren der Anrede des Probanden auf der Webseite, der durch das Geschlecht eingegeben wurde
-        // replaceAnrede();
-
-
-        // Timer-Funktion - Zeitdruck starten
-        // startTimer(89);
+        // Timer-Funktion - Zeitdruck starten, wenn experimentNumber 2, 4 oder 6 ist
+        fetchExperimentNumber(function (experimentNumber) {
+            if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
+                startTimer(89);
+            }
+        });
 
         // Timer für Anmeldung/Login
     }, 200);
@@ -268,8 +272,6 @@ function startTimer(duration) {
     document.getElementById('timerContainer').style.display = 'block';
 }
 
-
-
 //////////////////// Mailsystem ////////////////////
 
 // Mailbox Starten
@@ -283,9 +285,9 @@ function showMailbox() {
     mail.style.display = "none";
 
     // Ausblenden Footer
-    document.getElementById('footerLinks').style.display = 'none';
-    document.getElementById('footerLine').style.display = 'none';
-    document.getElementById('footerSettings').style.backgroundColor = 'white';
+    document.getElementById('footerSettings').style.display = 'none';
+    document.getElementById('footer2').style.display = 'block';
+    document.getElementById('footer2').style.backgroundColor = 'white';
 }
 
 // Navigation anzeigen
@@ -411,4 +413,28 @@ function closeAnswerPopUp(mailNumber) {
     // Mausaktivitäten wiedergeben
     let mainElementBlock = document.getElementById('mainElement');
     mainElementBlock.classList.remove("answerOverlay");
+}
+
+function updateParticipantData(lastName, gender) {
+    let formData = new FormData();
+    let token = getCsrfToken();
+
+    formData.append('participantName', lastName);
+    formData.append('participantGender', gender);
+    formData.append('csrfmiddlewaretoken', token);
+
+    fetch('/login', {
+        method: 'POST',
+        body: formData
+    }).then(response => {
+        return response.json().then(data => {
+            if (response.ok) {
+                console.log('Daten erfolgreich aktualisiert:', data.message);
+            } else {
+                console.error('Fehler beim Aktualisieren der Daten:', data.message);
+            }
+        });
+    }).catch(error => {
+        console.error('Fehler:', error);
+    });
 }

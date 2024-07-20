@@ -36,7 +36,7 @@
 
 <body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
     <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
-        <div class="container containernav"><a class="navbar-brand js-scroll-trigger" href="/B">Studie</a>
+        <div class="container containernav">
             <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
             <div>
                 <a href="https://www.uni-goettingen.de/">
@@ -53,65 +53,44 @@
         - Mindestens eine der Antworten nicht korrekt: Pop-up-Fenster und Teilnehmer wird zurück auf Landingpage geleitet -->
     <div class="container containerextend round center">
         <div class="rowextend">
-            <h2 class="h2 center">Fragen zur Studie</h2>
+            <h2 class="h2 center">Fragen zu den Richtlinien</h2>
             <div class="rowextend">
                 <div class="col" style="margin-top:16px">
-                    <p>Bevor die Studie startet, beantworten Sie bitte noch die folgenden Fragen, um überprüfen zu
-                        können, dass sowohl die Studie als auch dessen Ablauf korrekt verstanden wurde.
+                    <p>Bevor wir beginnen, beantworten Sie bitte noch die folgenden Fragen, um sicherzustellen, dass die
+                        Richtlinien korrekt verstanden wurden.
                     </p>
-                    <!-- Geschütztes Leerzeichen: "&nbsp;" -->
                     <p class="questions">
-                        <b>1. Welche Dienstleistung bietet das Unternehmen an?</b></br>
-                        <label class="option" for="check1a">
-                            <input type="radio" name="1" id="check1a">&nbsp; Unternehmensberatung
+                        <b>1. Wurden Ihnen die Informationssicherheitsrichtlinien zur Verfügung gestellt?</b></br>
+                        <label class="option" for="check1a_ISP">
+                            <input type="radio" name="question1_ISP" id="check1a_ISP" checked>&nbsp; Ja
                         </label>
                         <br>
-
-                        <label class="option" for="check1b">
-                            <input type="radio" name="1" id="check1b">&nbsp; Lebensmittel-Lieferdienst
-                        </label>
-                        <br>
-
-                        <label class="option" for="check1c">
-                            <input type="radio" name="1" id="check1c">&nbsp; Leistungen als Krankenkasse
+                        <label class="option" for="check1b_ISP">
+                            <input type="radio" name="question1_ISP" id="check1b_ISP">&nbsp; Nein
                         </label>
                         <br>
                     </p>
-
                     <p class="questions">
-                        <b>2. Worüber sollen Sie sich auf der nachfolgenden Website informieren? </b></br>
-                        <label class="option" for="check2a" style="margin-bottom: 6px;">
-                            <input type="radio" name="2" id="check2a">&nbsp; Informationen hinsichtlich einer
-                            Datenschutzverletzung
+                        <b>2. Wurde Ihnen ein jährlicher statistischer Bericht über Sicherheitsvorfälle zur Verfügung
+                            gestellt?</b></br>
+                        <label class="option" for="check2a_ISP">
+                            <input type="radio" name="question2_ISP" id="check2a_ISP" checked>&nbsp; Ja
                         </label>
                         <br>
-
-                        <label class="option" for="check2b" style="margin-bottom: 6px;">
-                            <input type="radio" name="2" id="check2b">&nbsp; Angebotene Produkte und Dienstleistungen
-                        </label>
-                        <br>
-
-                        <label class="option" for="check2c">
-                            <input type="radio" name="2" id="check2c">&nbsp; Maßnahmen zur Verbesserung des operativen
-                            Cashflows
+                        <label class="option" for="check2b_ISP">
+                            <input type="radio" name="question2_ISP" id="check2b_ISP">&nbsp; Nein
                         </label>
                         <br>
                     </p>
-
                     <p class="questions">
-                        <b>3. In welche Perspektive sollen Sie sich während der Studie versetzen?</b></br>
-                        <label class="option" for="check3a">
-                            <input type="radio" name="3" id="check3a">&nbsp; Ein Manager eines Konkurrenzunternehmens
+                        <b>3. Wurde Ihnen mitgeteilt, wie viele Ihrer Kollegen sich an die Sicherheitsregeln im
+                            Krankenhaus halten?</b></br>
+                        <label class="option" for="check3a_ISP">
+                            <input type="radio" name="question3_ISP" id="check3a_ISP" checked>&nbsp; Ja
                         </label>
                         <br>
-
-                        <label class="option" for="check3b">
-                            <input type="radio" name="3" id="check3b">&nbsp; Ein Kunde einer Krankenkassenversicherung
-                        </label>
-                        <br>
-
-                        <label class="option" for="check3c">
-                            <input type="radio" name="3" id="check3c">&nbsp; Ein Mitarbeiter eines Lieferdienstes
+                        <label class="option" for="check3b_ISP">
+                            <input type="radio" name="question3_ISP" id="check3b_ISP">&nbsp; Nein
                         </label>
                         <br>
                     </p>
@@ -119,14 +98,14 @@
             </div>
 
             <div class="rowextend">
-                <div class="col" style="font-size: 19px;">
+                <div class="col">
                     <p>Bitte klicken Sie nun auf den unten stehenden Button, um Ihre Antworten
-                        auszuwerten und anschließend mit der Studie zu beginnen.</p>
+                        auszuwerten und anschließend fortzufahren.</p>
                 </div>
                 <div class="col center">
                     <div class="rowextend center">
                         <button class="btn submit rounded-pill btn-primary" type="submit"
-                            onclick="redirect2B()"><b>Studie beginnen</b></button>
+                            onclick="redirect3()"><b>Beginnen</b></button>
                     </div>
                 </div>
             </div>

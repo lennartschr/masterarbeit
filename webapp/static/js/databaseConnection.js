@@ -92,3 +92,26 @@ function sendAnswer(mailNumber) {
     });
 }
 
+// function updateParticipantData(lastName, gender) {
+//     let formData = new FormData();
+//     let token = getCsrfToken();
+
+//     formData.append('participantName', lastName);
+//     formData.append('participantGender', gender);
+//     formData.append('csrfmiddlewaretoken', token);
+
+//     fetch('/login', {
+//         method: 'POST',
+//         body: formData
+//     }).then(response => {
+//         return response.json().then(data => {
+//             if (response.ok) {
+//                 console.log('Daten erfolgreich aktualisiert:', data.message);
+//             } else {
+//                 console.error('Fehler beim Aktualisieren der Daten:', data.message);
+//             }
+//         });
+//     }).catch(error => {
+//         console.error('Fehler:', error);
+//     });
+// }

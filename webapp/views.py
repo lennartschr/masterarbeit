@@ -1,3 +1,4 @@
+import random
 from django.utils import timezone
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -5,17 +6,41 @@ from .models import Answers
 from datetime import timedelta
 
 
-# Create your views here.
-# Wiedergabe der Views und deren Code/Inhalt unter dem Reiter "templates"
-
-
-#  Choose Experiment
-def start(request):
-    return render(request, "experiment/start.html")
-
-
-# Experiment 1
+# Studie
 def experiment(request):
+    if request.method == "GET":
+        x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
+        if x_forw_for:
+            ip_address = x_forw_for.split(",")[0]
+        else:
+            ip_address = request.META.get("REMOTE_ADDR")
+
+        experimentNumber = random.randint(
+            1, 6
+        )  # Zufällige Experimentnummer zwischen 1 und 6
+
+        # Experimentnummer in der VS-Konsole ausgeben
+        print(f"Experimentnummer für IP {ip_address}: {experimentNumber}")
+
+        # Zeitraum von 30 Minuten definieren
+        lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+
+        # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse in den letzten 30 Minuten existiert
+        recent_entry = Answers.objects.filter(
+            ip_address=ip_address,
+            created_at__gte=lifetime_participant_dataset,
+        ).first()
+
+        if recent_entry:
+            # Aktualisieren des bestehenden Eintrags mit einer neuen Experimentnummer
+            recent_entry.experimentNumber = experimentNumber
+            recent_entry.save()
+        else:
+            # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minuten ist
+            Answers.objects.create(
+                ip_address=ip_address, experimentNumber=experimentNumber
+            )
+
     return render(request, "experiment/experiment.html")
 
 
@@ -27,7 +52,87 @@ def kontrolle(request):
     return render(request, "experiment/kontrolle.html")
 
 
+def ISP(request):
+    x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forw_for:
+        ip_address = x_forw_for.split(",")[0]
+    else:
+        ip_address = request.META.get("REMOTE_ADDR")
+
+    # Experiment Number aus der Datenbank holen
+    lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+    recent_entry = Answers.objects.filter(
+        ip_address=ip_address,
+        created_at__gte=lifetime_participant_dataset,
+    ).first()
+
+    experimentNumber = (
+        recent_entry.experimentNumber if recent_entry else random.randint(1, 6)
+    )
+
+    context = {
+        "experimentNumber": experimentNumber,
+    }
+    return render(request, "experiment/ISP.html", context)
+
+
+def ISPkontrolle(request):
+    return render(request, "experiment/ISPkontrolle.html")
+
+
+# Abfrage Experimentnummer
+def get_experiment_number(request):
+    x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forw_for:
+        ip_address = x_forw_for.split(",")[0]
+    else:
+        ip_address = request.META.get("REMOTE_ADDR")
+
+    # Zeitraum von 30 Minuten definieren
+    lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+
+    try:
+        # Den neuesten Eintrag für diese IP-Adresse holen
+        latest_answer = Answers.objects.filter(
+            ip_address=ip_address,
+            created_at__gte=lifetime_participant_dataset,
+        ).latest("created_at")
+
+        return JsonResponse({"experimentNumber": latest_answer.experimentNumber})
+    except Answers.DoesNotExist:
+        return JsonResponse({"experimentNumber": None})
+
+
+# Webseite
 def login(request):
+    if request.method == "POST":
+        x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
+        if x_forw_for:
+            ip_address = x_forw_for.split(",")[0]
+        else:
+            ip_address = request.META.get("REMOTE_ADDR")
+
+        participantName = request.POST.get("participantName", "")
+        participantGender = request.POST.get("participantGender", "")
+
+        try:
+            # Eintrag mit der gleichen IP-Adresse und innerhalb der letzten 30 Minuten finden
+            lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+            latest_answer = Answers.objects.filter(
+                ip_address=ip_address, created_at__gte=lifetime_participant_dataset
+            ).latest("created_at")
+
+            # Aktualisieren der Teilnehmerdaten
+            latest_answer.participantName = participantName
+            latest_answer.participantGender = participantGender
+            latest_answer.save()
+
+            return JsonResponse(
+                {"message": "Teilnehmerdaten erfolgreich aktualisiert."}
+            )
+        except Answers.DoesNotExist:
+            return JsonResponse({"message": "Teilnehmer nicht gefunden."})
+
     return render(request, "webseite/login.html")
 
 
@@ -47,7 +152,7 @@ def webseite(request):
             # Zeitraum von 30 Minuten definieren
             lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
 
-            # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse, Name und Geschlecht in den letzten 1 Minute existiert
+            # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse, Name und Geschlecht in den letzten 30 Minuten existiert
             recent_entry = Answers.objects.filter(
                 ip_address=ip_address,
                 participantName=participantName,
@@ -57,7 +162,6 @@ def webseite(request):
 
             if recent_entry:
                 # Aktualisieren des letzten Eintrags, falls er innerhalb der letzten 30 Minuten erstellt wurde
-                # Nach 30 Minuten kann der Datensatz nicht mehr verändert werden
                 recent_entry.participantGender = participantGender
                 recent_entry.experimentNumber = experimentNumber
                 recent_entry.save()
@@ -65,7 +169,7 @@ def webseite(request):
                     {"message": "Teilnehmerdaten erfolgreich aktualisiert."}
                 )
             else:
-                # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minute ist
+                # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minuten ist
                 Answers.objects.create(
                     ip_address=ip_address,
                     participantName=participantName,
@@ -88,7 +192,7 @@ def webseite(request):
             answer4 = request.POST.get("answer4")
             pdf_clicked = int(request.POST.get("pdf_clicked", 0))
             participantName = request.POST.get("participantName")
-            
+
             try:
                 # Eintrag für den Teilnehmer aktualisieren basierend auf Name und IP-Adresse
                 latest_answer = Answers.objects.filter(
@@ -171,113 +275,6 @@ def webseite(request):
 
     return render(request, "webseite/webseite.html", context)
 
-    # Daten an Frontend zurück übergeben
-    # all_items = answers.objects.all() # Alle informationen der Datenbank ausgeben
-    # specific_item = answers.objects.get(id=1) # Oder spezifisch - bspw. das Erste Element
-    # specific_item2 = answers.objects.filter(participantName='Hallo') # Oder spezifisch - bspw. bestimmter Inhalt
 
-    # return render(request, "webseite/ZTest.html", {'Antworten_Gesamt': all_items}) # Ausgabe einer Variable aus dem Backend zurück ans Frontend
-
-
-# Experiment 2
-def experimentB(request):
-    return render(request, "experiment/experimentB.html")
-
-
-def datenschutzB(request):
-    return render(request, "experiment/datenschutzB.html")
-
-
-def kontrolleB(request):
-    return render(request, "experiment/kontrolleB.html")
-
-
-def webseiteAdler(request):
-    # if request.method == "POST":
-    #     x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
-    #     if x_forw_for:
-    #         ip_address = x_forw_for.split(",")[0]
-    #     else:
-    #         ip_address = request.META.get("REMOTE_ADDR")
-
-    #     if "participantName" in request.POST and "participantGender" in request.POST:
-    #         participantName = request.POST.get("participantName", "")
-    #         participantGender = request.POST.get("participantGender", "")
-    #         experimentNumber = request.POST.get("experimentNumber", 0)
-
-    #         # Neuen Teilnehmerdatensatz erstellen oder vorhandenen aktualisieren
-    #         Answers.objects.update_or_create(
-    #             ip_address=ip_address,
-    #             participantName=participantName,
-    #             participantGender=participantGender,
-    #             defaults={
-    #                 "participantGender": participantGender,
-    #                 "experimentNumber": experimentNumber,
-    #             },
-    #         )
-
-    #         return render(
-    #             request,
-    #             "webseite/webseite.html",
-    #             {"message": "Teilnehmerdaten erfolgreich gespeichert."},
-    #         )
-
-    #     elif "answer1" in request.POST or "answer4" in request.POST:
-    #         answer1 = request.POST.get("answer1")
-    #         answer4 = request.POST.get("answer4")
-    #         participantName = request.POST.get("participantName")
-
-    #         try:
-    #             # Eintrag für den Teilnehmer aktualisieren basierend auf Name und IP-Adresse
-    #             latest_answer = Answers.objects.get(
-    #                 participantName=participantName, ip_address=ip_address
-    #             )
-    #             if answer1:
-    #                 latest_answer.answer1 = answer1
-    #             if answer4:
-    #                 latest_answer.answer4 = answer4
-    #             latest_answer.save()
-
-    #             return render(
-    #                 request,
-    #                 "webseite/webseite.html",
-    #                 {"message": "Antwort erfolgreich gespeichert."},
-    #             )
-    #         except Answers.DoesNotExist:
-    #             return render(
-    #                 request,
-    #                 "webseite/webseite.html",
-    #                 {"message": "Teilnehmer nicht gefunden."},
-    #             )
-
-    # # Namen austauschen
-    # latest_answer = Answers.objects.latest("created_at")
-    # participant_name_with_suffix = (
-    #     latest_answer.participantName.lower() + "@vitanova.com"
-    # )
-
-    # # Dictionary zur Zuordnung der Anrede basierend auf dem Geschlecht
-    # gender_speech_map = {
-    #     "männlich": "Herr",
-    #     "weiblich": "Frau",
-    #     "divers": "Herr/Frau",
-    #     "andere": "Herr/Frau",
-    # }
-
-    # # Standardanrede, falls das Geschlecht nicht im Dictionary enthalten ist
-    # participantGender_speech = gender_speech_map.get(
-    #     latest_answer.participantGender, "Herr/Frau"
-    # )
-
-    # context = {
-    #     "participantName": latest_answer.participantName,
-    #     "participantNameWithSuffix": participant_name_with_suffix,
-    #     "participantGender": latest_answer.participantGender,
-    #     "participantGender_speech": participantGender_speech,
-    # }
-    return render(request, "webseite/webseiteAdler.html")
-
-
-# Testen
 def ZTest(request):
     return render(request, "webseite/ZTest.html")

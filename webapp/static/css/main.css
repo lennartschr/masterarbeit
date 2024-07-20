@@ -386,11 +386,29 @@ body {
 }
 
 /*//////////////// Footer ////////////////*/
+/* Footer */
 .footer {
+    background-color: rgba(234, 238, 240, 0.95);
     font-size: 14px;
     padding-bottom: 8px;
     padding-top: 10px;
     text-align: center;
+    width: 100%;
+
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+}
+
+#footer2 {
+    background-color: rgba(234, 238, 240, 0.95);
+    font-size: 14px;
+    padding-bottom: 8px;
+    padding-top: 10px;
+    text-align: center;
+    width: 100%;
 }
 
 #footerSettings {
@@ -429,6 +447,44 @@ body {
     padding-bottom: 2px;
     padding-top: 8px;
 }
+
+/* Media Query für Bildschirme kleiner als 500px */
+@media (max-width: 500px) {
+
+    #footerSettings {
+        background-color: rgba(234, 238, 240, 0.95);
+    }
+
+    .footer {
+        position: relative;
+    }
+
+    .gridFooter {
+        flex-direction: column;
+        /* Vertikale Ausrichtung */
+        align-items: center;
+        /* Zentriere die Items */
+    }
+
+    .colDot {
+        width: 100%;
+        /* Volle Breite für jedes Element */
+        margin-bottom: 20px;
+        /* Abstand zwischen den Elementen */
+    }
+
+    .colDot section {
+        text-align: center;
+        /* Zentriere den Text bei kleinen Bildschirmen */
+    }
+}
+
+.gridFooter {
+    display: flex;
+    justify-content: space-around;
+    /* Verteile die Elemente gleichmäßig */
+}
+
 
 
 /*//////////////// Mailingsystem ////////////////*/
@@ -737,7 +793,8 @@ body {
 }
 
 .document-tile.selected .selection-check::before {
-    content: '\2713';  /* Unicode für Häkchen */
+    content: '\2713';
+    /* Unicode für Häkchen */
     color: white;
     font-size: 16px;
     margin-top: -12px;
