@@ -458,7 +458,6 @@ function openAnswerPopUp(mailNumber) {
 
     const textarea = document.getElementById(`responseText${mailNumber}`);
     const charCount = document.getElementById(`charCount${mailNumber}`);
-    const sendButton = document.getElementById(`sendAnswer${mailNumber}`);
 
     textarea.addEventListener('input', () => {
         const remaining = textarea.maxLength - textarea.value.length;
