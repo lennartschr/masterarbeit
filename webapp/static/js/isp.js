@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Event-Listener für den Button hinzufügen
+    const delayedButton = document.getElementById('delayedButton');
     delayedButton.addEventListener('click', function () {
         window.location.href = '/ISPkontrolle';
     });
