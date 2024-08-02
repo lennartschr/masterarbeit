@@ -1,0 +1,90 @@
+CSS Klasse für die Darstellung von beispielhaften Produkten
+.slide-container {
+  margin-top: auto;
+  max-width: 1420px;
+  width: 100%;
+  padding: 3% 6% 6% 6%;
+}
+
+.rowProducts {
+  background-color: white;
+  padding-top: 3%;
+  padding-bottom: 16px;
+  padding-left: 0%;
+  padding-right: 0%;
+  margin-top: -4%;
+
+}
+
+.slide-content {
+  /* margin: 0 40px; */
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
+/* Produkt Cards */
+.card {
+  border-radius: 25px;
+  background-color: rgb(255, 255, 255);
+  margin: auto;
+  display: center;
+  border: 0px;
+  box-shadow: rgba(0, 0, 0, 0.20) 0px 6px 12px, rgba(0, 0, 0, 0.24) 0px 8px 8px;
+  margin-top: 10%;
+  margin-bottom: 15%;
+}
+
+.cardsize {
+  width: auto;
+  min-width: 15rem;
+  max-width: 18rem;
+}
+
+/* Card-Inhalt */
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 14px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgb(50, 50, 50);
+  padding-top: 14px;
+  margin-bottom: -2px;
+}
+
+.descriptionOptions {
+  font-size: 16px;
+  color: rgb(112, 112, 112);
+  text-align: center !important;
+  font-weight: 300;
+  padding-top: 10px;
+  margin-bottom: 2px;
+  min-height: 60px;
+}
+
+.footerProducts {
+  font-size: 14px;
+  text-align: center;
+}
+
+section {
+  padding-bottom: 16px;
+}
+
+figure {
+  margin-bottom: 0px;
+}
+
+h3 {
+  font-family: 'Raleway', sans-serif;
+  font-size: calc(1rem + 0.3vw);
+  font-weight: bold;
+  line-height: 1.2;
+  padding-bottom: 2px;
+}

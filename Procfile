@@ -1,1 +1,1 @@
-web gunicorn prototyp.wsgi:application --log-file -
+web: gunicorn prototyp.wsgi --log-file -
