@@ -1,6 +1,6 @@
 /////////// Datenbankanbindung ///////////
 
-const totalMailNumbers = 4; // Anzahl der zu beantwortenden Mails
+const totalMailNumbers = 3; // Anzahl der zu beantwortenden Mails
 let answeredCount = 0;
 
 // Funktion zum Abrufen des CSRF-Tokens
@@ -57,6 +57,11 @@ function sendAnswer(mailNumber) {
     let mainElementBlock = document.getElementById('mainElement');
     mainElementBlock.classList.remove("answerOverlay");
 
+    if (mailNumber === 10 || mailNumber === 20) {
+        // Nur für mailNumber 10 oder 20 (X und Y -> Dummy Mails)
+        return;
+    }
+
     // Antwort aus Inputfeld in Datenbank speichern
     let responseText = document.getElementById(`responseText${mailNumber}`).value;
     let participantName = document.getElementById('participantNameSpan').textContent;
@@ -78,7 +83,9 @@ function sendAnswer(mailNumber) {
         return response.json().then(data => {
             if (response.ok) {
                 console.log('Antwort erfolgreich gesendet:', data.message);
-                answeredCount++; // Zählen der gesendeten Antworten
+                if (!(mailNumber === 2)) {
+                    answeredCount++; // Zählen der gesendeten Antworten
+                }
                 if (answeredCount === totalMailNumbers) {
                     // Alle Antworten wurden gesendet
                     document.getElementById('completionSection').style.display = 'block';

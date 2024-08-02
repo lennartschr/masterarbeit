@@ -9,7 +9,7 @@
 /* Abstand Überschrift zur Navbar + Hintergrund weiß/grün iPad*/
 body {
     font-family: SF Pro Display, SF Pro Icons, AOS Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 0px;
     min-height: 800px;
     display: block;
@@ -40,8 +40,8 @@ h3 {
     font-weight: bold;
     background-color: rgb(255, 255, 255) !important;
     border: 1.5px solid rgb(50, 80, 156) !important;
-    color: rgb(0, 0, 0) !important;
-    /* transition: background-color 0.3s, color 0.3s; */
+    color: rgb(50, 80, 156) !important;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .submit:hover,
@@ -67,7 +67,7 @@ h3 {
 
 
 /* Größe der Schrift, wenn das Fenster <= 450px groß ist iPhone*/
-@media screen and (max-width: 450px) {
+/* @media screen and (max-width: 450px) {
     body {
         width: 100%;
         height: 100%;
@@ -81,10 +81,10 @@ h3 {
     h3 {
         font-size: 19px !important;
     }
-}
+} */
 
 /* Größe der Schrift, wenn das Fenster > 900px groß ist  Laptop*/
-@media screen and (min-width: 900px) {
+/* @media screen and (min-width: 900px) {
     body {
         font-size: 22px;
     }
@@ -97,7 +97,7 @@ h3 {
         font-size: 24px !important;
     }
 
-}
+} */
 
 /* Größe der Schrift, wenn das Fenster >= 768px groß ist */
 @media screen and (min-width: 400px) {
@@ -183,7 +183,7 @@ h3 {
     width: 90% !important; */
     min-height: 8%;
     height: auto;
-    padding: 6%;
+    padding: 5%;
     padding-top: 48px;
     padding-bottom: 40px;
     margin-top: 10px;
@@ -328,7 +328,18 @@ h3 {
     border-color: red;
 }
 
-#nudge1a, #nudge1b, #nudge2a, #nudge2b {
-    display: none;
-    color: red;
+.options-inline {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin: -25px 0px 25px 25px;
+}
+
+.options-inline .option {
+    display: flex;
+    align-items: center;
+}
+
+.bold {
+    font-weight: 500;
 }

@@ -22,6 +22,8 @@ class Answers(models.Model):
     answer4 = models.CharField(max_length=250, default="No Answer")
 
     pdf_clicked = models.IntegerField(default=0) # Ob die PDF mitgesendet wurde oder nicht
+    installed_update = models.IntegerField(default=0) # Ob das Update getätigt wurde oder nicht
+
 
 # Experiment Nummern
 #         0 = Default Webseite

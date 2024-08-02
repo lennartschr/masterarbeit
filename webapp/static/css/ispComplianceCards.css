@@ -1,0 +1,74 @@
+.card {
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 12px, rgba(0, 0, 0, 0.24) 0px 8px 8px;
+  border-radius: 25px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-upper {
+  padding: 20px;
+  background-color: #fff;
+  flex-grow: 1;
+}
+
+.card-lower {
+  font-family: 'Optima', sans-serif;
+  color: #000000;
+  background-color: #ff000020;
+  padding: 10px 20px 5px 20px;
+}
+
+.card-title {
+  font-size: medium;
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-text {
+  font-size: medium;
+}
+
+.card-nudge {
+  font-size: medium;
+}
+
+.hr {
+  margin: 0rem 0 !important;
+}
+
+#nudgeLossAversion_1,
+#nudgeLossAversion_2,
+#nudgeLossAversion_3,
+#nudgeLossAversion_4,
+#nudgeSocialProof_1,
+#nudgeSocialProof_2,
+#nudgeSocialProof_3,
+#nudgeSocialProof_4 {
+    display: none;
+    margin-bottom: 1rem;
+}
+
+#controlQuestionDefault,
+#controlQuestionLossAversion,
+#controlQuestionSocialProof {
+  display: none;
+}
+
+.nColor1 {
+  color: #000000; /* Orange Red */
+  font-weight: bold;
+}
+
+.nColor2 {
+  color: #ff51a8; /* Pink */
+  font-weight: bold;
+}
+
+.nColor3 {
+  color: #9370db; /* Medium Purple */
+  font-weight: bold;
+}
+
+

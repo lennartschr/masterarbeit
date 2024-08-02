@@ -34,17 +34,7 @@
 
 <!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
 <body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
-    <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
-        <div class="container containernav">
-            <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
-            <div>
-                <a href="https://www.uni-goettingen.de/">
-                    <img class="navlogo" src="{% static 'pictures/Universität-Göttingen-Logo.png' %}">
-                    <!-- (Quelle) Georg-August-Universität Göttingen https://www.uni-goettingen.de/de/589410.html -->
-                </a>
-            </div>
-        </div>
-    </nav>
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav"></nav>
 
     <!-- Container: Kontrollfragen & Auswertung der Antworten -->
     <!-- [Java-Script-Datei: js/function.js/"function redirect2()"]
@@ -71,7 +61,7 @@
                         <br>
 
                         <label class="option" for="check1c">
-                            <input type="radio" name="1" id="check1c" checked>&nbsp; Bearbeitung von Nachrichten und E&#x2011Mails
+                            <input type="radio" name="1" id="check1c">&nbsp; Bearbeitung von Nachrichten und E&#x2011Mails
                         </label>
                         <br>
                     </p>
@@ -79,12 +69,12 @@
                     <p class="questions">
                         <b>2. Welche Rolle übernehmen Sie während Ihres ersten Tages? </b></br>
                         <label class="option" for="check2a" style="margin-bottom: 6px;">
-                            <input type="radio" name="2" id="check2a" checked>&nbsp; Als Mitarbeiter*in in einem Krankenhaus
+                            <input type="radio" name="2" id="check2a">&nbsp; Als Mitarbeiter*in in einem Krankenhaus
                         </label>
                         <br>
 
                         <label class="option" for="check2b" style="margin-bottom: 6px;">
-                            <input type="radio" name="2" id="check2b">&nbsp; Als Kunde*in einer Krankenkassen&shyversicherung
+                            <input type="radio" name="2" id="check2b">&nbsp; Als Kunde*in einer Autowerk&shystatt
                         </label>
                         <br>
 
@@ -102,7 +92,7 @@
                         <br>
 
                         <label class="option" for="check3b">
-                            <input type="radio" name="3" id="check3b" checked>&nbsp; Ihre Arbeit unterstützt die Patienten&shyversorgung und den Kranken&shyhaus&shybetrieb
+                            <input type="radio" name="3" id="check3b">&nbsp; Ihre Arbeit unterstützt die Patienten&shyversorgung und den Kranken&shyhaus&shybetrieb
                         </label>
                         <br>
 
@@ -132,7 +122,7 @@
     <!-- Footer ist unten fixiert -->
     <footer class="mt-auto">
         <div class="container jumbotron vertical-center footer">
-            <span>© 2024 Georg-August-Universität Göttingen</span>
+            <span>© 2024 VitaNova</span>
         </div>
     </footer>
 </body>

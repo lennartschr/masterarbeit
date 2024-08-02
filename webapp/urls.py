@@ -23,6 +23,8 @@ urlpatterns = [
     path("login", views.login, name="login"),
     # Website
     path("webseite", views.webseite, name="webseite"),
+    # Update_Status
+    path('update_install_status', views.update_install_status, name='update_install_status'),
     # Website zum Testen von diversen Inhalten
     path("ZTest", views.ZTest, name="ZTest"),
 ]

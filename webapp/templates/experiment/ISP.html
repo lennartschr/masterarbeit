@@ -10,11 +10,11 @@
         content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
 
     <!-- Titel im Tab -->
-    <title>Alles verstanden?</title>
+    <title>Interne Richtlinien</title>
 
     <!-- Favicon der Website
     (Quelle) https://www.svgrepo.com/svg/500449/university -->
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicons/Graduate_Cap.svg' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'svg/policies.svg' %}">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -22,10 +22,12 @@
 
     <!-- CSS mit individueller Anpassung -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/experiment.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ispComplianceCards.css' %}" />
 
     <!-- JavaScript Einbindung -->
     <script src="{% static 'js/function.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/isp.js' %}"></script>
 
     <!-- Standard-Skripte Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -36,58 +38,165 @@
 <!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
 
 <body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
-    <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav">
-        <div class="container containernav">
-            <!-- UNILOGO: Weiterleitung zu Georg-August-Universität Göttingen -->
-            <div>
-                <a href="https://www.uni-goettingen.de/">
-                    <img class="navlogo" src="{% static 'pictures/Universität-Göttingen-Logo.png' %}">
-                    <!-- (Quelle) Georg-August-Universität Göttingen https://www.uni-goettingen.de/de/589410.html -->
-                </a>
-            </div>
-        </div>
-    </nav>
+    <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav"></nav>
 
     <!-- Verstecktes Feld zur Speicherung der experimentNumber -->
     <input type="hidden" id="experimentNumber" value="{{ experimentNumber }}">
 
-    <!-- Container: Kontrollfragen & Auswertung der Antworten -->
-    <!-- [Java-Script-Datei: js/function.js/"function redirect2()"]
-        - Alle Fragen korrekt beantwortet: Weiterleitung zur Website. 
-        - Mindestens eine der Antworten nicht korrekt: Pop-up-Fenster und Teilnehmer wird zurück auf Landingpage geleitet -->
+
     <div class="container containerextend round center">
         <div class="rowextend">
-            <div class="rowextend">
-                <h2 class="h2 center">Interne Richtlinien</h2>
-                <br>
-                <!-- Nudges -->
-                <div class="rowextend" id="nudge1a" style="display: none;"> Ich bin Nudge 1a - Verlustaversion</div>
-                <div class="rowextend" id="nudge2a" style="display: none;"> Ich bin Nudge 2a - Social Proof</div>
-                <br>
-                VitaNova verpflichtet seine Mitarbeiter, alle internen Systeme und Ressourcen verantwortungsbewusst zu
-                nutzen, um die Sicherheit und Effizienz im Krankenhausbetrieb zu gewährleisten. Die Nutzung der Systeme
-                soll den Informationsaustausch sowie die Kommunikation und Zusammenarbeit fördern. Mitarbeiter sind
-                angehalten, ihre Computer und vertraulichen Daten stets mit einem sicheren Passwort zu schützen. Sichere
-                Passwörter müssen aus mindestens acht Zeichen bestehen, darunter ein Großbuchstabe, ein Kleinbuchstabe,
-                ein Symbol und eine Zahl. Passwörter sind jederzeit vertraulich zu behandeln und dürfen nicht an andere
-                Personen weitergegeben oder aufgezeichnet werden. Wenn Mitarbeiter ihre Geräte oder Computer
-                unbeaufsichtigt lassen, müssen sie sich entweder abmelden oder ihre Bildschirme sperren, um unbefugten
-                Zugriff zu verhindern. Vertrauliche Daten, einschließlich persönlicher Informationen und
-                krankenhausinterner Daten, sind mit höchster Sorgfalt zu behandeln. Es ist untersagt, vertrauliche Daten
-                an private E-Mail-Konten zu versenden oder an unbefugte Dritte weiterzugeben.
-                <br><br>
-                <!-- Nudges -->
-                <div class="rowextend" id="nudge1b" style="display: none;"> Ich bin Nudge 1b - Verlustaversion</div>
-                <div class="rowextend" id="nudge2b" style="display: none;"> Ich bin Nudge 2b - Social Proof</div>
-            </div>
-            <br><br>
+            <h2 class="h2 center">Interne Richtlinien</h2>
+            <br>
+            Die Nutzung der Systeme soll den Informationsaustausch sowie die Kommunikation und Zusammenarbeit fördern.
+            VitaNova <b>verpflichtet</b> seine Mitarbeiter, alle internen Systeme und Ressourcen
+            <b>verantwortungsbewusst</b>
+            zu nutzen, um die <b>Sicherheit und Effizienz</b> im Krankenhausbetrieb <b>zu gewährleisten</b>.
+        </div>
 
-            <div class="rowextend">
-                <div class="col center">
-                    <div class="rowextend center">
-                        <button class="btn submit rounded-pill btn-primary" type="submit"
-                            onclick="window.location.href='/ISPkontrolle'"><b>Weiter</b></button>
+        <div class="rowextend">
+            <!-- Richtlininen -->
+            <div class="container mt-5">
+                <div class="row row-cols-1 row-cols-lg-2 row-cols-lg-2 g-4">
+
+                    <!-- § Teilen von Zugangsdaten -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-upper">
+                                <p class="card-title">§ Teilen von Zugangsdaten</p>
+                                <p class="card-text">Mitarbeiter sind angehalten, ihre Computer und alle vertraulichen
+                                    Daten jederzeit durch sichere Passwörter zu schützen. Passwörter müssen streng
+                                    vertraulich behandelt und dürfen weder an andere Personen weitergegeben noch
+                                    schriftlich festgehalten werden.</p>
+                            </div>
+                            <hr class="hr">
+                            <div class="card-lower">
+                                <!-- Loss_Aversion -->
+                                <p class="card-nudge" id="nudgeLossAversion_1">
+                                    Das <span class="nColor1">Teilen von Zugangsdaten</span> kann im schlimmsten Fall
+                                    unser Krankenhaus für <span class="nColor2">mehrere Wochen lahmlegen</span>!
+                                </p>
+                                <!-- Social_Proof -->
+                                <p class="card-nudge" id="nudgeSocialProof_1">
+                                    <span class="nColor2">99%</span> <span class="nColor1">unserer Teammitglieder</span>
+                                    bewahren ihre Zugangsdaten <span class="nColor3">strikt vertraulich</span> auf. Sind
+                                    Sie <span class="nColor3">Teil der 1%</span>, die unser Unternehmen <span
+                                        class="nColor2">gefährden</span> könnten?
+                                </p>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- § Physische Sicherheit und Gerätesicherheit -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-upper">
+                                <p class="card-title">§ Physische Sicherheit und Gerätesicherheit</p>
+                                <p class="card-text">Bei unbeaufsichtigtem Verlassen ihres Arbeitsplatzes sind
+                                    Mitarbeiter dazu angehalten, sich entweder von ihren Geräten abzumelden oder ihre
+                                    Bildschirme zu sperren, um unbefugten Zugriff zu verhindern. Der Arbeitsplatz ist
+                                    stets ordnungsgemäß zu hinterlassen, sodass keine vertraulichen Daten offen
+                                    zugänglich sind.</p>
+                            </div>
+                            <hr class="hr">
+                            <div class="card-lower">
+                                <!-- Loss_Aversion -->
+                                <p class="card-nudge" id="nudgeLossAversion_2">
+                                    Das <span class="nColor1">Abmelden</span> kostet Sie <span class="nColor2">2
+                                        Sekunden</span> Ihrer Arbeitszeit, aber ein <span
+                                        class="nColor3">Datenverlust</span> kann uns <span class="nColor1">Millionen
+                                        kosten</span> und unseren <span class="nColor3">Ruf unwiderruflich
+                                        schädigen</span>!
+                                </p>
+                                <!-- Social_Proof -->
+                                <p class="card-nudge" id="nudgeSocialProof_2">
+                                    <span class="nColor1">Die Mehrheit</span> unserer Kollegen <span
+                                        class="nColor2">sperren</span> ihren Bildschirm, bevor sie ihren <span
+                                        class="nColor3">Arbeitsplatz verlassen</span>. Die <span
+                                        class="nColor2">Sicherheit</span> unserer Daten hängt von <span
+                                        class="nColor3">jedem Einzelnen</span> ab. Eine <span
+                                        class="nColor1">Unachtsamkeit</span> gefährdet uns alle!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- § Weitergabe von unternehmensinternen Daten -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-upper">
+                                <p class="card-title">§ Weitergabe von unternehmensinternen Daten</p>
+                                <p class="card-text">Vertrauliche Daten, insbesondere persönliche Informationen und
+                                    interne Krankenhausdaten, sind mit äußerster Sorgfalt und unter Einhaltung aller
+                                    Datenschutzrichtlinien zu behandeln. Es ist strikt untersagt, vertrauliche Daten
+                                    über private E-Mail-Konten zu versenden oder an unbefugte Dritte weiterzugeben.</p>
+                            </div>
+                            <hr class="hr">
+                            <div class="card-lower">
+                                <!-- Loss_Aversion -->
+                                <p class="card-nudge" id="nudgeLossAversion_3">
+                                    Ein <span class="nColor1">falscher Umgang</span> kann nicht nur <span
+                                        class="nColor3">Patientendaten gefährden</span>, sondern auch unser Krankenhaus
+                                    <span class="nColor2">vor Gericht bringen</span>. Möchten Sie dafür <span
+                                        class="nColor1">verantwortlich</span> sein?
+                                </p>
+                                <!-- Social_Proof -->
+                                <p class="card-nudge" id="nudgeSocialProof_3">
+                                    <span class="nColor1">Unsere Abteilung</span> geht <span class="nColor2">äußerst
+                                        sorgfältig</span> mit <span class="nColor3">vertraulichen Informationen</span>
+                                    um. <span class="nColor1">Seien Sie nicht derjenige</span>, der unseren <span
+                                        class="nColor2">Ruf zerstört</span>!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- § E-Mail Sicherheit und Malware Schutz -->
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-upper">
+                                <p class="card-title">§ E-Mail Sicherheit und Malware-Schutz</p>
+                                <p class="card-text">E-Mail-Anhänge und Links sind nur dann zu öffnen, wenn der Absender
+                                    vertrauenswürdig ist und die E-Mail keinen verdächtigen Inhalt aufweist. Die
+                                    Absenderadresse ist stets sorgfältig zu überprüfen, selbst wenn die E-Mail
+                                    vertrauenswürdig erscheint. Verdächtige E-Mails sind umgehend dem jeweiligen
+                                    Vorgesetzten zu melden.
+                                </p>
+                            </div>
+                            <hr class="hr">
+                            <div class="card-lower">
+                                <!-- Loss_Aversion -->
+                                <p class="card-nudge" id="nudgeLossAversion_4">
+                                    Ein <span class="nColor1">einfacher Klick</span> auf einen <span
+                                        class="nColor2">schädlichen Link</span> kann unsere <span
+                                        class="nColor3">Systeme infiltrieren</span>, <span
+                                        class="nColor1">lebenswichtige Patientendaten</span> <span
+                                        class="nColor2">verschlüsseln</span> und zu einem <span
+                                        class="nColor2">Systemausfall</span> führen!
+                                </p>
+                                <!-- Social_Proof -->
+                                <p class="card-nudge" id="nudgeSocialProof_4">
+                                    <span class="nColor1">Unsere Mitarbeiter</span> sind stets <span
+                                        class="nColor2">vorsichtig</span> beim Umgang mit <span class="nColor3">E-Mails
+                                        und Anhängen</span>. <span class="nColor1">Ihre Aufmerksamkeit</span> schützt
+                                    nicht nur <span class="nColor2">unsere Daten</span>, sondern auch <span
+                                        class="nColor2">das Leben unserer Patienten</span>!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="rowextend">
+            <div class="col center">
+                <div class="rowextend center">
+                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                        id="delayedButton"><b>Weiter</b></button>
                 </div>
             </div>
         </div>
@@ -96,7 +205,7 @@
     <!-- Footer ist unten fixiert -->
     <footer class="mt-auto">
         <div class="container jumbotron vertical-center footer">
-            <span>© 2024 Georg-August-Universität Göttingen</span>
+            <span>© 2024 VitaNova</span>
         </div>
     </footer>
 </body>

@@ -66,28 +66,3 @@ function redirect2() {
     }
 }
 
-// Solange die Antworten falsch sind, kann der Nutzer nicht an dem Experiment teilnehmen und wird zurück zu den Richtlinien geleitet
-function redirect3() {
-    var a = 0;
-    var b = 0;
-    var c = 0;
-
-    if (document.getElementById("check1a_ISP").checked == true) {
-        a = 1;
-    }
-
-    if (document.getElementById("check2a_ISP").checked == true) {
-        b = 1;
-    }
-
-    if (document.getElementById("check3a_ISP").checked == true) {
-        c = 1;
-    }
-
-    if ((a == 1) && (b == 1) && (c == 1)) {
-        window.location.href = '/login';
-    } else {
-        window.location.href = '/ISP';
-        window.alert('Leider waren Ihre Angaben nicht korrekt.\nBitte lesen Sie die Richtlinien erneut.');
-    }
-}

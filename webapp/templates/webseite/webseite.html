@@ -58,13 +58,13 @@
                     </div>
                     <!-- Timer -->
                     <div class="ml-auto" id="timerContainer">
-                        <span id="timer">01:30</span>
+                        <span id="timer">06:00</span>
                     </div>
                     <!-- Navbar Bereich Rechts -->
                     <div class="hideLoginArea align-items-center" id="LoginArea">
                         <!-- Message-Logo -->
                         <!-- (Quelle) https://www.svgrepo.com/svg/501625/message?edit=true -->
-                        <a onclick="navigateTo('inboxPage'), showMailbox(), closeWelcomeMessage()">
+                        <a onclick="handleMailboxNavigation()">
                             <img class="messageUnread-logo" src="{% static 'svg/messageUnread.svg' %}"
                                 id="messageUnread" alt="Nachrichten">
                         </a>
@@ -93,13 +93,14 @@
                         <div class="formBox input-container">
                             <div class="input-container">
                                 <input type="text" id="username" placeholder=" " value="{{ participantNameWithSuffix }}"
-                                    readonly />
+                                    readonly autocomplete="username" />
                                 <label for="username">Nutzername</label>
                             </div>
                         </div>
                         <div class="formBox input-container">
                             <div class="input-container">
-                                <input type="password" id="password" placeholder=" " readonly />
+                                <input type="password" id="password" placeholder=" " readonly
+                                    autocomplete="current-password" />
                                 <label for="password">Passwort</label>
                             </div>
                         </div>
@@ -117,51 +118,53 @@
         <!-- Banner -->
         <header id="banner" class="banner" style="display: none">
             <div class="banner-content">
-                <h2>Effiziente Zusammenarbeit für beste Patientenversorgung</h2>
-                <p>Erfahren Sie mehr über unser Unternehmen</p>
+                <span class="banner-subtitel">Willkommen</span>
+                <h1 class="banner-titel">{{ participantGender_speech }} {{ participantName }}!</h1>
+                <!-- Willkommensnachricht -->
+                <div id="welcomeMessage" class="container containerextend" style="display: none">
+                    <div class="notification-box">
+                        <a onclick="handleMailboxNavigation()" style="cursor: pointer;">
+                            <div class="row centered-content">
+                                <div class="col-auto centered-content">
+                                    <!-- User-Bell-Logo -->
+                                    <!-- (Quelle) https://www.svgrepo.com/svg/513429/bell -->
+                                    <img class="notificationbell" src="{% static 'svg/bell.svg' %}">
+                                </div>
+                            </div>
+                            <div class="row centered-content">
+                                <div class="col-auto centered-content">
+                                    <div class="col centered-content banner-text">
+                                        In Ihrem Postfach befinden sich neue Nachrichten.
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="formBox">
+                            <button class="btn submit rounded-pill btn-primary" type="submit" style="max-width: 300px;"
+                                onclick="handleMailboxNavigation()">
+                                Zum Postfach
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 
-        <!-- Willkommensnachricht -->
-        <div id="welcomeMessage" class="container containerextend" style="display: none">
-            <div class="notification-box">
-                <a onclick="navigateTo('inboxPage'), showMailbox(), closeWelcomeMessage()" style="cursor: pointer;">
-                    <div class="row centered-content">
-                        <div class="col-auto centered-content">
-                            <!-- User-Bell-Logo -->
-                            <!-- (Quelle) https://www.svgrepo.com/svg/513429/bell -->
-                            <img class="notificationbell" src="{% static 'svg/bell.svg' %}">
-                        </div>
-                    </div>
-                    <div class="row centered-content">
-                        <div class="col-auto centered-content">
-                            <div class="col centered-content">
-                                Willkommen <wbr>{{ participantGender_speech }} {{ participantName }}!<br>
-                                In Ihrem Postfach befinden sich neue Nachrichten.
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!-- Container Mailverteiler Thema Sicherheitsinformationen nach Login (Handy-View) -->
-        <div id="MailContainerMobile" class="container containerextend">
+        <!-- Container Mailverteiler -->
+        <div id="MailContainerMobile" class="container containerextend" style="justify-content: center;">
             <div id="inboxPage" class="page" style="margin-top: 5%;">
                 <div class="content-wrapper">
                     <div class="email-wrapper wrapper">
-                        <div class="row align-items-stretch">
+                        <div class="row align-items-stretch" style="justify-content: center;">
                             <div id="folderPage" class="page active mail-sidebar d-block bg-white">
                                 <div class="menu-bar">
                                     <ul class="menu-items">
-                                        <li style="color: rgb(64, 131, 190); cursor: pointer;"
+                                        <li style="font-weight: 600; color: #008080; cursor: pointer;"
                                             onclick="navigateTo('mailPreviews'), showNavigation()"><a
-                                                style="color: rgb(64, 131, 190);"><i
-                                                    class="mdi mdi-email-outline"></i></a><span
-                                                class="mailbox-text">Nachrichten-Eingang<span
-                                                    style="color: rgb(64, 131, 190);"
+                                                style="color: #008080;"><i class="mdi mdi-email-outline"></i></a><span
+                                                class="mailbox-text">Nachrichten-Eingang<span style="color: #008080;"
                                                     class="badge badge-pill badge-success"><span
-                                                        id="inboxNumber">4</span></span></li>
+                                                        id="inboxNumber">6</span></span></li>
                                         <li><a><i class="mdi mdi-share"></i></a><span
                                                 class="mailbox-text">Entwürfe</span></li>
                                         <li><a><i class="mdi mdi-file-outline"></i></a><span
@@ -187,6 +190,25 @@
                         <div class="row align-items-stretch">
                             <div class="mail-list mailpreview-container border-right bg-white">
 
+                                <!-- Mailvorschau 10 (X) -->
+                                <div id="mail_Preview10" class="mail-list mailpreview" style="cursor: pointer;"
+                                    onclick="navigateTo('mail_10'), removeDot(10)">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="blue-dot" id="blueDot10"></div>
+                                        </div>
+                                        <div class="col-auto" style="max-width: 80%;">
+                                            <p class="sender-name">Fortbildung im August</p>
+                                            <p class="message_text">Hallo <span>{{ participantGender_speech }}</span>
+                                                <span>{{ participantName }}</span>,
+                                                ich plane gerade unsere nächsten Fortbildungen für Ende August und
+                                                möchte sicherstellen, dass wir Themen anbieten, die für alle im Team
+                                                interessant sind.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- Mailvorschau 1 -->
                                 <div id="mail_Preview1" class="mail-list mailpreview" style="cursor: pointer;"
                                     onclick="navigateTo('mail1'), removeDot(1)">
@@ -195,18 +217,40 @@
                                             <div class="blue-dot" id="blueDot1"></div>
                                         </div>
                                         <div class="col-auto" style="max-width: 80%;">
-                                            <p class="sender-name">Fahrtkostenerstattung 12.07.2024 /
-                                                Stellenausschreibung 2. OG</p>
+                                            <p class="sender-name">Stellenausschreibung 2. OG</p>
                                             <p class="message_text">Hallo <span>{{ participantGender_speech }}</span>
                                                 <span>{{ participantName }}</span>,
                                                 wie befürchtet bin ich leider krank geworden und arbeite diese Woche von
-                                                zu Hause aus. Ich habe gestern nochmal die Fahrtkosten überprüft.
+                                                zu Hause. Ich hatte noch keine Zeit, die beiden Unterlagen der neuen
+                                                Bewerber für die Stellenausschreibung der Bereichsleitung im 2. OG zu
+                                                überprüfen, die gestern von eurer Abteilung an mich weitergeleitet
+                                                wurden.
                                             </p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Mailvorschau 2 (ursprünglich Mailvorschau 4) -->
+                                <!-- Mailvorschau 20 (Y) -->
+                                <div id="mail_Preview20" class="mail-list mailpreview" style="cursor: pointer;"
+                                    onclick="navigateTo('mail_20'), removeDot(20)">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="blue-dot" id="blueDot20"></div>
+                                        </div>
+                                        <div class="col-auto" style="max-width: 80%;">
+                                            <p class="sender-name">Bestellung von medizinischem Verbrauchsmaterial</p>
+                                            <p class="message_text">{{ participantGender_titel }}
+                                                <span>{{ participantGender_speech }}</span>
+                                                <span>{{ participantName }}</span>,
+                                                ich habe letzte Woche eine Bestellung für Desinfektionsmittel
+                                                und sterile Handschuhe aufgegeben. Da unser Vorrat zur Neige geht,
+                                                wollte ich nachfragen, ob Sie Informationen zum Lieferstatus haben.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mailvorschau 2 -->
                                 <div id="mail_Preview2" class="mail-list mailpreview" style="cursor: pointer;"
                                     onclick="navigateTo('mail2'), removeDot(2)">
                                     <div class="row align-items-center">
@@ -214,13 +258,12 @@
                                             <div class="blue-dot" id="blueDot2"></div>
                                         </div>
                                         <div class="col-auto" style="max-width: 80%;">
-                                            <p class="sender-name">Patientenfall D72396 - Akteneinsicht</p>
+                                            <p class="sender-name">Dringendes Sicherheitsupdate erforderlich!</p>
                                             <p class="message_text">{{ participantGender_titel }}
                                                 <span>{{ participantGender_speech }}</span>
                                                 <span>{{ participantName }}</span>,
-                                                ich befinde mich gerade auf dem Weg zu einem wichtigen Treffen mit der
-                                                Kranken&shyhaus&shyleitung, um eine dringende
-                                                Patienten&shyfall&shybesprechung durch&shyzuführen.
+                                                um die Sicherheit unseres Netzwerks zu gewährleisten, führen wir heute
+                                                ein dringendes Sicherheits­update durch.
                                             </p>
                                         </div>
                                     </div>
@@ -247,7 +290,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Mailvorschau 4 (ursprünglich Mailvorschau 2) -->
+                                <!-- Mailvorschau 4 -->
                                 <div id="mail_Preview4" class="mail-list mailpreview" style="cursor: pointer;"
                                     onclick="navigateTo('mail4'), removeDot(4)">
                                     <div class="row align-items-center">
@@ -268,16 +311,16 @@
 
                                 <br>
                                 <!-- Button zur Qualtrics Umfrage -->
-                                <div class="rowextend center" id="completionSection" style="display: none;">
+                                <div class="rowextend center" id="completionSection">
                                     <div class="rowextend center" style="margin: 0% 5% 0% 5%;">
-                                        <br>
+                                        <br><br>
                                         <span class="center">Sobald Sie alle E-Mails beantwortet haben, beenden Sie
                                             bitte Ihre Arbeit. <br> Vielen Dank!</span>
                                         <br>
                                     </div>
                                     <div class="formBox">
-                                        <button class="btn submit rounded-pill btn-primary" style="margin-bottom: 60px;" type="button"
-                                            id="openSurvey">Arbeit abschließen</button>
+                                        <button class="btn submit rounded-pill btn-primary" style="margin-bottom: 60px;"
+                                            type="button" id="openSurvey">Arbeit abschließen</button>
                                     </div>
                                 </div>
                             </div>
@@ -286,7 +329,61 @@
                 </div>
             </div>
 
-            <!-- Mailinhalt 1 (ursprünglich Mailinhalt 2) -->
+            <!-- Mailinhalt_10 (X) -->
+            <div id="mail_10" class="page">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-view d-block bg-white">
+                                <div class="message-body">
+                                    <div class="sender-details">
+                                        <div class="details">
+                                            <p class="msg-subject">
+                                                <b>Betreff:</b> Fortbildung im August
+                                                <br><b>Von:</b> weber@vitanova.de
+                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="message-content border-left">
+                                        <p>Hallo <span>{{ participantGender_speech }}</span>
+                                            <span>{{ participantName }}</span>,
+                                            <br><br>
+                                            ich plane gerade unsere nächsten Fortbildungen für Ende August und möchte
+                                            sicherstellen, dass wir Themen anbieten, die für alle im Team interessant
+                                            sind. Spricht dich eines der Themen besonders an?
+                                        <ol>
+                                            <li><span class="bold">Zeitmanagement:</span> Effektive Techniken zur
+                                                besseren Organisation deiner Arbeitszeit</li>
+                                            <li><span class="bold">Kommunikation im Team:</span> Verbesserung der
+                                                Teamkommunikation und Konfliktlösung</li>
+                                            <li><span class="bold">Gesundheitsmanagement:</span> Strategien zur
+                                                Förderung der körperlichen und geistigen Gesundheit am Arbeitsplatz</li>
+                                        </ol>
+                                        Oder hast du andere Vorschläge? <br><br>
+
+                                        Liebe Grüße<br>
+                                        <span class="bold">Patrick Weber</span><br>
+                                        <span class="bold">Personalentwicklung</span><br>
+                                        </p>
+                                        <hr>
+                                        <div class="col center">
+                                            <div class="rowextend center">
+                                                <div class="formBox">
+                                                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                                                        id="openAnswerPopUp10">Antworten</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mailinhalt 1 -->
             <div id="mail1" class="page">
                 <div class="content-wrapper">
                     <div class="email-wrapper wrapper">
@@ -296,20 +393,10 @@
                                     <div class="sender-details">
                                         <div class="details">
                                             <p class="msg-subject">
-                                                <b>Betreff:</b> Fahrtkostenerstattung 12.07.2024 / Stellenausschreibung
-                                                2. OG
-                                                <br>
-                                                <b>Von:</b>
-                                                <span class="sender-email-container" onclick="toggleTooltip()">
-                                                    jennifer.schulze@gmail.de
-                                                    <img src="{% static 'svg/attention-icon.svg' %}" alt="Error Icon"
-                                                        class="error-icon-2">
-                                                </span><br>
-                                                <b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <b>Betreff:</b> Stellenausschreibung 2. OG
+                                                <br><b>Von:</b> jennifer.schulze@gmail.de
+                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
                                             </p>
-                                            <div class="tooltip" id="tooltip">
-                                                Dieser Absender ist extern. Bitte prüfen Sie den Inhalt sorgfältig.
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="message-content border-left">
@@ -317,30 +404,19 @@
                                             <span>{{ participantName }}</span>,
                                             <br><br>
                                             wie befürchtet bin ich leider krank geworden und arbeite diese Woche von zu
-                                            Hause aus. Ich habe gestern nochmal die Fahrtkosten überprüft. In dem
-                                            aktuellen Rückerstattungsantrag steht, dass wir eine Erstattung von 36 Euro
-                                            für die Fahrt zum Patienten erhalten sollen. Ich habe jedoch 63 Euro
-                                            berechnet, basierend auf dem Kilometersatz von 30 Cent pro km. War da
-                                            vielleicht ein Zahlendreher drin? Kannst du mir bitte bestätigen ob meine
-                                            Berechnung korrekt ist oder ob wir wirklich nur 36 Euro erstattet
-                                            bekommen? <br><br>
-
-                                            <b>Kilometerstand zu Beginn der Fahrt:</b> 51.000 km<br>
-                                            <b>Kilometerstand am Ende der Fahrt:</b> 51.210 km<br>
-                                            <b>Gefahrene Kilometer:</b> 210 km<br>
-                                            <b>€/km:</b> 30 Cent <br><br>
-
-                                            Außerdem hatte ich noch keine Zeit, die beiden Unterlagen der neuen Bewerber
+                                            Hause. Ich hatte noch keine Zeit, die beiden Unterlagen der neuen Bewerber
                                             für die Stellenausschreibung der Bereichsleitung im 2. OG zu überprüfen, die
-                                            gestern von eurer Abteilung an mich weitergeleitet wurden. Da wir zeitnah
-                                            eine Rückmeldung an Herrn Dr. Bergmann geben sollen, bräuchte ich diese
-                                            heute. Da ich von zu Hause aus nicht auf meine Arbeits-E-Mails zugreifen
-                                            kann, bitte ich dich, mir die Bewerbungsunterlagen einmal an diese
-                                            E-Mail-Adresse zu senden. Danke für die Hilfe und hoffentlich auf bald
-                                            wieder vor Ort.<br><br>
+                                            gestern von eurer Abteilung an mich weitergeleitet wurden.<br><br>
+                                            Wir müssen <span class="bold">zeitnah</span> eine Rückmeldung an Herrn Dr.
+                                            Bergmann geben, weshalb ich die Unterlagen heute benötige. Da ich von zu
+                                            Hause aus nicht auf meine Arbeits-E-Mails zugreifen kann, bitte ich dich,
+                                            mir <span class="bold">die Bewerbungsunterlagen</span> an <span
+                                                class="bold">diese E-Mail-Adresse</span> zu senden.<br> Danke für die
+                                            Hilfe und hoffentlich auf bald wieder vor Ort.<br><br>
 
                                             Mit besten Grüßen<br>
-                                            Jennifer Schulze<br>
+                                            <span class="bold">Jennifer Schulze</span><br>
+                                            <span class="bold">Buchhaltung</span><br>
                                         </p>
                                         <hr>
                                         <div class="col center">
@@ -359,7 +435,64 @@
                 </div>
             </div>
 
-            <!-- Mailinhalt 2 (ursprünglich Mailinhalt 4) -->
+            <!-- Mailinhalt_20 (Y) -->
+            <div id="mail_20" class="page">
+                <div class="content-wrapper">
+                    <div class="email-wrapper wrapper">
+                        <div class="row align-items-stretch">
+                            <div class="mail-view d-block bg-white">
+                                <div class="message-body">
+                                    <div class="sender-details">
+                                        <div class="details">
+                                            <p class="msg-subject">
+                                                <b>Betreff:</b> Bestellung von medizinischem Verbrauchsmaterial
+                                                <br><b>Von:</b> hoffmann@vitanova.de
+                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="message-content border-left">
+                                        <p> {{ participantGender_titel }} <span>{{ participantGender_speech }}</span>
+                                            <span>{{ participantName }}</span>,
+                                            <br><br>
+                                            ich habe letzte Woche eine Bestellung für Desinfektionsmittel und
+                                            sterile Handschuhe aufgegeben. Da unser Vorrat zur Neige geht, wollte ich
+                                            nachfragen, ob Sie Informationen zum Lieferstatus haben.
+                                            <br><br>
+                                            Hier sind die bestellten Artikel und Mengen:
+                                        <ul>
+                                            <li>Desinfektionsmittel: 10 Flaschen</li>
+                                            <li>Sterile Handschuhe (Größe M): 5 Packungen</li>
+                                            <li>Sterile Handschuhe (Größe L): 5 Packungen</li>
+                                        </ul>
+                                        Könnten Sie mir bitte den <span class="bold">aktuellen Status</span> der
+                                        Lieferung mitteilen und wann wir mit der <span class="bold">Ankunft der
+                                            Materialien</span> rechnen können?
+                                        <br><br>
+                                        Vielen Dank für Ihre Unterstützung!
+                                        <br><br>
+                                        Mit freundlichen Grüßen<br>
+                                        <span class="bold">Lena Hoffmann</span><br>
+                                        <span class="bold">Einkaufsabteilung</span><br>
+                                        </p>
+                                        <hr>
+                                        <div class="col center">
+                                            <div class="rowextend center">
+                                                <div class="formBox">
+                                                    <button class="btn submit rounded-pill btn-primary" type="submit"
+                                                        id="openAnswerPopUp20">Antworten</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mailinhalt 2 -->
             <div id="mail2" class="page">
                 <div class="content-wrapper">
                     <div class="email-wrapper wrapper">
@@ -369,8 +502,8 @@
                                     <div class="sender-details">
                                         <div class="details">
                                             <p class="msg-subject">
-                                                <b>Betreff:</b> Patientenfall D72396 - Akteneinsicht
-                                                <br><b>Von:</b> dr.bergmann@vitanova.com
+                                                <b>Betreff:</b> Dringendes Sicherheitsupdate erforderlich!
+                                                <br><b>Von:</b> re-rpcesl-vsey9o@news-mail.de
                                                 <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
                                             </p>
                                         </div>
@@ -379,26 +512,22 @@
                                         <p> {{ participantGender_titel }} <span>{{ participantGender_speech }}</span>
                                             <span>{{ participantName }}</span>,
                                             <br><br>
-                                            ich befinde mich gerade auf dem Weg zu einem wichtigen Treffen mit der
-                                            Kranken&shyhaus&shyleitung, um eine dringende
-                                            Patienten&shyfall&shybesprechung durch&shyzuführen. Leider musste ich
-                                            feststellen, dass nach einem Update unserer IT-Systeme meine
-                                            gespeicherten Anmeldedaten für unser internes Patienten&shydaten&shysystem
-                                            verloren gegangen sind.<br><br>
+                                            Um die Sicherheit unseres Netzwerks zu gewährleisten, führen wir heute ein
+                                            dringendes Sicherheits&shy;update durch. Um Kompatibilitäts&shy;probleme zu
+                                            vermeiden, sind <span class="bold">alle Nutzer aufgefordert</span>, ihre
+                                            Systeme <span class="bold">bis zum Ende des Tages zu
+                                                aktualisieren</span>.<br><br>
+                                            Bitte <span class="bold">klicken Sie auf den nachfolgenden Link</span>, um
+                                            das Update zu starten: <br><br>
 
-                                            Um die aktuellen Befunde und Labor&shyergebnisse des Patienten rechtzeitig
-                                            vor dem Treffen einzusehen, benötige ich dringend Zugriff
-                                            auf das System. Unser IT-Support konnte mir in der Kürze der Zeit nicht
-                                            weiter&shyhelfen und hat mir empfohlen, mich an Sie zu wenden, da Sie
-                                            derzeit im Dienst sind und bereits vollen Zugriff auf das System
-                                            haben.<br><br>
-                                            Könnten Sie mir bitte kurz&shyfristig Ihre Anmelde&shydaten für das
-                                            Patienten&shydaten&shysystem zukommen lassen, damit ich die notwendigen
-                                            Informationen rechtzeitig einsehen und die Besprechung vorbereiten kann?<br>
-                                            Ich danke Ihnen vielmals!<br><br>
+                                            <a id="updateLink" onclick="openUpdatePopUp()">Update starten</a> <br><br>
+                                            Sollten Sie das Update nicht durchführen, kann dies zu einem <span
+                                                class="bold">temporären Ausschluss vom Netzwerk</span> führen.<br>
 
-                                            Mit besten Grüßen<br>
-                                            Dr. Johannes Bergmann<br>
+                                            Bitte geben Sie uns <span class="bold">eine Rückmeldung</span>, sobald Sie
+                                            das Update durchgeführt haben.<br><br>
+                                            Mit freundlichen Grüßen<br> 
+                                            <span class="bold">Ihre IT-Abteilung</span><br>
                                         </p>
                                         <hr>
                                         <div class="col center">
@@ -434,29 +563,25 @@
                                         </div>
                                     </div>
                                     <div class="message-content border-left">
-                                        <!-- Notification Error -->
-                                        <!-- <div class="notification-error">
-                                            <img src="{% static 'svg/attention-icon.svg' %}" alt="Error Icon" class="error-icon">
-                                            <span>Achtung Externe Mail!</span>
-                                        </div> -->
                                         <p>
                                             Hallo <span>{{ participantGender_speech }}</span>
                                             <span>{{ participantName }}</span>,
                                             <br><br>
                                             vielen Dank für Ihre Unterstützung gestern bei der
                                             Patienten&shyfall&shybesprechung. Mir ist gerade aufgefallen, dass Sie die
-                                            Besprechungs&shyunterlagen nach dem Speichern auf Ihrem Computer auf Ihr
-                                            persönliches USB-Laufwerk kopiert haben und nicht auf das zentrale
-                                            Laufwerk.<br><br>
-
-                                            Da Ihr USB-Laufwerk passwort&shygeschützt ist, kann ich nicht auf die
-                                            Unterlagen zugreifen. Die Besprechung mit der Kranken&shyhaus&shyleitung
-                                            beginnt in 15 Minuten. Könnten Sie mir bitte schnellstmöglich das Passwort
-                                            für Ihren USB-Stick schicken? <br>
-                                            Vielen Dank für Ihre Hilfe!<br><br>
+                                            Besprechungs&shyunterlagen nach dem Speichern auf dem Computer auf <span
+                                                class="bold">Ihr persönliches USB-Laufwerk</span> kopiert haben und
+                                            nicht auf das zentrale Laufwerk.<br><br> Da Ihr USB-Laufwerk <span
+                                                class="bold"> passwort&shygeschützt ist</span>, kann ich <span
+                                                class="bold">nicht</span> auf die Unterlagen zugreifen. Die Besprechung
+                                            mit der Kranken&shyhaus&shyleitung beginnt in 15 Minuten. Könnten Sie mir
+                                            bitte <span class="bold">schnellstmöglich</span> das <span
+                                                class="bold">Passwort</span> für Ihren USB-Stick <span
+                                                class="bold">schicken</span>? <br> Vielen Dank für Ihre Hilfe!<br><br>
 
                                             Mit besten Grüßen<br>
-                                            Michael Diepholz<br>
+                                            <span class="bold">Michael Diepholz</span><br>
+                                            <span class="bold">Patientenmanagement</span><br>
                                         </p>
                                         <hr>
                                         <div class="col center">
@@ -475,7 +600,7 @@
                 </div>
             </div>
 
-            <!-- Mailinhalt 4 (ursprünglich Mailinhalt 2) -->
+            <!-- Mailinhalt 4 -->
             <div id="mail4" class="page">
                 <div class="content-wrapper">
                     <div class="email-wrapper wrapper">
@@ -485,41 +610,33 @@
                                     <div class="sender-details">
                                         <div class="details">
                                             <p class="msg-subject">
-                                                <b>Betreff: HealthDesk Version 3.1</b>
-                                                <br>
-                                                <b>Von:</b>
-                                                <span class="sender-email-container" onclick="toggleTooltip2()">
-                                                    dr.bergmann@vitanova.com
-                                                    <img src="{% static 'svg/attention-icon.svg' %}" alt="Error Icon"
-                                                        class="error-icon-2">
-                                                </span><br>
-                                                <b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <b>Betreff:</b> HealthDesk Version 3.1
+                                                <br><b>Von:</b> dr.bergmann@vitanova.com
+                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
                                             </p>
-                                            <div class="tooltip" id="tooltip2">
-                                                Dieser Absender ist extern. Bitte prüfen Sie den Inhalt sorgfältig.
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="message-content border-left">
                                         <p>{{ participantGender_titel }} <span>{{ participantGender_speech }}</span>
                                             <span>{{ participantName }}</span>,
                                             <br><br>
-                                            ich habe noch eine weitere Bitte an Sie. Wie Sie wissen, bin ich derzeit
-                                            außer Haus und werde erst nach dem Meeting mit der Krankenhausleitung
-                                            zurückkehren. Wir haben bei uns auf der Etage momentan noch die alte Version
-                                            3.0 von HealthDesk und unsere PCs erhalten erst kommende Woche das Update.
-                                            Um alle relevanten Daten für den Patienten in das System eintragen zu können
-                                            benötige ich die neue Version mit den entsprechenden Erweiterungen.<br><br>
-
-                                            Frau Schulze hat mir gerade erzählt, dass Sie bereits die neue Version 3.1
-                                            besitzen? Könnten Sie bitte Ihren Computer angemeldet lassen, damit ich
-                                            später auf die HealthDesk Version 3.1 zugreifen und die Daten des Patienten
-                                            eintragen kann, so wie Sie es letzte Woche für Frau Schulze getan haben?
-                                            <br>
-                                            Vielen Dank und bis morgen.<br><br>
+                                            Ich habe noch eine Bitte an Sie. Wie Sie wissen, bin ich derzeit außer Haus
+                                            und werde erst nach dem Meeting mit der Krankenhausleitung zurückkehren. Wir
+                                            haben bei uns auf der Etage momentan noch die <span class="bold">alte
+                                                Version 3.0 von HealthDesk</span> und unsere PCs erhalten erst kommende
+                                            Woche das Update. Um <span class="bold">alle relevanten Daten</span> für den
+                                            Patienten in das System eintragen zu können, <span class="bold">benötige ich
+                                                die neue Version 3.1</span> mit den entsprechenden
+                                            Erweiterungen.<br><br> Frau Schulze hat mir gerade erzählt, dass Sie bereits
+                                            die neue Version 3.1 besitzen? Könnten Sie bitte Ihren Computer <span
+                                                class="bold">angemeldet lassen</span>, damit ich später auf die <span
+                                                class="bold">HealthDesk Version 3.1 zugreifen</span> und die Daten des
+                                            Patienten <span class="bold">eintragen kann</span>, so wie es Herr Diepholz
+                                            letzte Woche getan hat? <br> Vielen Dank und bis morgen.<br><br>
 
                                             Mit freundlichen Grüßen<br>
-                                            Dr. Johannes Bergmann<br>
+                                            <span class="bold">Dr. Johannes Bergmann</span><br>
+                                            <span class="bold">Medizinische Leitung</span><br>
                                         </p>
                                         <hr>
                                         <div class="col center">
@@ -540,51 +657,48 @@
         </div>
 
         <!-- Footer ist unten fixiert -->
-        <footer class="footer" id="footerSettings" style="display: none;">
-            <section>
-                <div class="row gridFooter" style="text-align: left; padding-left: 5%;">
-                    <div class="colDot" style="font-size: 18px;">
-                        <section>
-                            <span class="h3">Über uns</span><br>
-                            <span class="spanLink">Unser Krankenhaus</span><br>
-                            <span class="spanLink">Mission & Werte</span><br>
-                            <span class="spanLink">Leitungsteam</span><br>
-                            <span class="spanLink">Geschichte</span><br>
-                        </section>
-                    </div>
-
-                    <div class="colDot">
-                        <section>
-                            <span class="h3">Nützliche Links</span><br>
-                            <span class="spanLink">IT-Support</span><br>
-                            <span class="spanLink">Medizinische Abteilungen</span><br>
-                            <span class="spanLink">Dokumente & Formulare</span><br>
-                            <span class="spanLink">Richtlinien & Protokolle</span><br>
-                        </section>
-                    </div>
-
-                    <div class="colDot">
-                        <section>
-                            <span class="h3">Kontakt & Hilfe</span><br>
-                            <span class="spanLink">Kontaktinformationen</span><br>
-                            <span class="spanLink">Notrufnummern</span><br>
-                            <span class="spanLink">FAQ</span><br>
-                        </section>
-                    </div>
-                </div>
-            </section>
-            <hr>
-            <span>© 2024 VitaNova</span>
-        </footer>
-
-        <!-- Footer ist unten fixiert -->
-        <footer class="fixed-bottom" id="footer2" style="display: none;">
+        <footer class="fixed-bottom" id="footerColor" style="display: none;">
             <span>© 2024 VitaNova</span>
         </footer>
     </div>
 
     <!-- Antworten (Pop-Ups) -->
-    <!-- Antwort E-Mail 1 (ursprünglich Antwort E-Mail 2) -->
+    <!-- Antwort E-Mail_10 (X) -->
+    <div class="popup" id="Antwort_Email_10">
+        <div class="container round popup-content" style="text-align: left;">
+            <div class="rowextend">
+                <!-- Close button "X" -->
+                <div class="popupcol close-btn" onclick="closeAnswerPopUp(10)">
+                    <span>&times;</span>
+                </div>
+            </div>
+            <br>
+            <div class="rowextend center">
+                <h5>Antwort an Patrick Weber</h5><br>
+            </div>
+
+            <!-- Input field for the response -->
+            <div class="rowextend center mt-3">
+                <textarea class="form-control" id="responseText10" rows="5" maxlength="250"
+                    placeholder="Bitte schreiben Sie Ihre Antwort hier ... "></textarea>
+                <div class="text-right">
+                    <span id="charCount10">250</span> Zeichen verbleibend
+                </div>
+            </div>
+            <br>
+            <span class="note">[<b>Notiz:</b> Geben Sie ein Feedback zu der Themenauswahl]</span>
+
+            <div class="rowextend center mt-3">
+                <div class="formBox">
+                    <button class="btn submit rounded-pill btn-primary" type="submit" id="sendAnswer10" disabled>
+                        Antwort senden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Antwort E-Mail 1 -->
     <div class="popup" id="Antwort_Email_1">
         <div class="container round popup-content" style="text-align: left;">
             <div class="rowextend">
@@ -600,17 +714,14 @@
 
             <!-- Input field for the response -->
             <div class="rowextend center mt-3">
-                <textarea class="form-control" id="responseText1" rows="4" maxlength="250"
+                <textarea class="form-control" id="responseText1" rows="5" maxlength="250"
                     placeholder="Bitte schreiben Sie Ihre Antwort hier ... "></textarea>
                 <div class="text-right">
                     <span id="charCount1">250</span> Zeichen verbleibend
                 </div>
             </div>
-
-            <div class="rowextend">
-                <br>
-                <span class="note">Dokument per Klick als Anhang hinzuzufügen:</span>
-            </div>
+            <br>
+            <span class="note">Dokument <span class="bold">per Klick</span> als Anhang hinzuzufügen:</span>
 
             <div class="document-container">
                 <div class="document-tile" id="documentTile">
@@ -630,7 +741,43 @@
         </div>
     </div>
 
-    <!-- Antwort E-Mail 2 (ursprünglich Antwort E-Mail 4) -->
+    <!-- Antwort E-Mail_20 (Y) -->
+    <div class="popup" id="Antwort_Email_20">
+        <div class="container round popup-content" style="text-align: left;">
+            <div class="rowextend">
+                <!-- Close button "X" -->
+                <div class="popupcol close-btn" onclick="closeAnswerPopUp(20)">
+                    <span>&times;</span>
+                </div>
+            </div>
+            <br>
+            <div class="rowextend center">
+                <h5>Antwort an Lena Hoffmann</h5><br>
+            </div>
+
+            <!-- Input field for the response -->
+            <div class="rowextend center mt-3">
+                <textarea class="form-control" id="responseText20" rows="5" maxlength="250"
+                    placeholder="Bitte schreiben Sie Ihre Antwort hier ... "></textarea>
+                <div class="text-right">
+                    <span id="charCount20">250</span> Zeichen verbleibend
+                </div>
+            </div>
+            <br>
+            <span class="note">[<b>Notiz:</b> Die Lieferung wurde bereits verschickt und wird voraussichtlich in 1-2
+                Tagen eintreffen.]</span>
+
+            <div class="rowextend center mt-3">
+                <div class="formBox">
+                    <button class="btn submit rounded-pill btn-primary" type="submit" id="sendAnswer20" disabled>
+                        Antwort senden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Antwort E-Mail 2 -->
     <div class="popup" id="Antwort_Email_2">
         <div class="container round popup-content" style="text-align: left;">
             <div class="rowextend">
@@ -641,22 +788,18 @@
             </div>
             <br>
             <div class="rowextend center">
-                <h5>Antwort an Dr. Johannes Bergmann</h5><br>
+                <h5>Antwort an die IT-Abteilung</h5><br>
             </div>
 
             <!-- Input field for the response -->
             <div class="rowextend center mt-3">
-                <textarea class="form-control" id="responseText2" rows="4" maxlength="250"
+                <textarea class="form-control" id="responseText2" rows="5" maxlength="250"
                     placeholder="Bitte schreiben Sie Ihre Antwort hier ... "></textarea>
                 <div class="text-right">
                     <span id="charCount2">250</span> Zeichen verbleibend
                 </div>
             </div>
-
-            <span class="note"><i>[Notiz: Ihre Anmeldedaten:</i><br>
-                <span><i>Username:</i></span> <span><i>{{ participantNameWithSuffix }}</i></span><br>
-                <span><i>Passwort:</i></span> <span><i>V!taHe@lth_24]</i></span>
-            </span>
+            <br>
 
             <div class="rowextend center mt-3">
                 <div class="formBox">
@@ -668,7 +811,7 @@
         </div>
     </div>
 
-    <!-- Antwort E-Mail 3 (ursprünglich Antwort E-Mail 1) -->
+    <!-- Antwort E-Mail 3 -->
     <div class="popup" id="Antwort_Email_3">
         <div class="container round popup-content" style="text-align: left;">
             <div class="rowextend">
@@ -684,16 +827,14 @@
 
             <!-- Input field for the response -->
             <div class="rowextend center mt-3">
-                <textarea class="form-control" id="responseText3" rows="4" maxlength="250"
+                <textarea class="form-control" id="responseText3" rows="5" maxlength="250"
                     placeholder="Bitte schreiben Sie Ihre Antwort hier ... "></textarea>
                 <div class="text-right">
                     <span id="charCount3">250</span> Zeichen verbleibend
                 </div>
             </div>
-
-            <span class="note"><i>[Notiz: Passwort des USB-Laufwerks:</i><br>
-                <span><i>Passwort:</i></span> <span><i>Vit@USB_Drive]</i></span>
-            </span>
+            <br>
+            <span class="note">[<b>Notiz:</b> Passwort des USB-Laufwerks: Vit@USB-Drive]</span>
 
             <div class="rowextend center mt-3">
                 <div class="formBox">
@@ -705,7 +846,7 @@
         </div>
     </div>
 
-    <!-- Antwort E-Mail 4 (ursprünglich Antwort E-Mail 3) -->
+    <!-- Antwort E-Mail 4 -->
     <div class="popup" id="Antwort_Email_4">
         <div class="container round popup-content" style="text-align: left;">
             <div class="rowextend">
@@ -721,17 +862,64 @@
 
             <!-- Input field for the response -->
             <div class="rowextend center mt-3">
-                <textarea class="form-control" id="responseText4" rows="4" maxlength="250"
+                <textarea class="form-control" id="responseText4" rows="5" maxlength="250"
                     placeholder="Bitte schreiben Sie Ihre Antwort hier ... "></textarea>
                 <div class="text-right">
                     <span id="charCount4">250</span> Zeichen verbleibend
                 </div>
             </div>
+            <br>
+            <span class="note">[<b>Notiz:</b> Geben Sie eine Rückmeldung bezüglich der Software]</span>
 
             <div class="rowextend center mt-3">
                 <div class="formBox">
                     <button class="btn submit rounded-pill btn-primary" type="submit" id="sendAnswer4" disabled>
                         Antwort senden
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Pop-up -->
+    <div id="updatePopup" class="popup">
+        <div class="popup-content">
+            <div class="rowextend">
+                <!-- Close button "X" -->
+                <div class="popupcol close-btn hidden" id="closeUpdateBtn" onclick="closeUpdatePopUp()">
+                    <span>&times;</span>
+                </div>
+            </div>
+            <p id="updateStatus">Update startet ...</p>
+            <div id="loadingSpinner" class="spinner"></div>
+            <div id="successIcon" class="success hidden">
+                <i class="checkmark">✓</i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop-Up - Anforderungen der Aufgabe -->
+    <div class="popup" id="taskDemand">
+        <div class="container round popup-content">
+            <div class="rowextend center">
+                <span class="spanInfo">Information</span>
+            </div>
+            <!-- Task Demand -->
+            <div class="rowextend center mt-3">
+                <span id="taskDemandHigh">Im Durchschnitt benötigen Mitarbeiter anderer Branchen <b>15&nbsp;min</b> für
+                    die
+                    Bearbeitung der nachfolgenden Aufgaben. Sie haben lediglich <b>sechs Minuten Zeit</b>.<br><br> Bitte
+                    halten Sie Ihre Antworten <b>kurz und prägnant</b>, um alle E-Mails innerhalb der vorgegebenen Zeit
+                    zu bearbeiten.</span>
+                <span id="taskDemandLow">Der Krankenhausalltag ist sehr schnelllebig und erfordert von den Mitarbeitern
+                    eine <b>effiziente Zeitnutzung</b>.<br><br>Bitte halten Sie Ihre Antworten <b>kurz und prägnant</b>,
+                    während Sie alle E-Mails bearbeiten.</span>
+            </div>
+
+            <div class="rowextend center mt-3">
+                <div class="formBox">
+                    <button class="btn submit rounded-pill btn-primary" type="submit" onclick="closeTaskDemandPopUp()">
+                        Weiter
                     </button>
                 </div>
             </div>

@@ -15,9 +15,9 @@ def experiment(request):
         else:
             ip_address = request.META.get("REMOTE_ADDR")
 
-        experimentNumber = random.randint(
-            1, 6
-        )  # Zufällige Experimentnummer zwischen 1 und 6
+        # Zufällige Experimentnummer zwischen 1 und 6
+        experimentNumber = random.randint(1, 6)
+        # experimentNumber = 4
 
         # Experimentnummer in der VS-Konsole ausgeben
         print(f"Experimentnummer für IP {ip_address}: {experimentNumber}")
@@ -103,7 +103,7 @@ def get_experiment_number(request):
         return JsonResponse({"experimentNumber": None})
 
 
-# Webseite
+# Login für Webseite
 def login(request):
     if request.method == "POST":
         x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
@@ -136,6 +136,7 @@ def login(request):
     return render(request, "webseite/login.html")
 
 
+# Hauptwebseite
 def webseite(request):
     if request.method == "POST":
         x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
@@ -274,6 +275,37 @@ def webseite(request):
     }
 
     return render(request, "webseite/webseite.html", context)
+
+
+# Update install status
+def update_install_status(request):
+    if request.method == "POST":
+        participantName = request.POST.get("participantName", "")
+        ip_address = request.META.get("REMOTE_ADDR", "")
+
+        try:
+            # Eintrag für den Teilnehmer aktualisieren basierend auf Name und IP-Adresse
+            latest_answer = Answers.objects.filter(
+                participantName=participantName, ip_address=ip_address
+            ).latest("created_at")
+
+            if timezone.now() - latest_answer.created_at < timedelta(minutes=30):
+                latest_answer.installed_update = 1
+                latest_answer.save()
+                return JsonResponse(
+                    {"message": "Installationsstatus erfolgreich aktualisiert."}
+                )
+            else:
+                return JsonResponse(
+                    {
+                        "message": "Eintrag ist älter als 30 Minuten, keine Aktualisierung erfolgt."
+                    }
+                )
+
+        except Answers.DoesNotExist:
+            return JsonResponse({"message": "Teilnehmer nicht gefunden."})
+
+    return JsonResponse({"message": "Ungültige Anfrage."})
 
 
 def ZTest(request):
