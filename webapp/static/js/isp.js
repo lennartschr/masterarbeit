@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (experimentNumber === 1 || experimentNumber === 2) {
             const cardLowers = document.querySelectorAll('.card-lower');
             cardLowers.forEach(cardLower => {
+                cardLower.style.backgroundColor = '#fff';
                 cardLower.style.display = 'none';
             });
             // Default Kontrollfrage anzeigen

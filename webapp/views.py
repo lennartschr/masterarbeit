@@ -22,10 +22,10 @@ def experiment(request):
         # Experimentnummer in der VS-Konsole ausgeben
         print(f"Experimentnummer für IP {ip_address}: {experimentNumber}")
 
-        # Zeitraum von 30 Minuten definieren
-        lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+        # Zeitraum von 45 Minuten definieren
+        lifetime_participant_dataset = timezone.now() - timedelta(minutes=45)
 
-        # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse in den letzten 30 Minuten existiert
+        # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse in den letzten 45 Minuten existiert
         recent_entry = Answers.objects.filter(
             ip_address=ip_address,
             created_at__gte=lifetime_participant_dataset,
@@ -36,7 +36,7 @@ def experiment(request):
             recent_entry.experimentNumber = experimentNumber
             recent_entry.save()
         else:
-            # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minuten ist
+            # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 45 Minuten ist
             Answers.objects.create(
                 ip_address=ip_address, experimentNumber=experimentNumber
             )
@@ -60,7 +60,7 @@ def ISP(request):
         ip_address = request.META.get("REMOTE_ADDR")
 
     # Experiment Number aus der Datenbank holen
-    lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+    lifetime_participant_dataset = timezone.now() - timedelta(minutes=45)
     recent_entry = Answers.objects.filter(
         ip_address=ip_address,
         created_at__gte=lifetime_participant_dataset,
@@ -88,8 +88,8 @@ def get_experiment_number(request):
     else:
         ip_address = request.META.get("REMOTE_ADDR")
 
-    # Zeitraum von 30 Minuten definieren
-    lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+    # Zeitraum von 45 Minuten definieren
+    lifetime_participant_dataset = timezone.now() - timedelta(minutes=45)
 
     try:
         # Den neuesten Eintrag für diese IP-Adresse holen
@@ -116,8 +116,8 @@ def login(request):
         participantGender = request.POST.get("participantGender", "")
 
         try:
-            # Eintrag mit der gleichen IP-Adresse und innerhalb der letzten 30 Minuten finden
-            lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+            # Eintrag mit der gleichen IP-Adresse und innerhalb der letzten 45 Minuten finden
+            lifetime_participant_dataset = timezone.now() - timedelta(minutes=45)
             latest_answer = Answers.objects.filter(
                 ip_address=ip_address, created_at__gte=lifetime_participant_dataset
             ).latest("created_at")
@@ -150,10 +150,10 @@ def webseite(request):
             participantGender = request.POST.get("participantGender", "")
             experimentNumber = request.POST.get("experimentNumber", 0)
 
-            # Zeitraum von 30 Minuten definieren
-            lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+            # Zeitraum von 45 Minuten definieren
+            lifetime_participant_dataset = timezone.now() - timedelta(minutes=45)
 
-            # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse, Name und Geschlecht in den letzten 30 Minuten existiert
+            # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse, Name und Geschlecht in den letzten 45 Minuten existiert
             recent_entry = Answers.objects.filter(
                 ip_address=ip_address,
                 participantName=participantName,
@@ -162,7 +162,7 @@ def webseite(request):
             ).first()
 
             if recent_entry:
-                # Aktualisieren des letzten Eintrags, falls er innerhalb der letzten 30 Minuten erstellt wurde
+                # Aktualisieren des letzten Eintrags, falls er innerhalb der letzten 45 Minuten erstellt wurde
                 recent_entry.participantGender = participantGender
                 recent_entry.experimentNumber = experimentNumber
                 recent_entry.save()
@@ -170,7 +170,7 @@ def webseite(request):
                     {"message": "Teilnehmerdaten erfolgreich aktualisiert."}
                 )
             else:
-                # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minuten ist
+                # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 45 Minuten ist
                 Answers.objects.create(
                     ip_address=ip_address,
                     participantName=participantName,
@@ -200,7 +200,7 @@ def webseite(request):
                     participantName=participantName, ip_address=ip_address
                 ).latest("created_at")
 
-                if timezone.now() - latest_answer.created_at < timedelta(minutes=30):
+                if timezone.now() - latest_answer.created_at < timedelta(minutes=45):
                     if answer1:
                         latest_answer.answer1 = answer1
                     if answer2:
@@ -215,7 +215,7 @@ def webseite(request):
                 else:
                     return JsonResponse(
                         {
-                            "message": "Eintrag ist älter als 30 Minuten, keine Aktualisierung erfolgt."
+                            "message": "Eintrag ist älter als 45 Minuten, keine Aktualisierung erfolgt."
                         }
                     )
 
@@ -289,7 +289,7 @@ def update_install_status(request):
                 participantName=participantName, ip_address=ip_address
             ).latest("created_at")
 
-            if timezone.now() - latest_answer.created_at < timedelta(minutes=30):
+            if timezone.now() - latest_answer.created_at < timedelta(minutes=45):
                 latest_answer.installed_update = 1
                 latest_answer.save()
                 return JsonResponse(
@@ -298,7 +298,7 @@ def update_install_status(request):
             else:
                 return JsonResponse(
                     {
-                        "message": "Eintrag ist älter als 30 Minuten, keine Aktualisierung erfolgt."
+                        "message": "Eintrag ist älter als 45 Minuten, keine Aktualisierung erfolgt."
                     }
                 )
 

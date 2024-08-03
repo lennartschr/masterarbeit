@@ -46,8 +46,7 @@
 #nudgeSocialProof_2,
 #nudgeSocialProof_3,
 #nudgeSocialProof_4 {
-    display: none;
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 #controlQuestionDefault,
@@ -57,18 +56,19 @@
 }
 
 .nColor1 {
-  color: #000000; /* Orange Red */
+  color: #000000;
+  /* Orange Red */
   font-weight: bold;
 }
 
 .nColor2 {
-  color: #ff51a8; /* Pink */
+  color: #ff51a8;
+  /* Pink */
   font-weight: bold;
 }
 
 .nColor3 {
-  color: #9370db; /* Medium Purple */
+  color: #9370db;
+  /* Medium Purple */
   font-weight: bold;
 }
-
-
