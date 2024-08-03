@@ -31,6 +31,9 @@ DEBUG = (
     os.environ.get("DEBUG", "False") == "True"
 )  # Debug nur aktivieren, wenn es explizit gesetzt ist
 
+# Für Lokale Änderungen
+# DEBUG = True
+
 ALLOWED_HOSTS = [
     "*",
     "0.0.0.0",
