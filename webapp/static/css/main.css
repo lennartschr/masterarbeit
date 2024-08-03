@@ -346,7 +346,7 @@ body {
     flex-direction: column;
     justify-content: center;
     left: 50%;
-    padding: 4% 2.5% 4% 2.5% !important;
+    padding: 4% 2.5% 10% 2.5% !important;
     position: fixed;
     text-align: center;
     top: 50%;
@@ -355,6 +355,14 @@ body {
     visibility: hidden;
     z-index: 1100;
 }
+
+/* CSS wenn Bildschirmbreite > 500px */
+@media screen and (min-width: 500px) {
+    .popup {
+        padding: 4% 2.5% 4% 2.5% !important;
+    }
+}
+
 
 .popup-content {
     max-height: 90vh;
