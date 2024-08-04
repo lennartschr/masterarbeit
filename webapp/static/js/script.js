@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // 1.	Standard Policy	+ 	Ohne Stress
                     case 1:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_026hDIzJZmVSsS2';
+                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yQGq8lz47KbKPI';
                         break;
 
                     // 2.	Standard Policy	+ 	Mit Stress
@@ -336,7 +336,7 @@ function startTimer(duration, experimentNumber) {
 
                 // 1.	Standard Policy	+ 	Ohne Stress
                 case 1:
-                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_026hDIzJZmVSsS2';
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yQGq8lz47KbKPI';
                     break;
 
                 // 2.	Standard Policy	+ 	Mit Stress
