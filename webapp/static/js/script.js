@@ -197,14 +197,6 @@ function openLoginPopup() {
 
 // Öffnen des Pop-ups für Task-Demand
 function openTaskDemandPopUp() {
-    // TaskDemandHigh vs. Low Text
-    fetchExperimentNumber(function (experimentNumber) {
-        if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
-            document.getElementById('taskDemandHigh').style.display = 'block'
-        } else {
-            document.getElementById('taskDemandLow').style.display = 'block';
-        }
-    });
 
     let pop = document.getElementById('taskDemand');
     pop.classList.add("open-popup");
@@ -216,7 +208,7 @@ function openTaskDemandPopUp() {
 
 // Schließt das Pop-ups für Task-Demand
 function closeTaskDemandPopUp() {
-    // Timer-Funktion - Zeitdruck starten, wenn experimentNumber 2, 4 oder 6 ist
+    // Timer-Funktion - Zeitdruck starten
     fetchExperimentNumber(function (experimentNumber) {
         if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
             // Pro Mail: 60 Sekunden a 6 Mails = 360 Sekunden = 6 Minuten
@@ -274,7 +266,20 @@ function closeWelcome() {
         document.body.style.backgroundColor = '#194E51';
 
         // DemandTask Pop up anzeigen
-        openTaskDemandPopUp();
+        fetchExperimentNumber(function (experimentNumber) {
+            if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
+                openTaskDemandPopUp();
+            }
+            else {
+                // Banner anzeigen
+                var banner = document.getElementById("banner");
+                banner.style.display = "block";
+
+                // Willkommensnachricht anzeigen
+                var welcomeMessage = document.getElementById("welcomeMessage");
+                welcomeMessage.style.display = "block";
+            }
+        });
 
         // Auf Seitenanfang scrollen
         window.scrollTo(0, 0);
@@ -484,10 +489,20 @@ function updateSendButtonState(mailNumber) {
     const textValid = textarea.value.trim().length > 5;
     const pdfSelected = documentTile.classList.contains('selected');
 
-    if (textValid || pdfSelected) {
-        sendButton.disabled = false;
+    if (mailNumber === 1) {
+        // Für Mailnummer 1: Button aktivieren, wenn entweder Text gültig ist oder PDF ausgewählt ist
+        if (textValid || pdfSelected) {
+            sendButton.disabled = false;
+        } else {
+            sendButton.disabled = true;
+        }
     } else {
-        sendButton.disabled = true;
+        // Für alle anderen Mailnummern: Button aktivieren, wenn Text gültig ist
+        if (textValid) {
+            sendButton.disabled = false;
+        } else {
+            sendButton.disabled = true;
+        }
     }
 }
 

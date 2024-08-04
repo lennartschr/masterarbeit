@@ -871,9 +871,3 @@ h5 {
     margin-top: -12px;
     margin-left: -2px;
 }
-
-/* Task Demand */
-#taskDemandHigh,
-#taskDemandLow {
-    display: none;
-}
