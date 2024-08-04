@@ -88,7 +88,8 @@ function sendAnswer(mailNumber) {
                 }
                 if (answeredCount === totalMailNumbers) {
                     // Alle Antworten wurden gesendet
-                    document.getElementById('completionSection').style.display = 'block';
+                    // document.getElementById('completionSection').style.display = 'block';
+                    document.getElementById('openSurvey').disabled = false; // Button aktivieren
                 }
             } else {
                 console.error('Fehler beim Senden der Antwort:', data.message);
