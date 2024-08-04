@@ -724,10 +724,6 @@ body {
     background: rgba(240, 244, 249, 0.8);
 }
 
-#completionSection {
-    display: none;
-}
-
 .messageSenderSymbol {
     height: 35px;
     margin-left: -0.75%;
