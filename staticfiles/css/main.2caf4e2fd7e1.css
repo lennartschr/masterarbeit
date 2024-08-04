@@ -2,7 +2,7 @@
 body {
     width: 100vw;
     height: 100vh;
-    background: url(../pictures/health_pictures/backgroundHealth.jpg) no-repeat center center;
+    background: url("../pictures/health_pictures/backgroundHealth.3b89c19ec42c.jpg") no-repeat center center;
     background-size: cover;
     background-size: 500px;
     background-position: 50% 75%;
@@ -95,7 +95,7 @@ body {
 
 /*//////////////// Banner ////////////////*/
 .banner {
-    /* background-image: url('../pictures/health_pictures/health-banner.jpeg'); */
+    /* background-image: url("../pictures/health_pictures/health-banner.8b63c8abfa73.jpeg"); */
     background-size: cover;
     background-position: center;
     display: flex;
