@@ -16,8 +16,17 @@ def experiment(request):
             ip_address = request.META.get("REMOTE_ADDR")
 
         # Zufällige Experimentnummer zwischen 1 und 6
-        experimentNumber = random.randint(1, 6)
+        # experimentNumber = random.randint(1, 6)
         # experimentNumber = 4
+
+        # Experiment ohne Loss Aversion laufen lassen = Experiment 3 & 4 ausschließen:
+        # Liste der erlaubten Experimentnummern
+        allowed_experiment_numbers = [1, 2, 5, 6]
+
+        # Zufällige Auswahl einer Experimentnummer aus der Liste
+        experimentNumber = random.choice(allowed_experiment_numbers)
+        # Experimentnummer ausgeben
+        print("Gewählte Experimentnummer:", experimentNumber)
 
         # Experimentnummer in der VS-Konsole ausgeben
         print(f"Experimentnummer für IP {ip_address}: {experimentNumber}")

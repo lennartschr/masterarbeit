@@ -27,6 +27,7 @@ SECRET_KEY = os.environ.get(
 )  # Geheimhaltung in der Produktion sicherstellen
 
 
+
 # (Produktionsumgebung)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (
