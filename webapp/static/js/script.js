@@ -211,8 +211,8 @@ function closeTaskDemandPopUp() {
     // Timer-Funktion - Zeitdruck starten
     fetchExperimentNumber(function (experimentNumber) {
         if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
-            // Pro Mail: 60 Sekunden a 6 Mails = 360 Sekunden = 6 Minuten
-            startTimer(359, experimentNumber);
+            // Pro Mail: 80 Sekunden a 6 Mails = 480 Sekunden = 8 Minuten
+            startTimer(479, experimentNumber);
         }
     });
 
