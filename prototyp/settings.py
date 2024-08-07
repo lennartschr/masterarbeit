@@ -61,7 +61,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Benutzerdefinierte Middleware für abgelaufene Sessions
-    'webapp.middleware.SessionExpiryMiddleware',
+    "webapp.middleware.SessionExpiryMiddleware",
 ]
 
 ROOT_URLCONF = "prototyp.urls"
@@ -85,16 +85,19 @@ TEMPLATES = [
 WSGI_APPLICATION = "prototyp.wsgi.application"
 
 # Database
-# Use SQLite in development and PostgreSQL in production
-if ENVIRONMENT == "production":
-    DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=True)}
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
+}
+
+# In Produktionsumgebungen verwenden wir PostgreSQL
+if "DATABASE_URL" in os.environ:
+    DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -135,13 +138,13 @@ else:
 # Session management
 
 # Sicherstellen, dass die Django-Standard-Session-Engine verwendet wird
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Verwende die DB-Session-Engine
+SESSION_ENGINE = "django.contrib.sessions.backends.db"  # Verwende die DB-Session-Engine
 # Sicherstellen, dass Session- und CSRF-Cookies sicher sind, wenn in Produktion
 SESSION_COOKIE_SECURE = ENVIRONMENT == "production"
 CSRF_COOKIE_SECURE = ENVIRONMENT == "production"
 # Session Timeout konfigurieren (60 Minuten)
 SESSION_COOKIE_AGE = 3600  # 60 Minuten in Sekunden
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True # Session endet bei Schließen des Browsers
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Session endet bei Schließen des Browsers
 SESSION_COOKIE_HTTPONLY = True  # Cookies sind nicht durch JavaScript zugänglich
 SESSION_SAVE_EVERY_REQUEST = True  # Aktualisiert die Sitzung bei jedem Request
 
