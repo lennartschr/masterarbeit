@@ -1,7 +1,21 @@
 /*//////////////// Fixe Variablen ////////////////*/
 let navigationHistory = ["folderPage"]; // Funktionalitäten für Mailverteiler in der Handyversion
-let experimentNumber; // Experimentnummer im globalen Scope definieren
 
+// Funktion, um die Experimentnummer über AJAX zu erhalten
+async function fetchExperimentNumber() {
+    try {
+        const response = await fetch('/get_experiment_number/');
+        const data = await response.json();
+        return data.experimentNumber;
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Experimentnummer:', error);
+        return null;
+    }
+}
+
+
+
+///////////////////// Experiment Umgebung (Login/Webseite) /////////////////////
 /*//////////////// Event-Listener ////////////////*/
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -10,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnDataPopUp) {
         btnDataPopUp.addEventListener('click', closeDataPopup);
     }
+
     const btnWelcome = document.getElementById('btnWelcome');
     if (btnWelcome) {
         btnWelcome.addEventListener('click', closeWelcome);
@@ -40,71 +55,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hinzufügen der Event-Listener für openSurvey-Button
     const openSurvey = document.getElementById('openSurvey');
-    fetchExperimentNumber(function (experimentNumber) {
-        if (openSurvey) {
-            openSurvey.addEventListener('click', function () {
-                let url;
+    if (openSurvey) {
+        openSurvey.addEventListener('click', function () {
+            let url;
 
-                switch (experimentNumber) {
+            switch (experimentNumber) {
 
-                    // 1.	Standard Policy	+ 	Ohne Stress
-                    case 1:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yQGq8lz47KbKPI';
-                        break;
+                // 1.	Standard Policy	+ 	Ohne Stress
+                case 1:
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yQGq8lz47KbKPI';
+                    break;
 
-                    // 2.	Standard Policy	+ 	Mit Stress
-                    case 2:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yxJgDlsDvuyy90';
-                        break;
+                // 2.	Standard Policy	+ 	Mit Stress
+                case 2:
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yxJgDlsDvuyy90';
+                    break;
 
-                    // 3.	Standard Policy	+ 	Ohne Stress	+ 	Nudge (Loss_Aversion)
-                    case 3:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_e3T0Tla24tIqawK';
-                        break;
+                // 3.	Standard Policy	+ 	Ohne Stress	+ 	Nudge (Loss_Aversion)
+                case 3:
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_e3T0Tla24tIqawK';
+                    break;
 
-                    // 4.	Standard Policy	+ 	Mit Stress		+ 	Nudge (Loss_Aversion)
-                    case 4:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_e9u7XuCIz7Y9DqC';
-                        break;
+                // 4.	Standard Policy	+ 	Mit Stress		+ 	Nudge (Loss_Aversion)
+                case 4:
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_e9u7XuCIz7Y9DqC';
+                    break;
 
-                    // 5.	Standard Policy	+ 	Ohne Stress	+ 	Nudge (Social_Proof)
-                    case 5:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_ePvkN7WNWl3IPH0';
-                        break;
+                // 5.	Standard Policy	+ 	Ohne Stress	+ 	Nudge (Social_Proof)
+                case 5:
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_ePvkN7WNWl3IPH0';
+                    break;
 
-                    // 6.	Standard Policy	+ 	Mit Stress		+ 	Nudge (Social_Proof)
-                    case 6:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_3Pq5OBh2ykHh058';
-                        break;
+                // 6.	Standard Policy	+ 	Mit Stress		+ 	Nudge (Social_Proof)
+                case 6:
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_3Pq5OBh2ykHh058';
+                    break;
 
-                    default:
-                        url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o';
-                        break;
-                }
-                window.open(url, '_blank');
-            });
-        }
-    });
+                default:
+                    url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o';
+                    break;
+            }
+            window.open(url, '_blank');
+        });
+    }
 });
 
-function fetchExperimentNumber(callback) {
-    fetch('/get_experiment_number')
-        .then(response => response.json())
-        .then(data => {
-            if (data.experimentNumber !== null) {
-                callback(data.experimentNumber);
-            } else {
-                console.error("Experiment number not found.");
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching experiment number:", error);
-        });
-}
 
 
 
-//////////////// Webseite ////////////////
+
+//////////////// Login ////////////////
 
 // Pop-up User-Daten öffnen
 function openDataPopup() {
@@ -195,43 +195,6 @@ function openLoginPopup() {
     document.getElementById('password').value = "UniGoettingenProjekt";
 }
 
-// Öffnen des Pop-ups für Task-Demand
-function openTaskDemandPopUp() {
-
-    let pop = document.getElementById('taskDemand');
-    pop.classList.add("open-popup");
-
-    // Mausaktivitäten blockieren
-    let mainElementBlock = document.getElementById('mainElement');
-    mainElementBlock.classList.add("overlay");
-}
-
-// Schließt das Pop-ups für Task-Demand
-function closeTaskDemandPopUp() {
-    // Timer-Funktion - Zeitdruck starten
-    fetchExperimentNumber(function (experimentNumber) {
-        if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
-            // Pro Mail: 80 Sekunden a 6 Mails = 480 Sekunden = 8 Minuten
-            startTimer(479, experimentNumber);
-        }
-    });
-
-    let pop = document.getElementById('taskDemand');
-    pop.classList.remove("open-popup");
-
-    // Mausaktivitäten wiedergeben
-    let mainElementBlock = document.getElementById('mainElement');
-    mainElementBlock.classList.remove("overlay");
-
-    // Banner anzeigen
-    var banner = document.getElementById("banner");
-    banner.style.display = "block";
-
-    // Willkommensnachricht anzeigen
-    var welcomeMessage = document.getElementById("welcomeMessage");
-    welcomeMessage.style.display = "block";
-}
-
 function closeWelcome() {
     // Ladevorgang anzeigen
     document.getElementById('loaderOverlay2').style.display = 'flex';
@@ -265,21 +228,18 @@ function closeWelcome() {
         // Background/Hintergrund entfernen
         document.body.style.backgroundColor = '#194E51';
 
-        // DemandTask Pop up anzeigen
-        fetchExperimentNumber(function (experimentNumber) {
-            if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
-                openTaskDemandPopUp();
-            }
-            else {
-                // Banner anzeigen
-                var banner = document.getElementById("banner");
-                banner.style.display = "block";
+        // DemandTask Pop up anzeigen basierend auf der Experimentnummer
+        if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
+            openTaskDemandPopUp();
+        } else {
+            // Banner anzeigen
+            var banner = document.getElementById("banner");
+            banner.style.display = "block";
 
-                // Willkommensnachricht anzeigen
-                var welcomeMessage = document.getElementById("welcomeMessage");
-                welcomeMessage.style.display = "block";
-            }
-        });
+            // Willkommensnachricht anzeigen
+            var welcomeMessage = document.getElementById("welcomeMessage");
+            welcomeMessage.style.display = "block";
+        }
 
         // Auf Seitenanfang scrollen
         window.scrollTo(0, 0);
@@ -287,6 +247,45 @@ function closeWelcome() {
         // Timer für Anmeldung/Login
     }, 2000);
 }
+
+
+// Öffnen des Pop-ups für Task-Demand
+function openTaskDemandPopUp() {
+
+    let pop = document.getElementById('taskDemand');
+    pop.classList.add("open-popup");
+
+    // Mausaktivitäten blockieren
+    let mainElementBlock = document.getElementById('mainElement');
+    mainElementBlock.classList.add("overlay");
+}
+
+
+// Schließt das Pop-ups für Task-Demand
+function closeTaskDemandPopUp() {
+    // Timer-Funktion - Zeitdruck starten
+
+    if (experimentNumber === 2 || experimentNumber === 4 || experimentNumber === 6) {
+        // Pro Mail: 100 Sekunden a 6 Mails = 600 Sekunden = 10 Minuten
+        startTimer(599, experimentNumber);
+    }
+
+    let pop = document.getElementById('taskDemand');
+    pop.classList.remove("open-popup");
+
+    // Mausaktivitäten wiedergeben
+    let mainElementBlock = document.getElementById('mainElement');
+    mainElementBlock.classList.remove("overlay");
+
+    // Banner anzeigen
+    var banner = document.getElementById("banner");
+    banner.style.display = "block";
+
+    // Willkommensnachricht anzeigen
+    var welcomeMessage = document.getElementById("welcomeMessage");
+    welcomeMessage.style.display = "block";
+}
+
 
 function handleMailboxNavigation() {
     navigateTo('inboxPage');
@@ -580,29 +579,4 @@ function closeUpdatePopUp() {
     // Mausaktivitäten wieder ermöglichen
     let mainElementBlock = document.getElementById('mainElement');
     mainElementBlock.classList.remove("answerOverlay");
-}
-
-// Login Update
-function updateParticipantData(lastName, gender) {
-    let formData = new FormData();
-    let token = getCsrfToken();
-
-    formData.append('participantName', lastName);
-    formData.append('participantGender', gender);
-    formData.append('csrfmiddlewaretoken', token);
-
-    fetch('/login', {
-        method: 'POST',
-        body: formData
-    }).then(response => {
-        return response.json().then(data => {
-            if (response.ok) {
-                console.log('Daten erfolgreich aktualisiert:', data.message);
-            } else {
-                console.error('Fehler beim Aktualisieren der Daten:', data.message);
-            }
-        });
-    }).catch(error => {
-        console.error('Fehler:', error);
-    });
 }

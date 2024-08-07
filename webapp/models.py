@@ -8,6 +8,8 @@ from datetime import timedelta
 
 # Ähnlich wie bei Java: class Answer extends models.Model { ... }
 class Answers(models.Model): 
+    session_id = models.CharField(max_length=40, null=True, blank=True)  # Session-ID speichern
+    
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     
@@ -16,10 +18,10 @@ class Answers(models.Model):
     participantName = models.CharField(max_length=20, default="UnknownName") 
     participantGender = models.CharField(max_length=20, default="UnknownGender")
 
-    answer1 = models.CharField(max_length=250, default="No Answer")
-    answer2 = models.CharField(max_length=250, default="No Answer")
-    answer3 = models.CharField(max_length=250, default="No Answer")
-    answer4 = models.CharField(max_length=250, default="No Answer")
+    answer1 = models.CharField(max_length=500, default="No Answer")
+    answer2 = models.CharField(max_length=500, default="No Answer")
+    answer3 = models.CharField(max_length=500, default="No Answer")
+    answer4 = models.CharField(max_length=500, default="No Answer")
 
     pdf_clicked = models.IntegerField(default=0) # Ob die PDF mitgesendet wurde oder nicht
     installed_update = models.IntegerField(default=0) # Ob das Update getätigt wurde oder nicht

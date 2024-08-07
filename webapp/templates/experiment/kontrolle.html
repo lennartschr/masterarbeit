@@ -9,6 +9,9 @@
     <meta charset="utf-8" name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
 
+    <!-- Token für Datenbankanbindung -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
     <!-- Titel im Tab -->
     <title>Alles verstanden?</title>
 
@@ -24,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/experiment.css' %}" />
 
     <!-- JavaScript Einbindung -->
+    <script src="{% static 'js/databaseConnection.js' %}"></script>
     <script src="{% static 'js/function.js' %}"></script>
 
     <!-- Standard-Skripte Bootstrap JS -->
@@ -33,6 +37,7 @@
 </head>
 
 <!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
+
 <body class="d-flex flex-column min-vh-100 center background" style="background-color: rgb(255, 255, 255)">
     <nav class="navbar navbar-dark navbar-expand-md fixed-top sticky-top py-1" id="startNav"></nav>
 
@@ -45,7 +50,8 @@
             <h2 class="h2 center">Fragen zur Studie</h2>
             <div class="rowextend">
                 <div class="col" style="margin-top:16px">
-                    <p>Bevor wir beginnen, beantworten Sie bitte noch die folgenden Fragen, um sicherzustellen, dass der Ablauf korrekt verstanden wurde.
+                    <p>Bevor wir beginnen, beantworten Sie bitte noch die folgenden Fragen, um sicherzustellen, dass der
+                        Ablauf korrekt verstanden wurde.
                     </p>
                     <!-- Geschütztes Leerzeichen: "&nbsp;" -->
                     <p class="questions">
@@ -61,7 +67,8 @@
                         <br>
 
                         <label class="option" for="check1c">
-                            <input type="radio" name="1" id="check1c">&nbsp; Bearbeitung von Nachrichten und E&#x2011Mails
+                            <input type="radio" name="1" id="check1c" checked>&nbsp; Bearbeitung von Nachrichten und
+                            E&#x2011Mails
                         </label>
                         <br>
                     </p>
@@ -69,7 +76,7 @@
                     <p class="questions">
                         <b>2. Welche Rolle nehmen Sie heute ein? </b></br>
                         <label class="option" for="check2a" style="margin-bottom: 6px;">
-                            <input type="radio" name="2" id="check2a">&nbsp; Als Mitarbeiter*in in einem Krankenhaus
+                            <input type="radio" name="2" id="check2a" checked>&nbsp; Als Mitarbeiter*in in einem Krankenhaus
                         </label>
                         <br>
 
@@ -79,7 +86,8 @@
                         <br>
 
                         <label class="option" for="check2c">
-                            <input type="radio" name="2" id="check2c">&nbsp; Als Manager*in eines Konkurrenz&shyunternehmens
+                            <input type="radio" name="2" id="check2c">&nbsp; Als Manager*in eines
+                            Konkurrenz&shyunternehmens
                         </label>
                         <br>
                     </p>
@@ -87,17 +95,20 @@
                     <p class="questions">
                         <b>3. Warum ist Ihre Arbeit wichtig für den Erfolg des Teams bei VitaNova?</b></br>
                         <label class="option" for="check3a">
-                            <input type="radio" name="3" id="check3a">&nbsp; Sie assistieren bei der Erstellung von Jahresabschlüssen
+                            <input type="radio" name="3" id="check3a">&nbsp; Sie assistieren bei der Erstellung von
+                            Jahresabschlüssen
                         </label>
                         <br>
 
                         <label class="option" for="check3b">
-                            <input type="radio" name="3" id="check3b">&nbsp; Ihre Arbeit unterstützt die Patienten&shyversorgung und den Kranken&shyhaus&shybetrieb
+                            <input type="radio" name="3" id="check3b" checked>&nbsp; Ihre Arbeit unterstützt die
+                            Patienten&shyversorgung und den Kranken&shyhaus&shybetrieb
                         </label>
                         <br>
 
                         <label class="option" for="check3c">
-                            <input type="radio" name="3" id="check3c">&nbsp; Sie helfen beim Entwickeln neuer Lebensmittel-Lieferdienste
+                            <input type="radio" name="3" id="check3c">&nbsp; Sie helfen beim Entwickeln neuer
+                            Lebensmittel-Lieferdienste
                         </label>
                         <br>
                     </p>

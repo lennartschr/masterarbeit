@@ -1,5 +1,4 @@
-// importPackage(java.io);
-// Script für das notwendige Ausfüllen der Daten
+/*//////////////// Funktion für Experiment-Beginn ////////////////*/
 
 function redirect() {
     var a = 0;

@@ -1,115 +1,61 @@
 import random
+import json
 from django.utils import timezone
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Answers
 from datetime import timedelta
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Studie
 def experiment(request):
-    if request.method == "GET":
-        x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
-        if x_forw_for:
-            ip_address = x_forw_for.split(",")[0]
-        else:
-            ip_address = request.META.get("REMOTE_ADDR")
+    # Stelle sicher, dass die Session initialisiert wird
+    request.session.save()
 
-        # Zufällige Experimentnummer zwischen 1 und 6
-        # experimentNumber = random.randint(1, 6)
-        # experimentNumber = 4
-
-        # Experiment ohne Loss Aversion laufen lassen = Experiment 3 & 4 ausschließen:
-        # Liste der erlaubten Experimentnummern
-        allowed_experiment_numbers = [1, 2, 5, 6]
-
-        # Zufällige Auswahl einer Experimentnummer aus der Liste
-        experimentNumber = random.choice(allowed_experiment_numbers)
-        # Experimentnummer ausgeben
-        print("Gewählte Experimentnummer:", experimentNumber)
-
-        # Experimentnummer in der VS-Konsole ausgeben
-        print(f"Experimentnummer für IP {ip_address}: {experimentNumber}")
-
-        # Zeitraum von 30 Minuten definieren
-        lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
-
-        # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse in den letzten 30 Minuten existiert
-        recent_entry = Answers.objects.filter(
-            ip_address=ip_address,
-            created_at__gte=lifetime_participant_dataset,
-        ).first()
-
-        if recent_entry:
-            # Aktualisieren des bestehenden Eintrags mit einer neuen Experimentnummer
-            recent_entry.experimentNumber = experimentNumber
-            recent_entry.save()
-        else:
-            # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minuten ist
-            Answers.objects.create(
-                ip_address=ip_address, experimentNumber=experimentNumber
-            )
-
-    return render(request, "experiment/experiment.html")
-
-
-def datenschutz(request):
-    return render(request, "experiment/datenschutz.html")
-
-
-def kontrolle(request):
-    return render(request, "experiment/kontrolle.html")
-
-
-def ISP(request):
+    # Um die IP Adresse auszulesen
     x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
     if x_forw_for:
         ip_address = x_forw_for.split(",")[0]
     else:
         ip_address = request.META.get("REMOTE_ADDR")
 
-    # Experiment Number aus der Datenbank holen
-    lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
-    recent_entry = Answers.objects.filter(
-        ip_address=ip_address,
-        created_at__gte=lifetime_participant_dataset,
-    ).first()
+    # Experimentnummer zufällig auswählen, falls nicht in der Session gespeichert
+    allowed_experiment_numbers = [1, 2, 5, 6]
+    if "experimentNumber" not in request.session:
+        experimentNumber = random.choice(allowed_experiment_numbers)
+        request.session["experimentNumber"] = experimentNumber
+    else:
+        experimentNumber = request.session["experimentNumber"]
 
-    experimentNumber = (
-        recent_entry.experimentNumber if recent_entry else random.randint(1, 6)
-    )
+    # Erstelle oder aktualisiere ein Answers-Objekt für diese Session
+    try:
+        answer = Answers.objects.get(id=request.session.get("answer_id"))
+        answer.ip_address = ip_address
+        answer.experimentNumber = experimentNumber
+        answer.save()
+    except Answers.DoesNotExist:
+        answer = Answers.objects.create(
+            session_id=request.session.session_key,
+            ip_address=ip_address,
+            created_at=timezone.now(),
+            experimentNumber=experimentNumber,
+        )
+        request.session["answer_id"] = answer.id
 
+    # Experimentnummer ausgeben
+    print("Gewählte Experimentnummer:", experimentNumber)
+    print(f"Experimentnummer für IP {ip_address}: {experimentNumber}")
+
+    # Daten für das Template bereitstellen
     context = {
         "experimentNumber": experimentNumber,
+        "ip_address": ip_address,
+        "answer": answer,
     }
-    return render(request, "experiment/ISP.html", context)
 
-
-def ISPkontrolle(request):
-    return render(request, "experiment/ISPkontrolle.html")
-
-
-# Abfrage Experimentnummer
-def get_experiment_number(request):
-    x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
-    if x_forw_for:
-        ip_address = x_forw_for.split(",")[0]
-    else:
-        ip_address = request.META.get("REMOTE_ADDR")
-
-    # Zeitraum von 30 Minuten definieren
-    lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
-
-    try:
-        # Den neuesten Eintrag für diese IP-Adresse holen
-        latest_answer = Answers.objects.filter(
-            ip_address=ip_address,
-            created_at__gte=lifetime_participant_dataset,
-        ).latest("created_at")
-
-        return JsonResponse({"experimentNumber": latest_answer.experimentNumber})
-    except Answers.DoesNotExist:
-        return JsonResponse({"experimentNumber": None})
+    # Rendern der Vorlage
+    return render(request, "experiment/experiment.html", context)
 
 
 # Login für Webseite
@@ -127,14 +73,14 @@ def login(request):
         try:
             # Eintrag mit der gleichen IP-Adresse und innerhalb der letzten 30 Minuten finden
             lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
-            latest_answer = Answers.objects.filter(
+            actualSession = Answers.objects.filter(
                 ip_address=ip_address, created_at__gte=lifetime_participant_dataset
             ).latest("created_at")
 
             # Aktualisieren der Teilnehmerdaten
-            latest_answer.participantName = participantName
-            latest_answer.participantGender = participantGender
-            latest_answer.save()
+            actualSession.participantName = participantName
+            actualSession.participantGender = participantGender
+            actualSession.save()
 
             return JsonResponse(
                 {"message": "Teilnehmerdaten erfolgreich aktualisiert."}
@@ -147,174 +93,229 @@ def login(request):
 
 # Hauptwebseite
 def webseite(request):
-    if request.method == "POST":
-        x_forw_for = request.META.get("HTTP_X_FORWARDED_FOR")
-        if x_forw_for:
-            ip_address = x_forw_for.split(",")[0]
-        else:
-            ip_address = request.META.get("REMOTE_ADDR")
 
-        if "participantName" in request.POST and "participantGender" in request.POST:
-            participantName = request.POST.get("participantName", "")
-            participantGender = request.POST.get("participantGender", "")
-            experimentNumber = request.POST.get("experimentNumber", 0)
+    # Stelle sicher, dass die Session initialisiert wird
+    request.session.save()
 
-            # Zeitraum von 30 Minuten definieren
-            lifetime_participant_dataset = timezone.now() - timedelta(minutes=30)
+    # Prüfe, ob die Antwort-ID in der Session vorhanden ist
+    answer_id = request.session.get("answer_id")
 
-            # Überprüfen, ob ein Eintrag mit der gleichen IP-Adresse, Name und Geschlecht in den letzten 30 Minuten existiert
-            recent_entry = Answers.objects.filter(
-                ip_address=ip_address,
-                participantName=participantName,
-                participantGender=participantGender,
-                created_at__gte=lifetime_participant_dataset,
-            ).first()
+    # Standardwerte setzen
+    participant_name = "Teilnehmer"
+    participant_gender_speech = "Teilnehmer/in"
+    participant_gender_titel = "Sehr geehrter/Sehr geehrte"
+    participant_name_with_suffix = "teilnehmer@vitanova.com"
 
-            if recent_entry:
-                # Aktualisieren des letzten Eintrags, falls er innerhalb der letzten 30 Minuten erstellt wurde
-                recent_entry.participantGender = participantGender
-                recent_entry.experimentNumber = experimentNumber
-                recent_entry.save()
-                return JsonResponse(
-                    {"message": "Teilnehmerdaten erfolgreich aktualisiert."}
-                )
-            else:
-                # Neuen Eintrag erstellen, falls kein aktueller Eintrag existiert oder älter als 30 Minuten ist
-                Answers.objects.create(
-                    ip_address=ip_address,
-                    participantName=participantName,
-                    participantGender=participantGender,
-                    experimentNumber=experimentNumber,
-                )
-                return JsonResponse(
-                    {"message": "Neuer Teilnehmerdatensatz erfolgreich gespeichert."}
-                )
+    if answer_id:
+        try:
+            # Antworten aus der Datenbank abrufen
+            answer = Answers.objects.get(id=answer_id)
+            participant_name = answer.participantName
 
-        elif (
-            "answer1" in request.POST
-            or "answer2" in request.POST
-            or "answer3" in request.POST
-            or "answer4" in request.POST
-        ):
-            answer1 = request.POST.get("answer1")
-            answer2 = request.POST.get("answer2")
-            answer3 = request.POST.get("answer3")
-            answer4 = request.POST.get("answer4")
-            pdf_clicked = int(request.POST.get("pdf_clicked", 0))
-            participantName = request.POST.get("participantName")
+            # Dictionary zur Zuordnung der Anrede basierend auf dem Geschlecht
+            gender_speech_map = {
+                "männlich": "Herr",
+                "weiblich": "Frau",
+                "divers": "Herr/Frau",
+                "andere": "Herr/Frau",
+            }
 
-            try:
-                # Eintrag für den Teilnehmer aktualisieren basierend auf Name und IP-Adresse
-                latest_answer = Answers.objects.filter(
-                    participantName=participantName, ip_address=ip_address
-                ).latest("created_at")
+            # Dictionary zur Zuordnung des Titels basierend auf dem Geschlecht
+            gender_titel_map = {
+                "männlich": "Sehr geehrter",
+                "weiblich": "Sehr geehrte",
+                "divers": "Sehr geehrter/Sehr geehrte",
+                "andere": "Sehr geehrter/Sehr geehrte",
+            }
 
-                if timezone.now() - latest_answer.created_at < timedelta(minutes=30):
-                    if answer1:
-                        latest_answer.answer1 = answer1
-                    if answer2:
-                        latest_answer.answer2 = answer2
-                    if answer3:
-                        latest_answer.answer3 = answer3
-                    if answer4:
-                        latest_answer.answer4 = answer4
-                    latest_answer.pdf_clicked = pdf_clicked
-                    latest_answer.save()
-                    return JsonResponse({"message": "Antwort erfolgreich gespeichert."})
-                else:
-                    return JsonResponse(
-                        {
-                            "message": "Eintrag ist älter als 30 Minuten, keine Aktualisierung erfolgt."
-                        }
-                    )
+            # Anrede und Titel basierend auf dem Geschlecht bestimmen
+            participant_gender_speech = gender_speech_map.get(
+                answer.participantGender, "Teilnehmer/in"
+            )
+            participant_gender_titel = gender_titel_map.get(
+                answer.participantGender, "Sehr geehrter/Sehr geehrte"
+            )
 
-            except Answers.DoesNotExist:
-                return JsonResponse({"message": "Teilnehmer nicht gefunden."})
+            # Generiere den Namen mit dem Suffix
+            participant_name_with_suffix = f"{participant_name.lower()}@vitanova.com"
 
-    try:
-        # Versuchen, den neuesten Eintrag zu holen
-        latest_answer = Answers.objects.latest("created_at")
-    except Answers.DoesNotExist:
-        # Wenn kein Eintrag vorhanden ist, erstellen wir einen neuen Dummy-Eintrag
-        latest_answer = Answers.objects.create(
-            ip_address="dummy_ip",
-            participantName="Dummy",
-            participantGender="divers",
-            experimentNumber=0,
-        )
+        except Answers.DoesNotExist:
+            # Falls keine Antwort gefunden wurde, verwende die Standardwerte
+            pass
 
-    # Zeitstempel in lokale Zeit umwandeln
-    latest_answer.created_at = timezone.localtime()
-
-    # Namen austauschen
-    participant_name_with_suffix = (
-        latest_answer.participantName.lower() + "@vitanova.com"
-    )
-
-    # Dictionary zur Zuordnung der Anrede basierend auf dem Geschlecht
-    gender_speech_map = {
-        "männlich": "Herr",
-        "weiblich": "Frau",
-        "divers": "Herr/Frau",
-        "andere": "Herr/Frau",
-    }
-
-    # Dictionary zur Zuordnung des Titels basierend auf dem Geschlecht
-    gender_titel_map = {
-        "männlich": "Sehr geehrter",
-        "weiblich": "Sehr geehrte",
-        "divers": "Sehr geehrter/Sehr geehrte",
-        "andere": "Sehr geehrter/Sehr geehrte",
-    }
-
-    # Standardanreden, falls das Geschlecht nicht im Dictionary enthalten ist
-    participantGender_speech = gender_speech_map.get(
-        latest_answer.participantGender, "Herr/Frau"
-    )
-    participantGender_titel = gender_titel_map.get(
-        latest_answer.participantGender, "Sehr geehrter/Sehr geehrte"
-    )
-
+    # Daten für das Template bereitstellen
     context = {
-        "participantName": latest_answer.participantName,
-        "participantNameWithSuffix": participant_name_with_suffix,
-        "participantGender": latest_answer.participantGender,
-        "participantGender_speech": participantGender_speech,
-        "participantGender_titel": participantGender_titel,
+        "participantName": participant_name,
+        "participantGender_speech": participant_gender_speech,
+        "participantGender_titel": participant_gender_titel,
+        "participant_name_with_suffix": participant_name_with_suffix,
     }
 
+    # Rendern der Vorlage
     return render(request, "webseite/webseite.html", context)
+
+
+def update_answer(request):
+    if request.method == "POST":
+        try:
+            # JSON-Daten aus der Anfrage lesen
+            data = json.loads(request.body)
+            mail_number = data.get("mailNumber")
+            response_text = data.get("responseText", "")
+            pdf_clicked = data.get("pdfClicked", 0)
+
+            # Aktuelle Answer-Objekt abrufen
+            answer_id = request.session.get("answer_id")
+            answer = Answers.objects.get(id=answer_id)
+
+            # Antwort basierend auf der mailNumber speichern
+            if mail_number == 1:
+                answer.answer1 = response_text
+                answer.pdf_clicked = pdf_clicked
+            elif mail_number == 2:
+                answer.answer2 = response_text
+            elif mail_number == 3:
+                answer.answer3 = response_text
+            elif mail_number == 4:
+                answer.answer4 = response_text
+
+            # Speichern des aktualisierten Answer-Objekts
+            answer.save()
+
+            return JsonResponse({"success": True})
+
+        except Answers.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Answer not found"})
+
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
+
+    return JsonResponse({"success": False, "error": "Invalid request method"})
 
 
 # Update install status
 def update_install_status(request):
     if request.method == "POST":
-        participantName = request.POST.get("participantName", "")
-        ip_address = request.META.get("REMOTE_ADDR", "")
-
-        try:
-            # Eintrag für den Teilnehmer aktualisieren basierend auf Name und IP-Adresse
-            latest_answer = Answers.objects.filter(
-                participantName=participantName, ip_address=ip_address
-            ).latest("created_at")
-
-            if timezone.now() - latest_answer.created_at < timedelta(minutes=30):
-                latest_answer.installed_update = 1
-                latest_answer.save()
+        # Überprüfe, ob eine answer_id in der Session existiert
+        if "answer_id" in request.session:
+            try:
+                # Hol das Answers-Objekt basierend auf der answer_id aus der Session
+                answer = Answers.objects.get(id=request.session["answer_id"])
+                # Aktualisiere den installed_update-Status
+                answer.installed_update = 1
+                answer.save()
                 return JsonResponse(
-                    {"message": "Installationsstatus erfolgreich aktualisiert."}
+                    {"success": True, "message": "Installationsstatus aktualisiert"}
                 )
+            except Answers.DoesNotExist:
+                return JsonResponse(
+                    {"success": False, "message": "Answers-Objekt nicht gefunden"}
+                )
+        else:
+            return JsonResponse(
+                {"success": False, "message": "Keine answer_id in der Session"}
+            )
+    else:
+        return JsonResponse({"success": False, "message": "Ungültige Anfrage-Methode"})
+
+
+# Abfrage Experimentnummer
+def get_experiment_number(request):
+
+    experiment_number = None
+    # Überprüfe, ob eine answer_id in der Session existiert
+    if "answer_id" in request.session:
+        # Versuche, das passende Answers-Objekt abzurufen
+        try:
+            answer = Answers.objects.get(id=request.session["answer_id"])
+            experiment_number = answer.experimentNumber
+        except Answers.DoesNotExist:
+            experiment_number = None
+
+    # Gebe die Experimentnummer als JSON-Antwort zurück
+    return JsonResponse({"experimentNumber": experiment_number})
+
+
+@csrf_exempt
+def update_participant_data(request):
+    if request.method == "POST":
+        try:
+            # JSON-Daten vom Client abrufen
+            data = json.loads(request.body)
+            participant_name = data.get("participantName", "UnknownName")
+            participant_gender = data.get("participantGender", "UnknownGender")
+
+            # ID des Answers-Objekts aus der Session abrufen
+            answer_id = request.session.get("answer_id")
+
+            # Answers-Objekt aktualisieren
+            if answer_id:
+                answer = Answers.objects.get(id=answer_id)
+                answer.participantName = participant_name
+                answer.participantGender = participant_gender
+                answer.save()
+
+                # Erfolgsmeldung zurücksenden
+                return JsonResponse({"success": True})
             else:
                 return JsonResponse(
-                    {
-                        "message": "Eintrag ist älter als 30 Minuten, keine Aktualisierung erfolgt."
-                    }
+                    {"success": False, "error": "Answer ID nicht in Session gefunden."}
                 )
 
-        except Answers.DoesNotExist:
-            return JsonResponse({"message": "Teilnehmer nicht gefunden."})
+        except Exception as e:
+            # Fehler melden
+            return JsonResponse({"success": False, "error": str(e)})
 
-    return JsonResponse({"message": "Ungültige Anfrage."})
+    return JsonResponse({"success": False, "error": "Invalid request method."})
+
+
+# Antworten speichern
+def save_response(request):
+    if request.method == "POST":
+        # Extrahiere Daten aus der Anfrage
+        answer_id = request.session.get("answer_id")
+        mail_number = request.POST.get("mailNumber")
+        response_text = request.POST.get("responseText")
+        pdf_clicked = int(request.POST.get("pdfClicked", 0))  # Konvertiere in Integer
+
+        # Aktualisiere das Answers-Objekt
+        try:
+            answer = Answers.objects.get(id=answer_id)
+
+            if mail_number == "1":
+                answer.answer1 = response_text
+                answer.pdf_clicked = pdf_clicked
+            elif mail_number == "2":
+                answer.answer2 = response_text
+            elif mail_number == "3":
+                answer.answer3 = response_text
+            elif mail_number == "4":
+                answer.answer4 = response_text
+
+            # Speichere die Änderungen
+            answer.save()
+
+            return JsonResponse({"success": True})
+        except Answers.DoesNotExist:
+            return JsonResponse({"success": False, "error": "Answer not found"})
+
+    return JsonResponse({"success": False, "error": "Invalid request method"})
+
+
+def datenschutz(request):
+    return render(request, "experiment/datenschutz.html")
+
+
+def kontrolle(request):
+    return render(request, "experiment/kontrolle.html")
+
+
+def ISP(request):
+    return render(request, "experiment/ISP.html")
+
+
+def ISPkontrolle(request):
+    return render(request, "experiment/ISPkontrolle.html")
 
 
 def ZTest(request):

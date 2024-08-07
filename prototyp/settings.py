@@ -18,32 +18,29 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
     "SECRET_KEY", "your-secret-key"
 )  # Ensure to keep this key secure in production
 
-# Debugging settings based on environment
+# Umgebungsvariable für Entwicklungs- oder Produktionsumgebung
 ENVIRONMENT = os.environ.get("ENV", "development")
 
-# Wechsel der Static Files je nach Entwicklung oder Produktion
+# Debugging basierend auf der Umgebung
 if ENVIRONMENT == "production":
     DEBUG = os.environ.get("DEBUG", "False") == "True"
 else:
     DEBUG = True
 
+# Allowed Hosts
 ALLOWED_HOSTS = [
-    "*",  # Consider using specific hosts for production
     "0.0.0.0",
-    "https://unigoe-prototyp.herokuapp.com/",
     "localhost",
+    "127.0.0.1",
+    "unigoe-prototyp.herokuapp.com",
 ]
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -63,6 +60,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Benutzerdefinierte Middleware für abgelaufene Sessions
+    'webapp.middleware.SessionExpiryMiddleware',
 ]
 
 ROOT_URLCONF = "prototyp.urls"
@@ -86,22 +85,18 @@ TEMPLATES = [
 WSGI_APPLICATION = "prototyp.wsgi.application"
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# Use SQLite in development and PostgreSQL in production
+if ENVIRONMENT == "production":
+    DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=True)}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
-
-# Use PostgreSQL in production
-if "DATABASE_URL" in os.environ:
-    DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -118,8 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
-
 LANGUAGE_CODE = "de-de"
 TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
@@ -127,8 +120,6 @@ USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
@@ -142,17 +133,21 @@ else:
     STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # Session management
+
+# Sicherstellen, dass die Django-Standard-Session-Engine verwendet wird
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Verwende die DB-Session-Engine
+# Sicherstellen, dass Session- und CSRF-Cookies sicher sind, wenn in Produktion
 SESSION_COOKIE_SECURE = ENVIRONMENT == "production"
 CSRF_COOKIE_SECURE = ENVIRONMENT == "production"
-SESSION_EXPIRE_AT_BROWSER_CLOSE = (
-    True  # Optional: Set to true to expire session on browser close
-)
+# Session Timeout konfigurieren (60 Minuten)
+SESSION_COOKIE_AGE = 3600  # 60 Minuten in Sekunden
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True # Session endet bei Schließen des Browsers
+SESSION_COOKIE_HTTPONLY = True  # Cookies sind nicht durch JavaScript zugänglich
+SESSION_SAVE_EVERY_REQUEST = True  # Aktualisiert die Sitzung bei jedem Request
 
 # Django-Heroku settings
 if ENVIRONMENT == "production":
     django_heroku.settings(locals())
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

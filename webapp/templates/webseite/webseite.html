@@ -6,10 +6,11 @@
 
 <head>
     <!-- Automatische Einstellung des Contents auf Handys mit Notch (bspw. ab iPhone X) -->
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <!-- Token für Datenbankanbindung -->
     <meta name="csrf-token" content="{{ csrf_token }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Titel im Tab -->
     <title>VitaNova Intranet</title>
@@ -58,7 +59,7 @@
                     </div>
                     <!-- Timer -->
                     <div class="ml-auto" id="timerContainer">
-                        <span id="timer">08:00</span>
+                        <span id="timer">10:00</span>
                     </div>
                     <!-- Navbar Bereich Rechts -->
                     <div class="hideLoginArea align-items-center" id="LoginArea">
@@ -92,7 +93,7 @@
                     <form>
                         <div class="formBox input-container">
                             <div class="input-container">
-                                <input type="text" id="username" placeholder=" " value="{{ participantNameWithSuffix }}"
+                                <input type="text" id="username" placeholder=" " value="{{ participant_name_with_suffix }}"
                                     readonly autocomplete="username" />
                                 <label for="username">Nutzername</label>
                             </div>
@@ -342,7 +343,7 @@
                                             <p class="msg-subject">
                                                 <b>Betreff:</b> Fortbildung im August
                                                 <br><b>Von:</b> weber@vitanova.de
-                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <br><b>An:</b> <span>{{ participant_name_with_suffix }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -396,7 +397,7 @@
                                             <p class="msg-subject">
                                                 <b>Betreff:</b> Stellenausschreibung 2. OG
                                                 <br><b>Von:</b> jennifer.schulze@gmail.de
-                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <br><b>An:</b> <span>{{ participant_name_with_suffix }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -448,7 +449,7 @@
                                             <p class="msg-subject">
                                                 <b>Betreff:</b> Bestellung von medizinischem Verbrauchsmaterial
                                                 <br><b>Von:</b> hoffmann@vitanova.de
-                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <br><b>An:</b> <span>{{ participant_name_with_suffix }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -505,7 +506,7 @@
                                             <p class="msg-subject">
                                                 <b>Betreff:</b> Dringendes Sicherheitsupdate erforderlich!
                                                 <br><b>Von:</b> re-rpcesl-vsey9o@news-mail.de
-                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <br><b>An:</b> <span>{{ participant_name_with_suffix }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -559,7 +560,7 @@
                                             <p class="msg-subject">
                                                 <b>Betreff:</b> Patient A793564 - Besprechungsunterlagen
                                                 <br><b>Von:</b> diepholz@vitanova.com
-                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <br><b>An:</b> <span>{{ participant_name_with_suffix }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -613,7 +614,7 @@
                                             <p class="msg-subject">
                                                 <b>Betreff:</b> HealthDesk Version 3.1
                                                 <br><b>Von:</b> dr.bergmann@vitanova.com
-                                                <br><b>An:</b> <span>{{ participantNameWithSuffix }}</span>
+                                                <br><b>An:</b> <span>{{ participant_name_with_suffix }}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -911,7 +912,7 @@
                 <span>
                     Im Durchschnitt benötigen Mitarbeiter anderer Branchen <b>15&nbsp;Minuten</b> für die Bearbeitung
                     der nachfolgenden E-Mails. Da der Krankenhausalltag sehr schnelllebig ist, haben Sie <b>lediglich
-                        <span style="color: red;">8 Minuten</span> Zeit</b>.<br><br>
+                        <span style="color: red;">10 Minuten</span> Zeit</b>.<br><br>
 
                     Bitte halten Sie Ihre Antworten <b>kurz und prägnant</b>, um alle E-Mails innerhalb der vorgegebenen
                     Zeit zu bearbeiten.
