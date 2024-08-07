@@ -8,7 +8,7 @@ from datetime import timedelta
 
 # Ähnlich wie bei Java: class Answer extends models.Model { ... }
 class Answers(models.Model): 
-    session_id = models.CharField(max_length=40, null=True, blank=True)  # Session-ID speichern
+    session_id = models.CharField(max_length=255, null=True, blank=True)  # Session-ID speichern
     
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
