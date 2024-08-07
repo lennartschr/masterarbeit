@@ -582,6 +582,7 @@ function closeUpdatePopUp() {
     mainElementBlock.classList.remove("answerOverlay");
 }
 
+// Login Update
 function updateParticipantData(lastName, gender) {
     let formData = new FormData();
     let token = getCsrfToken();

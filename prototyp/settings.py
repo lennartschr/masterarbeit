@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os  # HINZUFÜGEN!!!
-import django_heroku  # HINZUFÜGEN!!!
-import dj_database_url  # HINZUFÜGEN!!!
+import os
+import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,27 +24,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
     "SECRET_KEY", "your-secret-key"
-)  # Geheimhaltung in der Produktion sicherstellen
+)  # Ensure to keep this key secure in production
 
+# Debugging settings based on environment
+ENVIRONMENT = os.environ.get("ENV", "development")
 
-
-# (Produktionsumgebung)
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (
-    os.environ.get("DEBUG", "False") == "True"
-)  # Debug nur aktivieren, wenn es explizit gesetzt ist
-
-
-# (Entwicklungsumgebung)
-# Für Lokale Änderungen
-# DEBUG = True
+# Wechsel der Static Files je nach Entwicklung oder Produktion
+if ENVIRONMENT == "production":
+    DEBUG = os.environ.get("DEBUG", "False") == "True"
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = [
-    "*",
+    "*",  # Consider using specific hosts for production
     "0.0.0.0",
     "https://unigoe-prototyp.herokuapp.com/",
     "localhost",
-]  # HINZUFÜGEN!!!
+]
 
 # Application definition
 
@@ -55,12 +51,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "webapp",  # HINZUFÜGEN!!!
+    "webapp",  # Ensure this is your app
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Whitenoise Middleware für statische Dateien
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -74,7 +70,7 @@ ROOT_URLCONF = "prototyp.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],  # HINZUFÜGEN!!!
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -99,7 +95,7 @@ DATABASES = {
     }
 }
 
-# In Produktionsumgebungen verwenden wir PostgreSQL
+# Use PostgreSQL in production
 if "DATABASE_URL" in os.environ:
     DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
@@ -127,23 +123,34 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "de-de"
 TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
-USE_L10N = True  # HINZUFÜGEN!!!
+USE_L10N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'  # HINZUFÜGEN!!!
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # HINZUFÜGEN!!!
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'webapp/static'),  # Stelle sicher, dass dies korrekt ist
-]  # HINZUFÜGEN!!!
+    os.path.join(BASE_DIR, "webapp/static"),
+]
 
-# WhiteNoise-Konfiguration für das Bereitstellen statischer Dateien
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# WhiteNoise configuration for serving static files
+if ENVIRONMENT == "production":
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+else:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-# Django-Heroku-Einstellungen
-django_heroku.settings(locals())  # HINZUFÜGEN!!!
+# Session management
+SESSION_COOKIE_SECURE = ENVIRONMENT == "production"
+CSRF_COOKIE_SECURE = ENVIRONMENT == "production"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = (
+    True  # Optional: Set to true to expire session on browser close
+)
+
+# Django-Heroku settings
+if ENVIRONMENT == "production":
+    django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
