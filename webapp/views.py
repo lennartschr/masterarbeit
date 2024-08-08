@@ -11,6 +11,9 @@ from django.views.decorators.csrf import csrf_exempt
 # Studie
 def experiment(request):
     # Stelle sicher, dass die Session initialisiert wird
+    if not request.session.session_key:
+        request.session.create()
+    
     request.session.save()
 
     # Um die IP Adresse auszulesen

@@ -19,11 +19,13 @@ class SessionExpiryMiddleware(MiddlewareMixin):
             
             # Prüfen, ob die Sitzung abgelaufen ist
             if session.expire_date < timezone.now():
-                # Leite zu einer spezifischen Seite weiter
-                return redirect('/')  
+                # Sitzung ist abgelaufen, Sitzung löschen und umleiten
+                request.session.flush()
+                return redirect('/')  # Leite zur experiment-Seite weiter
         
         except Session.DoesNotExist:
-            # Leite zu einer spezifischen Seite weiter, wenn die Sitzung nicht existiert
+            # Sitzung existiert nicht, Sitzung löschen und umleiten
+            request.session.flush()
             return redirect('/')
         
         return None  # Erlaube die Verarbeitung der Anfrage
