@@ -160,7 +160,7 @@ CSRF_COOKIE_SECURE = ENVIRONMENT == "production"
 SESSION_COOKIE_AGE = 3600  # 60 Minuten in Sekunden
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Session endet bei Schließen des Browsers
 SESSION_COOKIE_HTTPONLY = True  # Cookies sind nicht durch JavaScript zugänglich
-SESSION_SAVE_EVERY_REQUEST = True  # Aktualisiert die Sitzung bei jedem Request
+SESSION_SAVE_EVERY_REQUEST = False  # Aktualisiert die Sitzung bei jedem Request
 
 # Django-Heroku settings
 if ENVIRONMENT == "production":
