@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o';
                     break;
             }
-            window.open(url, '_blank');
+            window.location.href = url;
         });
     }
 });
