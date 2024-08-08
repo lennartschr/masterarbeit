@@ -9,7 +9,7 @@
 /* Abstand Überschrift zur Navbar + Hintergrund weiß/grün iPad*/
 body {
     font-family: SF Pro Display, SF Pro Icons, AOS Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     margin: 0px;
     min-height: 800px;
     display: block;
@@ -64,6 +64,10 @@ h3 {
 @media screen and (min-width: 400px) {
     .navsize {
         font-size: 20px;
+    }
+
+    body {
+        font-size: 1.2rem;
     }
 }
 
@@ -237,8 +241,7 @@ h3 {
 }
 
 .option {
-    padding-top: 2%;
-    padding-left: 2.5%;
+    padding: 2% 0% 2% 0%;
     text-align: left;
 }
 
