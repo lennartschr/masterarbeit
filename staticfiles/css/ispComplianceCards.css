@@ -7,6 +7,22 @@
   flex-direction: column;
 }
 
+.cardFit {
+  padding-left: 1% !important;
+  padding-right: 1% !important;
+}
+
+.cardDistance {
+  margin-top: auto;
+}
+
+/* Größe der Schrift, wenn das Fenster <= 768px groß ist */
+@media screen and (max-width: 400px) {
+  .cardDistance {
+    margin-top: 15%;
+  }
+}
+
 .card-upper {
   padding: 20px;
   background-color: #fff;
@@ -24,14 +40,6 @@
   font-size: medium;
   font-weight: bold;
   text-align: center;
-}
-
-.card-text {
-  font-size: medium;
-}
-
-.card-nudge {
-  font-size: medium;
 }
 
 .hr {
