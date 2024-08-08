@@ -105,6 +105,10 @@ body {
     #containernav {
         padding: 1% .5% 1% .5%;
     }
+
+    #timerContainer {
+        padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+    }
 }
 
 /*//////////////// Banner ////////////////*/
