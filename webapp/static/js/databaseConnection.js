@@ -228,7 +228,9 @@ async function sendAnswer(mailNumber) {
         const data = await response.json();
         if (data.success) {
             console.log('Antwort erfolgreich gespeichert');
-            sentAnswers++; // Zählen der gesendeten erforderlichen Antworten
+            if (mailNumber !== 2) {
+                sentAnswers++; // Zählen der gesendeten erforderlichen Antworten
+            }
         }
         if (sentAnswers === 3) {
             // Alle Antworten wurden gesendet
