@@ -95,7 +95,7 @@ body {
 }
 
 /* Größe der Schrift, wenn das Fenster <= 768px groß ist */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
 
     .navbar-brand {
         margin-right: 0.5rem;
@@ -107,7 +107,7 @@ body {
     }
 
     #timerContainer {
-        padding: 0.25rem 0.5rem 0.5rem 0.5rem;
+        padding: 0.25rem 0.5rem 0.25rem 0.5rem;
     }
 }
 
@@ -132,10 +132,10 @@ body {
 }
 
 /* Größe der Schrift, wenn das Fenster <= 768px groß ist */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
 
     .banner-content {
-        padding: 20% 8% 20% 8%;
+        padding: 15% 8% 20% 8%;
     }
 }
 
@@ -790,7 +790,7 @@ body {
 }
 
 /* Größe der Schrift, wenn das Fenster <= 768px groß ist */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 600px) {
     .close-btn {
         right: 6%;
     }
