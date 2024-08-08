@@ -12,6 +12,7 @@ body {
 
 /* CSS wenn Bildschirmbreite > 500px */
 @media screen and (min-width: 500px) {
+
     /* Responsive Background Image */
     body {
         background-size: 800px;
@@ -93,6 +94,19 @@ body {
     margin-top: -6px;
 }
 
+/* Größe der Schrift, wenn das Fenster <= 768px groß ist */
+@media screen and (max-width: 400px) {
+
+    .navbar-brand {
+        margin-right: 0.5rem;
+        font-size: 1.15rem;
+    }
+
+    #containernav {
+        padding: 1% .5% 1% .5%;
+    }
+}
+
 /*//////////////// Banner ////////////////*/
 .banner {
     /* background-image: url('../pictures/health_pictures/health-banner.jpeg'); */
@@ -109,14 +123,15 @@ body {
 
 .banner-content {
     width: 100%;
-    padding: 30% 8% 25% 8%;
+    padding: 6% 8% 8% 8%;
     font-family: 'Optima', sans-serif;
 }
 
-/* CSS wenn Bildschirmbreite > 800px */
-@media screen and (min-width: 800px) {
+/* Größe der Schrift, wenn das Fenster <= 768px groß ist */
+@media screen and (max-width: 400px) {
+
     .banner-content {
-        padding: 6% 8% 8% 8%;
+        padding: 20% 8% 20% 8%;
     }
 }
 
@@ -768,6 +783,13 @@ body {
     cursor: pointer !important;
     font-size: 30px;
     font-weight: bold;
+}
+
+/* Größe der Schrift, wenn das Fenster <= 768px groß ist */
+@media screen and (max-width: 400px) {
+    .close-btn {
+        right: 6%;
+    }
 }
 
 .close-btn span {
