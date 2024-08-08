@@ -93,8 +93,8 @@
                     <form>
                         <div class="formBox input-container">
                             <div class="input-container">
-                                <input type="text" id="username" placeholder=" " value="{{ participant_name_with_suffix }}"
-                                    readonly autocomplete="username" />
+                                <input type="text" id="username" placeholder=" "
+                                    value="{{ participant_name_with_suffix }}" readonly autocomplete="username" />
                                 <label for="username">Nutzername</label>
                             </div>
                         </div>
@@ -688,8 +688,9 @@
                 </div>
             </div>
             <br>
-            <span class="note">[<b>Notiz:</b> Geben Sie ein Feedback zu der Themenauswahl]</span>
-
+            <span class="note">[<span class="hinweis">Hinweis:</span> Geben Sie ein <span class="bold">Feedback</span>
+                zu der Themenauswahl]</span>
+            <br><br>
             <div class="rowextend center mt-3">
                 <div class="formBox">
                     <button class="btn submit rounded-pill btn-primary" type="submit" id="sendAnswer10" disabled>
@@ -723,9 +724,9 @@
                 </div>
             </div>
             <br>
-            <span class="note">[<b>Notiz:</b> Das Dokument können Sie <span class="bold">per Klick</span> als Anhang
-                hinzuzufügen]</span>
-
+            <span class="note">[<span class="hinweis">Hinweis:</span> Das Dokument können Sie <span class="bold">per
+                    Klick</span> als Anhang hinzuzufügen]</span>
+            <br><br>
             <div class="document-container">
                 <div class="document-tile" id="documentTile">
                     <img src="{% static 'svg/pdf.svg' %}" alt="Dokument" class="document-icon">
@@ -767,9 +768,10 @@
                 </div>
             </div>
             <br>
-            <span class="note">[<b>Notiz:</b> Die Lieferung wurde bereits verschickt und wird voraussichtlich in 1-2
-                Tagen eintreffen.]</span>
-
+            <span class="note">[<span class="hinweis">Hinweis:</span> Die Lieferung wurde bereits <span
+                    class="bold">verschickt</span> und wird voraussichtlich in <span class="bold">1-2 Tagen</span>
+                eintreffen.]</span>
+            <br><br>
             <div class="rowextend center mt-3">
                 <div class="formBox">
                     <button class="btn submit rounded-pill btn-primary" type="submit" id="sendAnswer20" disabled>
@@ -837,8 +839,9 @@
                 </div>
             </div>
             <br>
-            <span class="note">[<b>Notiz:</b> Passwort des USB-Laufwerks: Vit@USB-Drive]</span>
-
+            <span class="note">[<span class="hinweis">Hinweis:</span> Passwort des USB-Laufwerks: <span
+                    class="bold">Vit@USB-Drive</span>]</span>
+            <br><br>
             <div class="rowextend center mt-3">
                 <div class="formBox">
                     <button class="btn submit rounded-pill btn-primary" type="submit" id="sendAnswer3" disabled>
@@ -872,8 +875,9 @@
                 </div>
             </div>
             <br>
-            <span class="note">[<b>Notiz:</b> Geben Sie eine Rückmeldung bezüglich der Software]</span>
-
+            <span class="note">[<span class="hinweis">Hinweis:</span> Geben Sie eine <span
+                    class="bold">Rückmeldung</span> bezüglich der Software]</span>
+            <br><br>
             <div class="rowextend center mt-3">
                 <div class="formBox">
                     <button class="btn submit rounded-pill btn-primary" type="submit" id="sendAnswer4" disabled>
