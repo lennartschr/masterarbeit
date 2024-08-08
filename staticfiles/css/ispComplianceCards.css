@@ -12,9 +12,6 @@
   padding-right: 1% !important;
 }
 
-.cardDistance {
-  margin-top: auto;
-}
 
 /* Größe der Schrift, wenn das Fenster <= 768px groß ist */
 @media screen and (max-width: 600px) {
