@@ -13,7 +13,7 @@ def experiment(request):
     # Stelle sicher, dass die Session initialisiert wird
     if not request.session.session_key:
         request.session.create()
-    
+
     request.session.save()
 
     # Um die IP Adresse auszulesen
@@ -303,6 +303,26 @@ def save_response(request):
             return JsonResponse({"success": False, "error": "Answer not found"})
 
     return JsonResponse({"success": False, "error": "Invalid request method"})
+
+# Umfrage Startzeit
+def update_survey_time(request):
+    if request.method == "POST":
+        survey_time = timezone.now()
+
+        # Holen des aktuellen Answers-Objekts aus der Session
+        answer_id = request.session.get("answer_id")
+        if answer_id:
+            try:
+                answer = Answers.objects.get(id=answer_id)
+                answer.survey_start_time = survey_time
+                answer.save()
+                return JsonResponse({"success": True})
+            except Answers.DoesNotExist:
+                return JsonResponse({"success": False, "error": "Answer not found"})
+        else:
+            return JsonResponse({"success": False, "error": "Session invalid"})
+    else:
+        return JsonResponse({"success": False, "error": "Invalid request method"})
 
 
 def datenschutz(request):

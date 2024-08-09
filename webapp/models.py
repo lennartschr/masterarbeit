@@ -26,12 +26,14 @@ class Answers(models.Model):
     pdf_clicked = models.IntegerField(default=0) # Ob die PDF mitgesendet wurde oder nicht
     installed_update = models.IntegerField(default=0) # Ob das Update getätigt wurde oder nicht
 
+    survey_start_time = models.DateTimeField(null=True, blank=True)  # Zeitstempel für den Start der Umfrage
+
 
 # Experiment Nummern
-#         0 = Default Webseite
-# Adler = 1 = Nudge1
-# Igel  = 2 = Nudge1 + Zeitstress
-# Hase  = 3 = Nudge2
-# Otter = 4 = Nudge2 + Zeitstress
-# Fuchs = 5 = ISP-Compliance
-# Koala = 6 = ISP-Compliance + Zeitstress
+# 0 = Default Webseite
+# 1 = Nudge1
+# 2 = Nudge1 + Zeitstress
+# 3 = Nudge2
+# 4 = Nudge2 + Zeitstress
+# 5 = ISP-Compliance
+# 6 = ISP-Compliance + Zeitstress

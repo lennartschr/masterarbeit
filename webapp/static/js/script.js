@@ -95,7 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o';
                     break;
             }
-            window.location.href = url;
+
+            // Sende die Zeitstempel-Daten an den Server
+            fetch('/update_survey_time/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()  // Stelle sicher, dass das CSRF-Token in der Anfrage enthalten ist
+                },
+                body: JSON.stringify({
+                    survey_start_time: new Date().toISOString()
+                })
+            }).then(response => {
+                if (response.ok) {
+                    // Weiterleitung zur Umfrage
+                    window.location.href = url;
+                } else {
+                    console.error('Fehler beim Speichern des Zeitstempels');
+                }
+            }).catch(error => {
+                console.error('Fehler bei der Anfrage:', error);
+            });
         });
     }
 });
@@ -313,65 +333,72 @@ function startTimer(duration, experimentNumber) {
     const display = document.getElementById('timer');
 
     const interval = setInterval(() => {
-        minutes = Math.floor(timer / 60);
-        seconds = timer % 60;
-
+        let minutes = Math.floor(timer / 60);
+        let seconds = timer % 60;
+    
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
-
+    
         display.textContent = minutes + ":" + seconds;
-
+    
         // Wechselt die Farbe zu rot, wenn noch 1 Minute oder weniger verbleibt
         if (timer <= 60) {
             display.style.color = 'red';
             display.style.fontWeight = 'bold';
         }
-
+    
         if (--timer < 0) {
             clearInterval(interval);
+    
             let url;
-
+    
             switch (experimentNumber) {
-
-                // 1.	Standard Policy	+ 	Ohne Stress
                 case 1:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yQGq8lz47KbKPI';
                     break;
-
-                // 2.	Standard Policy	+ 	Mit Stress
                 case 2:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yxJgDlsDvuyy90';
                     break;
-
-                // 3.	Standard Policy	+ 	Ohne Stress	+ 	Nudge (Loss_Aversion)
                 case 3:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_e3T0Tla24tIqawK';
                     break;
-
-                // 4.	Standard Policy	+ 	Mit Stress		+ 	Nudge (Loss_Aversion)
                 case 4:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_e9u7XuCIz7Y9DqC';
                     break;
-
-                // 5.	Standard Policy	+ 	Ohne Stress	+ 	Nudge (Social_Proof)
                 case 5:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_ePvkN7WNWl3IPH0';
                     break;
-
-                // 6.	Standard Policy	+ 	Mit Stress		+ 	Nudge (Social_Proof)
                 case 6:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_3Pq5OBh2ykHh058';
                     break;
-
                 default:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o';
                     break;
             }
-
-            window.location.href = url; // Leitet den Benutzer zu der ausgewählten URL weiter
-            window.alert('Leider haben Sie die E-Mails nicht in der vorgegebenen Zeit beantworten können. Sie wurden daher ausgeloggt.');
+    
+            // Zeitstempel speichern und danach zur Umfrage weiterleiten
+            fetch('/update_survey_time/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken()  // Funktion, um das CSRF-Token zu erhalten
+                },
+                body: JSON.stringify({ 
+                    survey_start_time: new Date().toISOString() 
+                })
+            }).then(response => {
+                if (response.ok) {
+                    // Weiterleitung zur Umfrage
+                    window.location.href = url;
+                    window.alert('Leider haben Sie die E-Mails nicht in der vorgegebenen Zeit beantworten können. Sie wurden daher ausgeloggt.');
+                } else {
+                    console.error('Fehler beim Speichern des Zeitstempels');
+                }
+            }).catch(error => {
+                console.error('Fehler bei der Anfrage:', error);
+            });
         }
-    }, 1000);
+    }, 1000);    
 
     // Timer anzeigen
     document.getElementById('timerContainer').style.display = 'block';

@@ -35,6 +35,9 @@ urlpatterns = [
     path('update_answer/', views.update_answer, name='update_answer'),
     # Update_Status
     path('update_install_status/', views.update_install_status, name='update_install_status'),
+    # Umfrage Startzeit
+    path('update_survey_time/', views.update_survey_time, name='update_survey_time'),
+
     # Website zum Testen von diversen Inhalten
     path("ZTest", views.ZTest, name="ZTest"),
 ]
