@@ -268,6 +268,28 @@ function closeWelcome() {
     }, 2000);
 }
 
+// Öffnen des Pop-ups für Erinnerungshilfe
+function openHelpPopUp() {
+
+    let pop = document.getElementById('helpPopUp');
+    pop.classList.add("open-popup");
+
+    // Mausaktivitäten blockieren
+    let mainElementBlock = document.getElementById('mainElement');
+    mainElementBlock.classList.add("answerOverlay");
+}
+
+// Schließt das Pop-up für Erinnerungshilfe
+function closeHelpPopUp() {
+
+    let pop = document.getElementById('helpPopUp');
+    pop.classList.remove("open-popup");
+
+    // Mausaktivitäten wiedergeben
+    let mainElementBlock = document.getElementById('mainElement');
+    mainElementBlock.classList.remove("answerOverlay");
+}
+
 
 // Öffnen des Pop-ups für Task-Demand
 function openTaskDemandPopUp() {
@@ -281,7 +303,7 @@ function openTaskDemandPopUp() {
 }
 
 
-// Schließt das Pop-ups für Task-Demand
+// Schließt das Pop-up für Task-Demand
 function closeTaskDemandPopUp() {
     // Timer-Funktion - Zeitdruck starten
 
@@ -308,9 +330,10 @@ function closeTaskDemandPopUp() {
 
 
 function handleMailboxNavigation() {
+    closeWelcomeMessage();
     navigateTo('inboxPage');
     showMailbox();
-    closeWelcomeMessage();
+    openHelpPopUp()
 }
 
 function closeWelcomeMessage() {
