@@ -163,7 +163,7 @@ body {
 
 
 .banner-text {
-    font-weight: 100;
+    font-weight: 300;
     font-size: 26px;
     font-size: calc(20px + (26 - 12) * ((100vw - 767px) / (1920 - 767)));
     line-height: 26px;
