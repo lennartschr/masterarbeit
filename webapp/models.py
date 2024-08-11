@@ -31,9 +31,9 @@ class Answers(models.Model):
 
 # Experiment Nummern
 # 0 = Default Webseite
-# 1 = Nudge1
-# 2 = Nudge1 + Zeitstress
-# 3 = Nudge2
-# 4 = Nudge2 + Zeitstress
-# 5 = ISP-Compliance
-# 6 = ISP-Compliance + Zeitstress
+# 1 = ISP-Compliance
+# 2 = ISP-Compliance + Zeitstress
+# 3 = ISP-Compliance + Loss_Aversion (Nudge_1)
+# 4 = ISP-Compliance + Loss_Aversion (Nudge_1) + Zeitstress
+# 5 = ISP-Compliance + Social_Proof  (Nudge_2)
+# 6 = ISP-Compliance + Social_Proof  (Nudge_2) + Zeitstress
