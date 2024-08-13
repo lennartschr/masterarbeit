@@ -463,11 +463,6 @@ function navigateTo(pageId) {
     navigationHistory.push(pageId);
 }
 
-// function changeColor() {
-//     // Mail-Preview Farbe von Phishing Mail ausgrauen nachdem man die Mail angesehen hat, um Verwirrung zu vermeiden
-//     document.getElementById('mail_Preview2').style.color = '#a0a0a0';
-// }
-
 function navigateBack() {
     if (navigationHistory.length > 2) {
         document.getElementById(navigationHistory.pop()).classList.remove('active');
