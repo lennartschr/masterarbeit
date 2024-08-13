@@ -204,10 +204,6 @@ function openLoginPopup() {
     var welcomePage = document.getElementById("welcomePage");
     welcomePage.classList.remove("hide");
 
-    // Navbar Farbe ändern
-    var navbar = document.getElementById("containernav");
-    navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-
     // Entferne Ladevorgang
     mainElement.classList.remove("mainBlur");
 
@@ -358,23 +354,23 @@ function startTimer(duration, experimentNumber) {
     const interval = setInterval(() => {
         let minutes = Math.floor(timer / 60);
         let seconds = timer % 60;
-    
+
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
-    
+
         display.textContent = minutes + ":" + seconds;
-    
+
         // Wechselt die Farbe zu rot, wenn noch 1 Minute oder weniger verbleibt
         if (timer <= 60) {
             display.style.color = 'red';
             display.style.fontWeight = 'bold';
         }
-    
+
         if (--timer < 0) {
             clearInterval(interval);
-    
+
             let url;
-    
+
             switch (experimentNumber) {
                 case 1:
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_6yQGq8lz47KbKPI';
@@ -398,7 +394,7 @@ function startTimer(duration, experimentNumber) {
                     url = 'https://wiwigoettingen.eu.qualtrics.com/jfe/form/SV_etws8ZxKhr2g77o';
                     break;
             }
-    
+
             // Zeitstempel speichern und danach zur Umfrage weiterleiten
             fetch('/update_survey_time/', {
                 method: 'POST',
@@ -406,8 +402,8 @@ function startTimer(duration, experimentNumber) {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': getCSRFToken()  // Funktion, um das CSRF-Token zu erhalten
                 },
-                body: JSON.stringify({ 
-                    survey_start_time: new Date().toISOString() 
+                body: JSON.stringify({
+                    survey_start_time: new Date().toISOString()
                 })
             }).then(response => {
                 if (response.ok) {
@@ -421,7 +417,7 @@ function startTimer(duration, experimentNumber) {
                 console.error('Fehler bei der Anfrage:', error);
             });
         }
-    }, 1000);    
+    }, 1000);
 
     // Timer anzeigen
     document.getElementById('timerContainer').style.display = 'block';
@@ -467,10 +463,10 @@ function navigateTo(pageId) {
     navigationHistory.push(pageId);
 }
 
-function changeColor() {
-    // Mail-Preview Farbe von Phishing Mail ausgrauen nachdem man die Mail angesehen hat, um Verwirrung zu vermeiden
-    document.getElementById('mail_Preview2').style.color = '#a0a0a0';
-}
+// function changeColor() {
+//     // Mail-Preview Farbe von Phishing Mail ausgrauen nachdem man die Mail angesehen hat, um Verwirrung zu vermeiden
+//     document.getElementById('mail_Preview2').style.color = '#a0a0a0';
+// }
 
 function navigateBack() {
     if (navigationHistory.length > 2) {
@@ -503,6 +499,27 @@ function removeDot(dotNumber) {
         }
     }
 }
+
+
+// Löschbutton Aufrufen
+function toggleOptions(mailNumber) {
+    const menu = document.getElementById(`options_Menu${mailNumber}`);
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+// Löschen und in Datenbank speichern
+function deleteMail(mailNumber) {
+    const mailElement = document.getElementById(`mail_Preview${mailNumber}`);
+    mailElement.style.display = 'none'; // E-Mail ausblenden
+    
+    if (mailNumber === 10 || mailNumber === 20) {
+        // Nur für mailNumber 10 oder 20 (X und Y -> Dummy Mails)
+        return;
+    }
+    // Keine Dummy Mails bekommen einen Eintrag * Gelöscht * in der Datenbank
+    sendAnswerDelete(mailNumber);
+}
+
 
 /////////////////////////// Mail-Antworten ///////////////////////////
 
@@ -598,7 +615,7 @@ function openUpdatePopUp() {
 
         // Senden einer Anfrage, um den Installationsstatus zu aktualisieren
         updateInstallStatus();
-    }, 2000);
+    }, 3000);
 }
 
 // Funktion zum Aktualisieren des Installationsstatus

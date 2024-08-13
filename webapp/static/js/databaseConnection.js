@@ -191,6 +191,9 @@ async function sendAnswer(mailNumber) {
     // Mail-Preview Farbe ausgrauen nach Antwort
     document.getElementById(`mail_Preview${mailNumber}`).style.color = '#a0a0a0';
 
+    // Löschfunktion ausblenden
+    document.getElementById(`more_Options${mailNumber}`).style.display = 'none';
+
     // Mausaktivitäten wiedergeben
     let mainElementBlock = document.getElementById('mainElement');
     mainElementBlock.classList.remove("answerOverlay");
@@ -231,18 +234,73 @@ async function sendAnswer(mailNumber) {
             if (mailNumber !== 2) {
                 sentAnswers++; // Zählen der gesendeten erforderlichen Antworten
             }
-        }
-        if (sentAnswers === 3) {
-            // Alle Antworten wurden gesendet
-            document.getElementById('completionSection').style.display = 'block';
-        }
-        else {
+
+            if (sentAnswers === 3) {
+                // Alle Antworten wurden gesendet
+                document.getElementById('completionSection').style.display = 'block';
+            }
+        } else {
             console.error('Fehler beim Speichern der Antwort:', data.error);
         }
     } catch (error) {
         console.error('Fehler bei der Anfrage:', error);
     }
 }
+
+
+// Antwort gelöscht (Generische Funktion)
+async function sendAnswerDelete(mailNumber) {
+
+    if (mailNumber === 10 || mailNumber === 20) {
+        // Nur für mailNumber 10 oder 20 (X und Y -> Dummy Mails)
+        return;
+    }
+
+    // Antwort "Gelöscht" in der Datenbank speichern
+    let responseText = "* Gelöscht *";
+
+    // Bei Mailnumber=1 prüfen, ob das PDF geklickt wurde
+    let pdfClicked = 0;
+    if (mailNumber === 1) {
+        let documentTile = document.getElementById('documentTile');
+        pdfClicked = documentTile.classList.contains('selected') ? 1 : 0;
+    }
+
+    // Daten an den Server senden
+    try {
+        const response = await fetch('/update_answer/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken() // Funktion, um das CSRF-Token zu erhalten
+            },
+            body: JSON.stringify({
+                mailNumber: mailNumber,
+                responseText: responseText,
+                pdfClicked: pdfClicked
+            })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            console.log('Löschung erfolgreich gespeichert');
+            if (mailNumber !== 2) {
+                sentAnswers++; // Zählen der gesendeten erforderlichen Antworten
+                console.log('Send Answer Anzahl: ' + sentAnswers);
+            }
+
+            if (sentAnswers === 3) {
+                // Alle Antworten wurden gesendet
+                document.getElementById('completionSection').style.display = 'block';
+            }
+        } else {
+            console.error('Fehler beim Speichern der Löschung:', data.error);
+        }
+    } catch (error) {
+        console.error('Fehler bei der Anfrage:', error);
+    }
+}
+
 
 // Funktion, um das CSRF-Token aus dem Cookie zu erhalten
 function getCSRFToken() {

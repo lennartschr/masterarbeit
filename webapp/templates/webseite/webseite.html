@@ -45,46 +45,47 @@
 <!-- Body wird flexibel auf die Größe des Viewports angepasst, damit der Footer immer unten ist, Body ist flexibel mit Mindesthöhe 100%  -->
 
 <body onload="openLoginPopup()" id="background">
-    <div id="mainElement" class="mainBlur">
-        <!-- Navigationsbar-->
-        <nav class="navbar navbar-light navbar-expand fixed-top sticky-top py-0 center">
-            <div id="containernav" class="d-flex flex-column align-items-start w-100">
-                <!-- Oberer Teil der Navbar -->
-                <div class="d-flex justify-content-between align-items-center w-100">
-                    <div class="navbar-brand js-scroll-trigger navsize a">VitaNova</div>
-                    <div class="healthSymbolPosition">
-                        <!-- Health-Insurance-Logo -->
-                        <!-- (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
-                        <a><img class="health-symbol" src="{% static 'svg/health-insurance.svg' %}"></a>
-                    </div>
-                    <!-- Timer -->
-                    <div class="ml-auto" id="timerContainer">
-                        <span id="timer">10:00</span>
-                    </div>
-                    <!-- Navbar Bereich Rechts -->
-                    <div class="hideLoginArea align-items-center" id="LoginArea">
-                        <!-- Message-Logo -->
-                        <!-- (Quelle) https://www.svgrepo.com/svg/501625/message?edit=true -->
-                        <a onclick="handleMailboxNavigation()">
-                            <img class="messageUnread-logo" src="{% static 'svg/messageUnread.svg' %}"
-                                id="messageUnread" alt="Nachrichten">
-                        </a>
-                        <div class="navbar-brand js-scroll-trigger navsize a">
-                            <span id="participantNameSpan">{{ participantName }}</span>
-                        </div>
-                    </div>
+
+    <!-- Navigationsbar-->
+    <nav class="navbar navbar-light navbar-expand fixed-top sticky-top py-0 center">
+        <div id="containernav" class="d-flex flex-column align-items-start w-100">
+            <!-- Oberer Teil der Navbar -->
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="navbar-brand js-scroll-trigger navsize a">VitaNova</div>
+                <div class="healthSymbolPosition">
+                    <!-- Health-Insurance-Logo -->
+                    <!-- (Quelle) https://www.svgrepo.com/svg/389918/medicine-symbol -->
+                    <a><img class="health-symbol" src="{% static 'svg/health-insurance.svg' %}"></a>
                 </div>
-                <!-- Unterer Teil der Navbar mit Zurück-Button -->
-                <div class="justify-content-start w-100 mt-2" id="navigationSymbol">
-                    <a onclick="navigateBack()">
-                        <!-- Zurück-Symbol -->
-                        <!-- (Quelle) https://www.svgrepo.com/svg/494008/back -->
-                        <img id="backButton" src="{% static 'svg/arrow-back.svg' %}" alt="Zurück">
+                <!-- Timer -->
+                <div class="ml-auto" id="timerContainer">
+                    <span id="timer">10:00</span>
+                </div>
+                <!-- Navbar Bereich Rechts -->
+                <div class="hideLoginArea align-items-center" id="LoginArea">
+                    <!-- Message-Logo -->
+                    <!-- (Quelle) https://www.svgrepo.com/svg/501625/message?edit=true -->
+                    <a onclick="handleMailboxNavigation()">
+                        <img class="messageUnread-logo" src="{% static 'svg/messageUnread.svg' %}" id="messageUnread"
+                            alt="Nachrichten">
                     </a>
+                    <div class="navbar-brand js-scroll-trigger navsize a">
+                        <span id="participantNameSpan">{{ participantName }}</span>
+                    </div>
                 </div>
             </div>
-        </nav>
+            <!-- Unterer Teil der Navbar mit Zurück-Button -->
+            <div class="justify-content-start w-100 mt-2" id="navigationSymbol">
+                <a onclick="navigateBack()">
+                    <!-- Zurück-Symbol -->
+                    <!-- (Quelle) https://www.svgrepo.com/svg/494008/back -->
+                    <img id="backButton" src="{% static 'svg/arrow-back.svg' %}" alt="Zurück">
+                </a>
+            </div>
+        </div>
+    </nav>
 
+    <div id="mainElement" class="mainBlur">
         <!-- LoginBereich "Anmelden" VitaNova -->
         <div class="container containerWelcome round center hide" id="welcomePage">
             <div class="loginfield">
@@ -192,13 +193,13 @@
                             <div class="mail-list mailpreview-container border-right bg-white">
 
                                 <!-- Mailvorschau 10 (X) -->
-                                <div id="mail_Preview10" class="mail-list mailpreview" style="cursor: pointer;"
-                                    onclick="navigateTo('mail_10'), removeDot(10)">
+                                <div id="mail_Preview10" class="mail-list mailpreview">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="blue-dot" id="blueDot10"></div>
                                         </div>
-                                        <div class="col-auto" style="max-width: 80%;">
+                                        <div class="col-auto" style="max-width: 80%;" style="cursor: pointer;"
+                                            onclick="navigateTo('mail_10'), removeDot(10)">
                                             <p class="sender-name">Fortbildung im August</p>
                                             <p class="message_text">Hallo <span>{{ participantGender_speech }}</span>
                                                 <span>{{ participantName }}</span>,
@@ -207,17 +208,31 @@
                                                 interessant sind.
                                             </p>
                                         </div>
+                                        <div class="col-auto position-relative" id="more_Options10">
+                                            <!-- More options icon -->
+                                            <div class="more-options" onclick="toggleOptions(10)">⋮</div>
+                                            <!-- Options menu -->
+                                            <div id="options_Menu10" class="options-menu">
+                                                <div class="option-item" onclick="deleteMail(10)">
+                                                    <!-- Delete icon image -->
+                                                    <img src="{% static 'svg/delete_bin.svg' %}" alt="Dokument"
+                                                        class="delete-icon">
+                                                    <span>Löschen</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
+
                                 <!-- Mailvorschau 1 -->
-                                <div id="mail_Preview1" class="mail-list mailpreview" style="cursor: pointer;"
-                                    onclick="navigateTo('mail1'), removeDot(1)">
+                                <div id="mail_Preview1" class="mail-list mailpreview">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="blue-dot" id="blueDot1"></div>
                                         </div>
-                                        <div class="col-auto" style="max-width: 80%;">
+                                        <div class="col-auto" style="max-width: 80%;" style="cursor: pointer;"
+                                            onclick="navigateTo('mail1'), removeDot(1)">
                                             <p class="sender-name">Stellenausschreibung 2. OG</p>
                                             <p class="message_text">Hallo <span>{{ participantGender_speech }}</span>
                                                 <span>{{ participantName }}</span>,
@@ -228,37 +243,63 @@
                                                 wurden.
                                             </p>
                                         </div>
+                                        <div class="col-auto position-relative" id="more_Options1">
+                                            <!-- More options icon -->
+                                            <div class="more-options" onclick="toggleOptions(1)">⋮</div>
+                                            <!-- Options menu -->
+                                            <div id="options_Menu1" class="options-menu">
+                                                <div class="option-item" onclick="deleteMail(1)">
+                                                    <!-- Delete icon image -->
+                                                    <img src="{% static 'svg/delete_bin.svg' %}" alt="Dokument"
+                                                        class="delete-icon">
+                                                    <span>Löschen</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Mailvorschau 20 (Y) -->
-                                <div id="mail_Preview20" class="mail-list mailpreview" style="cursor: pointer;"
-                                    onclick="navigateTo('mail_20'), removeDot(20)">
+                                <div id="mail_Preview20" class="mail-list mailpreview">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="blue-dot" id="blueDot20"></div>
                                         </div>
-                                        <div class="col-auto" style="max-width: 80%;">
-                                            <p class="sender-name">Bestellung von medizinischem Verbrauchsmaterial</p>
+                                        <div class="col-auto" style="max-width: 80%;" style="cursor: pointer;"
+                                            onclick="navigateTo('mail_20'), removeDot(20)">
+                                            <p class="sender-name">Bestellung von medizinischem Verbrauchsmaterial #408-40</p>
                                             <p class="message_text">{{ participantGender_titel }}
                                                 <span>{{ participantGender_speech }}</span>
                                                 <span>{{ participantName }}</span>,
-                                                ich habe letzte Woche bei euch eine Bestellung für Desinfektionsmittel
-                                                und sterile Handschuhe aufgegeben. Da unser Vorrat zur Neige geht,
+                                                ich habe letzte Woche eine Bestellung für Desinfektionsmittel und
+                                                sterile Handschuhe aufgegeben. Da unser Vorrat zur Neige geht,
                                                 wollte ich nachfragen, ob Sie Informationen zum Lieferstatus haben.
                                             </p>
+                                        </div>
+                                        <div class="col-auto position-relative" id="more_Options20">
+                                            <!-- More options icon -->
+                                            <div class="more-options" onclick="toggleOptions(20)">⋮</div>
+                                            <!-- Options menu -->
+                                            <div id="options_Menu20" class="options-menu">
+                                                <div class="option-item" onclick="deleteMail(20)">
+                                                    <!-- Delete icon image -->
+                                                    <img src="{% static 'svg/delete_bin.svg' %}" alt="Dokument"
+                                                        class="delete-icon">
+                                                    <span>Löschen</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- Mailvorschau 2 -->
-                                <div id="mail_Preview2" class="mail-list mailpreview" style="cursor: pointer;"
-                                    onclick="navigateTo('mail2'),changeColor(), removeDot(2)">
+                                <div id="mail_Preview2" class="mail-list mailpreview">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="blue-dot" id="blueDot2"></div>
                                         </div>
-                                        <div class="col-auto" style="max-width: 80%;">
+                                        <div class="col-auto" style="max-width: 80%;" style="cursor: pointer;"
+                                            onclick="navigateTo('mail2'), changeColor(), removeDot(2)">
                                             <p class="sender-name">Dringendes Sicherheitsupdate erforderlich!</p>
                                             <p class="message_text">{{ participantGender_titel }}
                                                 <span>{{ participantGender_speech }}</span>
@@ -267,17 +308,30 @@
                                                 ein dringendes Sicherheits­update durch.
                                             </p>
                                         </div>
+                                        <div class="col-auto position-relative" id="more_Options2">
+                                            <!-- More options icon -->
+                                            <div class="more-options" onclick="toggleOptions(2)">⋮</div>
+                                            <!-- Options menu -->
+                                            <div id="options_Menu2" class="options-menu">
+                                                <div class="option-item" onclick="deleteMail(2)">
+                                                    <!-- Delete icon image -->
+                                                    <img src="{% static 'svg/delete_bin.svg' %}" alt="Dokument"
+                                                        class="delete-icon">
+                                                    <span>Löschen</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Mailvorschau 3 -->
-                                <div id="mail_Preview3" class="mail-list mailpreview" style="cursor: pointer;"
-                                    onclick="navigateTo('mail3'), removeDot(3)">
+                                <div id="mail_Preview3" class="mail-list mailpreview">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="blue-dot" id="blueDot3"></div>
                                         </div>
-                                        <div class="col-auto" style="max-width: 80%;">
+                                        <div class="col-auto" style="max-width: 80%;" style="cursor: pointer;"
+                                            onclick="navigateTo('mail3'), removeDot(3)">
                                             <p class="sender-name">Patient A793564 - Besprechungsunterlagen</p>
                                             <p class="message_text">Hallo <span>{{ participantGender_speech }}</span>
                                                 <span>{{ participantName }}</span>,
@@ -288,17 +342,30 @@
                                                 Laufwerk.
                                             </p>
                                         </div>
+                                        <div class="col-auto position-relative" id="more_Options3">
+                                            <!-- More options icon -->
+                                            <div class="more-options" onclick="toggleOptions(3)">⋮</div>
+                                            <!-- Options menu -->
+                                            <div id="options_Menu3" class="options-menu">
+                                                <div class="option-item" onclick="deleteMail(3)">
+                                                    <!-- Delete icon image -->
+                                                    <img src="{% static 'svg/delete_bin.svg' %}" alt="Dokument"
+                                                        class="delete-icon">
+                                                    <span>Löschen</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Mailvorschau 4 -->
-                                <div id="mail_Preview4" class="mail-list mailpreview" style="cursor: pointer;"
-                                    onclick="navigateTo('mail4'), removeDot(4)">
+                                <div id="mail_Preview4" class="mail-list mailpreview">
                                     <div class="row align-items-center">
                                         <div class="col-auto">
                                             <div class="blue-dot" id="blueDot4"></div>
                                         </div>
-                                        <div class="col-auto" style="max-width: 80%;">
+                                        <div class="col-auto" style="max-width: 80%;" style="cursor: pointer;"
+                                            onclick="navigateTo('mail4'), removeDot(4)">
                                             <p class="sender-name">HealthDesk Version 3.1</p>
                                             <p class="message_text">{{ participantGender_titel }}
                                                 <span>{{ participantGender_speech }}</span>
@@ -307,9 +374,23 @@
                                                 außer Haus und werde erst nach dem Meeting heute zurückkehren.
                                             </p>
                                         </div>
+                                        <div class="col-auto position-relative" id="more_Options4">
+                                            <!-- More options icon -->
+                                            <div class="more-options" onclick="toggleOptions(4)">⋮</div>
+                                            <!-- Options menu -->
+                                            <div id="options_Menu4" class="options-menu">
+                                                <div class="option-item" onclick="deleteMail(4)">
+                                                    <!-- Delete icon image -->
+                                                    <img src="{% static 'svg/delete_bin.svg' %}" alt="Dokument"
+                                                        class="delete-icon">
+                                                    <span>Löschen</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <br>
+
                                 <!-- Button zur Qualtrics Umfrage -->
                                 <div class="rowextend center" id="completionSection">
                                     <div class="rowextend center" style="margin: 0% 5% 0% 5%;">
@@ -407,13 +488,13 @@
                                             wie befürchtet bin ich leider krank geworden und arbeite diese Woche von zu
                                             Hause. Ich hatte noch keine Zeit, die beiden Unterlagen der neuen Bewerber
                                             für die Stellenausschreibung der Bereichsleitung im 2. OG zu überprüfen, die
-                                            gestern von eurer Abteilung an mich weitergeleitet wurden.<br><br>
-                                            Wir müssen <span class="bold">zeitnah</span> eine Rückmeldung an Herrn Dr.
-                                            Bergmann geben, weshalb ich die Unterlagen heute benötige. Da ich von zu
-                                            Hause aus nicht auf meine Arbeits-E-Mails zugreifen kann, bitte ich dich,
-                                            mir <span class="bold">die Bewerbungsunterlagen</span> an <span
-                                                class="bold">diese E-Mail-Adresse</span> zu senden.<br> Danke für die
-                                            Hilfe und hoffentlich auf bald wieder vor Ort.<br><br>
+                                            gestern von eurer Abteilung an mich weitergeleitet wurden.<br><br> Wir
+                                            müssen <span class="bold">zeitnah</span> eine Rückmeldung an Herrn Dr.
+                                            Bergmann geben, weshalb ich die Unterlagen <span class="bold">heute</span>
+                                            benötige. Da ich von zu Hause aus nicht auf meine Arbeits-E-Mails zugreifen
+                                            kann, bitte ich dich, mir <span class="bold">die Bewerbungsunterlagen</span>
+                                            an <span class="bold">diese E-Mail-Adresse</span> zu senden.<br>
+                                            Danke für die Hilfe und hoffentlich auf bald wieder vor Ort.<br><br>
 
                                             Mit besten Grüßen<br>
                                             <span class="bold">Jennifer Schulze</span><br>
@@ -446,7 +527,7 @@
                                     <div class="sender-details">
                                         <div class="details">
                                             <p class="msg-subject">
-                                                <b>Betreff:</b> Bestellung von medizinischem Verbrauchsmaterial
+                                                <b>Betreff:</b> Bestellung von medizinischem Verbrauchsmaterial #408-40
                                                 <br><b>Von:</b> hoffmann@vitanova.de
                                                 <br><b>An:</b> <span>{{ participant_name_with_suffix }}</span>
                                             </p>
@@ -456,8 +537,8 @@
                                         <p> {{ participantGender_titel }} <span>{{ participantGender_speech }}</span>
                                             <span>{{ participantName }}</span>,
                                             <br><br>
-                                            ich habe letzte Woche bei euch eine Bestellung für Desinfektionsmittel
-                                            und sterile Handschuhe aufgegeben. Da unser Vorrat zur Neige geht,
+                                            ich habe letzte Woche eine Bestellung für Desinfektionsmittel und
+                                            sterile Handschuhe aufgegeben. Da unser Vorrat zur Neige geht,
                                             wollte ich nachfragen, ob Sie Informationen zum Lieferstatus haben.
                                             <br><br>
                                             Hier sind die bestellten Artikel und Mengen:
@@ -474,7 +555,7 @@
                                         <br><br>
                                         Mit freundlichen Grüßen<br>
                                         <span class="bold">Lena Hoffmann</span><br>
-                                        <span class="bold">Einkaufsabteilung</span><br>
+                                        <span class="bold">Bedarfsmanagement</span><br>
                                         </p>
                                         <hr>
                                         <div class="col center">
@@ -898,8 +979,9 @@
                 <br>
                 <span>
                     Bitte bearbeiten Sie die E-Mails in Ihrem <span class="hinweis">Nachrichten-Eingang</span>.<br><br>
-                    Unter Klicken auf <span class="bold">"Antworten"</span> erhalten Sie in einigen Fällen eine
-                    optionale Hilfestellung zur Beantwortung der Nachricht.
+                    Um eine Rückmeldung auf eine Nachricht zu verfassen können Sie auf <span
+                        class="bold">"Antworten"</span> klicken. Hierbei erhalten Sie in einigen Fällen eine optionale
+                    Hilfestellung für Ihre Antwort.
                 </span>
                 <br><br>
             </div>
@@ -940,9 +1022,10 @@
             <!-- Task Demand -->
             <div class="rowextend center mt-3">
                 <span>
-                    Im Durchschnitt benötigen Mitarbeiter anderer Branchen <b>15&nbsp;Minuten</b> für die Bearbeitung
-                    der nachfolgenden E-Mails. Da der Krankenhausalltag sehr schnelllebig ist, haben Sie <b>lediglich
-                        <span style="color: red;">10 Minuten</span> Zeit</b>.<br><br>
+                    Mitarbeiter außerhalb dieser Branche benötigen im Durchschnitt <b>15&nbsp;Minuten</b> für die
+                    Bearbeitung der nachfolgenden E&#8209Mails. Da der Krankenhausalltag sehr schnelllebig ist, haben
+                    Sie
+                    <b>lediglich <span style="color: red;">10 Minuten</span> Zeit</b>.<br><br>
 
                     Bitte halten Sie Ihre Antworten <b>kurz und prägnant</b>, um alle E-Mails innerhalb der vorgegebenen
                     Zeit zu bearbeiten.

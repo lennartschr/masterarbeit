@@ -53,7 +53,7 @@ body {
     /* Stellt sicher, dass die Navbar die volle Breite einnimmt */
     /* z-index: 100; */
     /* Stellt sicher, dass die Navbar über anderen Inhalten liegt */
-    background-color: rgb(23, 55, 118);
+    background-color: rgb(255, 255, 255);
 }
 
 .health-symbol {
@@ -759,6 +759,45 @@ body {
 .blue-dot-removed {
     background-color: rgb(255, 255, 255);
 }
+
+/* Delete Options */
+.more-options {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px 10px 10px 5px;
+}
+
+.options-menu {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 35px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.option-item {
+    padding: 8px 14px 8px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.option-item:hover {
+    background-color: #f5f5f5;
+}
+
+.delete-icon {
+    margin-right: 8px;
+    margin-bottom: 2px;
+    width: calc(24px + 0.590625vw);
+    height: calc(24px + 0.590625vw);
+}
+
 
 
 /* Mailantworten */
