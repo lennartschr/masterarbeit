@@ -496,11 +496,40 @@ function removeDot(dotNumber) {
 }
 
 
-// Löschbutton Aufrufen
+// Funktion zum Überprüfen, ob ein Lösch-Element sichtbar ist
+function isVisible(element) {
+    return element.style.display === 'block';
+}
+
+// Funktion zum Umschalten der Sichtbarkeit des Optionsmenüs
 function toggleOptions(mailNumber) {
     const menu = document.getElementById(`options_Menu${mailNumber}`);
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    if (isVisible(menu)) {
+        menu.style.display = 'none';
+    } else {
+        // Alle offenen Menüs schließen
+        closeAllOptions();
+        menu.style.display = 'block';
+    }
 }
+
+// Funktion zum Schließen aller offenen Optionsmenüs wenn man irgendwo anders hinklickt
+function closeAllOptions() {
+    const menus = document.querySelectorAll('.options-menu');
+    menus.forEach(menu => {
+        menu.style.display = 'none';
+    });
+}
+
+// Event Listener, um das Menü zu schließen, wenn irgendwo außerhalb geklickt wird
+document.addEventListener('click', function (event) {
+    const isClickInside = event.target.closest('.more-options') || event.target.closest('.options-menu');
+
+    if (!isClickInside) {
+        closeAllOptions();
+    }
+});
+
 
 // Löschen und in Datenbank speichern
 function deleteMail(mailNumber) {
