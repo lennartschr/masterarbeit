@@ -177,7 +177,7 @@ body {
 /*//////////////// Homepage ////////////////*/
 #welcomeMessage {
     padding-bottom: 0;
-    padding-top: 2.5%;
+    /* padding-top: 2.5%; */
 }
 
 .notificationbell {
@@ -292,6 +292,7 @@ body {
     /* Zentriert den Ladespinner vertikal */
     flex-direction: column;
     /* Stellt Text und Spinner untereinander dar */
+    z-index: 1200;
 }
 
 /* Spinner/Ladesymbol */
